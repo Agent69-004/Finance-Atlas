@@ -2548,9 +2548,689 @@
       padding-top: 8vh;
     }
   }
+
+  /* ===================== v4: phone-first layout + stronger motion ===================== */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    -webkit-touch-callout: none;
+    overscroll-behavior: none;
+  }
+  .map,
+  .node {
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #fx2 {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: block;
+    z-index: 89;
+  }
+  @keyframes shine {
+    to {
+      background-position: -160% 0;
+    }
+  }
+  @keyframes drawStroke {
+    from {
+      stroke-dashoffset: 70;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes sheetUp {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+  }
+  @keyframes grabHint {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    35% {
+      transform: translateY(-5px);
+    }
+    65% {
+      transform: translateY(1px);
+    }
+  }
+  @keyframes tabPop {
+    0% {
+      transform: scale(0.8);
+    }
+    60% {
+      transform: scale(1.16);
+    }
+    100% {
+      transform: scale(1.12);
+    }
+  }
+
+  /* hero number shimmer */
+  .big #pct {
+    background: linear-gradient(100deg, var(--ink) 34%, var(--acc) 50%, var(--ink) 66%);
+    background-size: 260% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shine 7s linear infinite;
+  }
+
+  /* map extras: aurora, packets, crowns */
+  .aura {
+    animation-duration: 38s;
+    pointer-events: none;
+  }
+  .pk circle:first-child {
+    opacity: 0.2;
+  }
+  .map[data-f="1"] .pk,
+  .map[data-f="2"] .pk,
+  .map[data-f="3"] .pk {
+    opacity: 0.25;
+  }
+  html[data-motion="off"] .pk {
+    display: none;
+  }
+  .node .crown {
+    fill: none;
+    stroke: var(--dc);
+    stroke-width: 1.6;
+    stroke-dasharray: 2 7;
+    stroke-linecap: round;
+    opacity: 0;
+    transition: opacity 0.6s;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .node.mastered .crown {
+    opacity: 0.95;
+    animation: spin 9s linear infinite;
+  }
+  .node.mastered .halo {
+    opacity: 0.32;
+    animation: pulseHalo 3.2s ease-out infinite;
+  }
+  .node .halo {
+    pointer-events: all;
+  }
+
+  /* splash */
+  .splash {
+    position: absolute;
+    inset: 0;
+    z-index: 120;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    transition:
+      opacity 0.8s var(--ease),
+      transform 0.9s var(--ease),
+      visibility 0s 0.8s;
+  }
+  .splash.out {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.06);
+    pointer-events: none;
+  }
+  .splash svg {
+    width: 84px;
+    height: 84px;
+    padding: 14px;
+    border-radius: 26px;
+    background: var(--ink);
+    box-shadow: 0 30px 60px -24px var(--shadow);
+  }
+  .splash svg path {
+    fill: none;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-dasharray: 70;
+    animation: drawStroke 1.1s var(--ease) both;
+  }
+  .splash svg path:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+  .splash svg path:nth-child(3) {
+    animation-delay: 0.24s;
+  }
+  .splash b {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+    animation: rise 0.9s var(--ease) 0.35s backwards;
+  }
+  .splash small {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mute);
+    animation: rise 0.9s var(--ease) 0.5s backwards;
+  }
+
+  /* tab bar + drawer grabber are phone-only */
+  .tabbar,
+  .drawer .grab {
+    display: none;
+  }
+  .tabbar svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (max-width: 860px) {
+    :root {
+      --peek: 178px;
+      --tabh: 66px;
+      --tabb: calc(var(--tabh) + 14px + env(safe-area-inset-bottom, 0px));
+    }
+    /* header becomes a slim glass bar */
+    .top {
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: calc(10px + env(safe-area-inset-top, 0px)) var(--gxr) 10px var(--gx);
+      flex-wrap: nowrap;
+      gap: 8px;
+      background: color-mix(in srgb, var(--bg) 66%, transparent);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s;
+    }
+    .app.sheet-up .top {
+      border-bottom-color: var(--rule2);
+    }
+    .modes,
+    .brand em,
+    #searchBtn {
+      display: none;
+    }
+    .brand b {
+      font-size: 25px;
+    }
+    .brand {
+      flex: 1;
+    }
+    .tright {
+      gap: 8px;
+    }
+    .ibtn {
+      width: 40px;
+      height: 40px;
+    }
+    .ibtn svg {
+      width: 17px;
+      height: 17px;
+    }
+    .ibtn,
+    .fbtn,
+    .zoom button,
+    .seg,
+    .cbtn {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: color-mix(in srgb, var(--bg) 84%, transparent);
+    }
+
+    /* full-screen map with depth when the sheet or a subject rises */
+    .map {
+      top: 0;
+      height: 100%;
+      bottom: auto;
+      transform-origin: 50% 36%;
+      transform: scale(calc(1 - var(--sp, 0) * 0.05));
+      opacity: calc(1 - var(--sp, 0) * 0.6);
+      transition:
+        transform 0.8s var(--ease),
+        opacity 0.6s var(--ease);
+    }
+    .app.open .map {
+      transform: scale(0.93);
+      opacity: 0.5;
+    }
+    .app:not([data-view="map"]) .map {
+      opacity: 0;
+    }
+
+    /* map controls: filter chips under the header, zoom stack by the thumb */
+    .tools {
+      display: contents;
+    }
+    .zoom {
+      position: absolute;
+      right: var(--gxr);
+      bottom: calc(var(--peek) + var(--tabb) + 14px);
+      flex-direction: column;
+      gap: 8px;
+      z-index: 15;
+      transition: opacity 0.5s;
+    }
+    .zoom button {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      padding: 0;
+      font-size: 17px;
+      border-radius: 50%;
+    }
+    .legend {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(env(safe-area-inset-top, 0px) + 62px);
+      z-index: 15;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 6px var(--gxr) 6px var(--gx);
+      scrollbar-width: none;
+      transition: opacity 0.5s;
+    }
+    .legend::-webkit-scrollbar {
+      display: none;
+    }
+    .legend .eyebrow {
+      display: none;
+    }
+    .fbtn {
+      height: 36px;
+      padding: 0 15px;
+      flex: none;
+      font-size: 13px;
+    }
+    .app:not([data-view="map"]) .zoom,
+    .app:not([data-view="map"]) .legend {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .app.open .zoom,
+    .app.open .legend {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* bottom sheet using native scrolling: peek, then pull up */
+    .scroll {
+      display: block;
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 10;
+      pointer-events: none;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: y proximity;
+      scrollbar-width: none;
+    }
+    .scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .spacer {
+      display: block;
+      height: calc(100% - var(--peek) - var(--tabb));
+      scroll-snap-align: start;
+      pointer-events: none;
+    }
+    .ledger {
+      position: relative;
+      inset: auto;
+      width: auto;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100% - 62px - env(safe-area-inset-top, 0px));
+      padding: 28px var(--gxr) calc(var(--tabb) + 34px) var(--gx);
+      border: 0;
+      border-top: 1px solid var(--rule2);
+      border-radius: 30px 30px 0 0;
+      background: color-mix(in srgb, var(--bg) 95%, transparent);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: 0 -26px 50px -30px var(--shadow);
+      scroll-snap-align: start;
+      scroll-margin-top: calc(60px + env(safe-area-inset-top, 0px));
+      animation: sheetUp 1.1s var(--ease) 0.5s backwards;
+    }
+    .ledger::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 50%;
+      width: 44px;
+      height: 5px;
+      margin-left: -22px;
+      border-radius: 5px;
+      background: var(--rule2);
+      animation: grabHint 2.2s ease-in-out 2.4s 3;
+    }
+    .ledger > .eyebrow:first-child {
+      order: 0;
+    }
+    .big {
+      order: 1;
+      font-size: 66px;
+      margin-top: 2px;
+    }
+    .sb {
+      order: 2;
+      margin: 12px 0 8px;
+    }
+    .next {
+      order: 3;
+      margin-top: 6px;
+    }
+    .next button {
+      font-size: 22px;
+      padding: 4px 0;
+    }
+    .subl {
+      order: 4;
+      margin-top: 8px;
+    }
+    .sess {
+      order: 5;
+    }
+    .idx {
+      order: 6;
+    }
+    .areas {
+      order: 7;
+      flex: none;
+      padding-bottom: 10px;
+    }
+    .led-foot {
+      order: 8;
+    }
+    .sring {
+      width: 58px;
+      height: 58px;
+    }
+
+    /* tab bar */
+    .tabbar {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+      height: var(--tabh);
+      z-index: 32;
+      display: flex;
+      padding: 6px;
+      border-radius: 28px;
+      border: 1px solid var(--rule2);
+      background: var(--glass);
+      backdrop-filter: blur(22px) saturate(1.5);
+      -webkit-backdrop-filter: blur(22px) saturate(1.5);
+      box-shadow: 0 20px 44px -16px var(--shadow);
+      transition: transform 0.85s var(--ease);
+      animation: sheetUp 1s var(--ease) 0.7s backwards;
+    }
+    .app.open .tabbar {
+      transform: translateY(170%);
+    }
+    .tabbar button {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 3px;
+      border-radius: 22px;
+      color: var(--mute);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      transition:
+        color 0.35s,
+        transform 0.3s var(--spring);
+    }
+    .tabbar button:active {
+      transform: scale(0.88);
+    }
+    .tabbar button[aria-pressed="true"] {
+      color: var(--bg);
+    }
+    .tabbar button[aria-pressed="true"] svg {
+      animation: tabPop 0.55s var(--spring) both;
+    }
+    .tabink {
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 0;
+      border-radius: 22px;
+      background: var(--ink);
+      z-index: 0;
+      transition:
+        transform 0.65s var(--spring),
+        width 0.65s var(--spring);
+    }
+
+    /* other views sit between header and tab bar */
+    .view {
+      left: var(--gx);
+      right: var(--gxr);
+      top: calc(env(safe-area-inset-top, 0px) + 62px);
+      bottom: 0;
+      padding: 14px 0 calc(var(--tabb) + 28px) 0;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    .view h2 {
+      font-size: clamp(40px, 12vw, 54px);
+    }
+    .toast {
+      bottom: calc(var(--tabb) + 12px);
+    }
+
+    /* subject sheet: grabber, big touch targets */
+    .drawer {
+      height: 94%;
+      transition:
+        transform 0.85s cubic-bezier(0.22, 1.1, 0.36, 1),
+        visibility 0s 0.85s;
+    }
+    .app.open .drawer {
+      transition:
+        transform 0.85s cubic-bezier(0.22, 1.1, 0.36, 1),
+        visibility 0s;
+    }
+    .drawer .grab {
+      display: flex;
+      justify-content: center;
+      padding: 10px 0 2px;
+      touch-action: none;
+      cursor: grab;
+      position: relative;
+      z-index: 4;
+    }
+    .drawer .grab i {
+      width: 46px;
+      height: 5px;
+      border-radius: 5px;
+      background: var(--rule2);
+    }
+    .dr-head {
+      padding: 8px 20px 0;
+      touch-action: none;
+    }
+    .dr-head .close {
+      width: 42px;
+      height: 42px;
+      top: 14px;
+      right: 14px;
+    }
+    .dr-head h1 {
+      font-size: clamp(40px, 12vw, 54px);
+    }
+    .dr-body {
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    }
+    .dr-tabs button {
+      padding: 15px 0;
+      font-size: 15px;
+    }
+    .ci {
+      grid-template-columns: 26px minmax(0, 1fr);
+      gap: 16px;
+      padding: 15px 0;
+      font-size: 15.5px;
+      line-height: 1.4;
+    }
+    .check {
+      width: 26px;
+      height: 26px;
+    }
+    .check:checked::after {
+      width: 7px;
+      height: 12px;
+    }
+    .grp-h .lnk {
+      padding: 12px 6px;
+      margin-right: -6px;
+      font-size: 11px;
+    }
+    .rit {
+      height: 38px;
+      padding: 0 15px 0 11px;
+      font-size: 13.5px;
+    }
+    .rit i {
+      width: 13px;
+      height: 13px;
+    }
+    .btn {
+      height: 44px;
+      padding: 0 20px;
+      font-size: 14px;
+    }
+    .seg button {
+      height: 36px;
+      padding: 0 16px;
+      font-size: 11.5px;
+    }
+    .cbtn {
+      height: 42px;
+    }
+    .pal {
+      padding-top: calc(env(safe-area-inset-top, 0px) + 14px);
+    }
+    .pal-i {
+      padding: 14px;
+    }
+    .modal {
+      padding: 24px 22px;
+    }
+    .cur-wrap {
+      height: 340px;
+    }
+    .cur-bar .sp {
+      display: none;
+    }
+    .cur-bar .seg {
+      width: 100%;
+    }
+    .cur-bar .seg button {
+      flex: 1;
+    }
+    .cur-bar .cbtn {
+      flex: 1;
+      justify-content: center;
+    }
+    .zoom #zfit {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+    .app.sheet-up .zoom,
+    .app.sheet-up .legend {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .subl {
+      margin-top: 28px;
+    }
+    .tabbar {
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+    }
+    .tabbar::before {
+      content: "";
+      position: absolute;
+      left: -12px;
+      right: -12px;
+      bottom: calc(-10px - env(safe-area-inset-bottom, 0px));
+      height: calc(var(--tabh) + 34px + env(safe-area-inset-bottom, 0px));
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(transparent, color-mix(in srgb, var(--bg) 94%, transparent) 55%);
+    }
+  }
+
+  .crit {
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    border: 1px dashed var(--rule2);
+    border-radius: 14px;
+  }
+  .crit ul {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    font-size: 13.5px;
+    color: var(--mute);
+    line-height: 1.55;
+  }
+  .crit li {
+    padding: 3px 0 3px 20px;
+    position: relative;
+  }
+  .crit li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--acc);
+  }
 </style>
 
 <div class="app" id="app" data-view="map">
+  <div class="splash" id="splash" aria-hidden="true">
+    <svg viewBox="0 0 40 40">
+      <path d="M5 26c5-9 9 1 13-5s7-7 13-3" stroke="#FFB020" />
+      <path d="M5 31c5-6 9 1 13-3s7-4 13-2" stroke="#2DD4BF" />
+      <path d="M5 20c5-10 9-1 13-7s7-5 13-2" stroke="#9B87FF" />
+    </svg>
+    <b>Finance 69</b>
+    <small>Nov 2026 → Oct 2027</small>
+  </div>
+  <div id="satop" aria-hidden="true" style="position:fixed;left:0;top:0;width:0;height:env(safe-area-inset-top,0px);pointer-events:none"></div>
+  <div id="sabot" aria-hidden="true" style="position:fixed;left:0;bottom:0;width:0;height:env(safe-area-inset-bottom,0px);pointer-events:none"></div>
   <canvas id="bg" aria-hidden="true"></canvas>
   <div class="spot" id="spot" aria-hidden="true"></div>
   <svg
@@ -2560,6 +3240,9 @@
     aria-label="Map of finance subjects. Drag to pan, scroll or pinch to zoom."
   >
     <defs>
+      <radialGradient id="ag0"><stop offset="0" style="stop-color:var(--c1);stop-opacity:.5" /><stop offset="1" style="stop-color:var(--c1);stop-opacity:0" /></radialGradient>
+      <radialGradient id="ag1"><stop offset="0" style="stop-color:var(--c4);stop-opacity:.5" /><stop offset="1" style="stop-color:var(--c4);stop-opacity:0" /></radialGradient>
+      <radialGradient id="ag2"><stop offset="0" style="stop-color:var(--c7);stop-opacity:.45" /><stop offset="1" style="stop-color:var(--c7);stop-opacity:0" /></radialGradient>
       <filter id="sh" x="-50%" y="-50%" width="200%" height="200%">
         <feDropShadow
           dx="0"
@@ -2638,7 +3321,7 @@
     <div class="hint">Drag to pan · scroll or pinch to zoom · open any subject</div>
   </div>
 
-  <div class="scroll">
+  <div class="scroll" id="scroll">
     <div class="spacer"></div>
     <aside class="ledger" id="ledger" aria-label="Index and progress">
       <div class="eyebrow">Overall mastery</div>
@@ -2676,6 +3359,7 @@
   <section class="view" id="view" hidden></section>
 
   <aside class="drawer" id="drawer" aria-label="Subject detail" aria-hidden="true">
+    <div class="grab" id="drGrab" aria-hidden="true"><i></i></div>
     <div class="dr-head">
       <button class="close" id="closeBtn" aria-label="Close">
         <svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2 2 12" /></svg>
@@ -2695,6 +3379,30 @@
   </aside>
 
   <canvas id="fx" aria-hidden="true"></canvas>
+  <canvas id="fx2" aria-hidden="true"></canvas>
+  <nav class="tabbar" id="tabbar" aria-label="Views">
+    <span class="tabink" id="tabInk"></span>
+    <button data-v="map" aria-pressed="true">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="m15.5 8.5-2 5-5 2 2-5z" /></svg>
+      <span>Map</span>
+    </button>
+    <button data-v="path" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2" /><circle cx="18" cy="6" r="2.2" /><path d="M8 17.5c5 0 3-5 6-6.5s3-3 2-3.4" /></svg>
+      <span>Path</span>
+    </button>
+    <button data-v="currents" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><path d="M3 9c3-4 5 4 9 0s6 3 9-1" /><path d="M3 14c3-4 5 4 9 0s6 3 9-1" /><path d="M3 19c3-4 5 4 9 0s6 3 9-1" /></svg>
+      <span>Currents</span>
+    </button>
+    <button data-v="projects" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z" /><path d="m3 13 9 5 9-5" /></svg>
+      <span>Projects</span>
+    </button>
+    <button id="tabSearch" aria-label="Search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
+      <span>Search</span>
+    </button>
+  </nav>
   <div class="veil" id="veil" hidden></div>
   <div class="pal" id="pal" hidden>
     <div class="pal-box" role="dialog" aria-modal="true" aria-label="Search">
@@ -3568,6 +4276,182 @@
       { id: "moro", name: "Morocco and career", c: "--c6", ids: ["11", "12"] },
       { id: "tool", name: "Toolkit", c: "--c7", ids: ["xl", "sql", "bi", "py"] },
     ];
+    /* ---------- syllabus additions: appended groups keep earlier ticks valid ---------- */
+    var EXTRA = {
+  "11": [
+    [
+      "Moroccan accounting and tax (verify against current law)",
+      [
+        "Moroccan general accounting standard (CGNC) and where it differs from IFRS",
+        "Corporate tax basics: accounting profit to taxable profit, deductible and non-deductible items",
+        "VAT mechanics: VAT collected, VAT deductible, credits and timing",
+        "Withholding tax concepts on dividends, interest and fees paid abroad",
+        "Tax effect of common transactions: buying an asset, borrowing, paying a group company",
+        "Annual reporting and disclosure duties, and how they differ for listed and unlisted companies",
+        "Habit: check the current Finance Law and tax administration guidance before quoting any rate or rule"
+      ]
+    ],
+    [
+      "Regulators and market infrastructure",
+      [
+        "Role of Bank Al-Maghrib: monetary policy, banking supervision, prudential rules",
+        "Role of the AMMC: listed companies, disclosures, market conduct",
+        "Role of ACAPS: insurance and pension supervision",
+        "Casablanca Stock Exchange: indices, listing, trading and settlement basics",
+        "Tax administration and company registration bodies: what each one asks a company to file"
+      ]
+    ]
+  ],
+  "17": [
+    [
+      "Insurance regulation (verify current texts)",
+      [
+        "What ACAPS supervises and the powers it has over insurers",
+        "Authorisation, conduct and consumer protection rules in outline",
+        "Solvency margin and technical provisions: what they protect and how they are tested",
+        "Reinsurance and how regulators look at it",
+        "Compulsory insurance lines such as motor third-party liability, and why they exist"
+      ]
+    ]
+  ],
+  "20": [
+    [
+      "Short-term financing and treasury reporting",
+      [
+        "Overdraft, short-term credit lines and receivables financing: cost and trade-offs",
+        "Compare financing options on effective cost, not headline rate",
+        "Weekly treasury report: cash position, forecast against actual, bank balances",
+        "13-week cash forecast and how to update it",
+        "Liquidity risk indicators: cash runway, covenant headroom, concentration of banks and customers"
+      ]
+    ]
+  ],
+  "10": [
+    [
+      "Model standards checklist",
+      [
+        "Inputs, calculations and outputs kept apart, with a consistent timeline across columns",
+        "One formula per row, no hard-coded numbers inside formulas, clear colour code",
+        "Integrity checks: balance sheet balances, cash ties to the statement, totals agree",
+        "Scenario selector and sensitivity tables on the key drivers",
+        "Assumptions listed with source and date, plus a change log",
+        "Review your own model as if you were checking someone else's: trace errors, fix, document"
+      ]
+    ]
+  ],
+  "21": [
+    [
+      "Sector ratios to know",
+      [
+        "Banks: net interest margin, cost-to-income, cost of risk, non-performing loan and coverage ratios",
+        "Insurers: loss, expense and combined ratio, solvency position",
+        "Industry and retail: gross margin, inventory days, capex intensity",
+        "Real estate and construction: leverage, backlog, presales and cash conversion",
+        "Connect an operating change to its effect on revenue, margin, cash and leverage"
+      ]
+    ]
+  ],
+  "07": [
+    [
+      "Findings and working papers",
+      [
+        "Write a finding as condition, criteria, cause, effect and recommendation",
+        "Working paper standards: purpose, source, tick marks, cross-references, preparer and reviewer",
+        "Rank findings by risk and draft a short management letter",
+        "Follow up: agreed actions, owners and dates"
+      ]
+    ]
+  ],
+  "12": [
+    [
+      "Professional reporting and communication",
+      [
+        "Two-page financial analysis report: conclusion first, then evidence",
+        "Credit memo structure: purpose, borrower, financials, repayment capacity, risks, mitigants, recommendation, conditions",
+        "Ten-slide finance presentation in PowerPoint: one message per slide, the right chart for each message",
+        "Word and Excel professionally: styles, linked tables, clean formatting, export to PDF",
+        "State assumptions, ranges and risks plainly, and finish with a clear recommendation",
+        "Behavioural answers with a simple structure: situation, action, result, lesson"
+      ]
+    ],
+    [
+      "Spaced revision and error log",
+      [
+        "Review each new topic after 1, 3, 7 and 21 days",
+        "Error log: every wrong answer written with its cause and the fix",
+        "Weekly: 5 to 10 mixed problems from earlier subjects",
+        "Monthly: a timed mock set and a one-page summary",
+        "Quarterly: update portfolio, CV and your mastery checks"
+      ]
+    ]
+  ],
+  "xl": [
+    [
+      "Names, auditing and data model",
+      [
+        "Named ranges and the Name Manager, used in a real formula",
+        "Trace precedents and dependents, Evaluate Formula and error checking on an inherited file",
+        "Check cells that prove a workbook is right: totals tie, balance sheet balances",
+        "Power Pivot: load tables, create relationships and one simple measure (basic)"
+      ]
+    ],
+    [
+      "Rates, bonds and loans: workbook exercises",
+      [
+        "Loan schedule with PMT, IPMT, PPMT, RATE and NPER",
+        "Bond with PRICE, YIELD, DURATION and MDURATION",
+        "Irregular cash flows with XNPV and XIRR",
+        "Use Goal Seek to find the rate or price that makes a result match a target"
+      ]
+    ]
+  ]
+};
+    Object.keys(EXTRA).forEach(function (id) {
+      EXTRA[id].forEach(function (g) {
+        BY[id].groups.push(g);
+      });
+    });
+    var CRIT = {
+  "p1": [
+    "Ratios for three years built with formulas and no typed-in results",
+    "One page explains the three biggest changes and their causes",
+    "Reported figures and your own estimates are labelled differently"
+  ],
+  "p2": [
+    "The reconciliation ties to zero, or every difference is listed",
+    "Duplicates and unusual items flagged, with the rule used written down",
+    "Sample method documented and each finding written as condition, criteria, cause, effect, recommendation"
+  ],
+  "p3": [
+    "DSCR, interest cover and leverage calculated, with a stress case on the main assumption",
+    "Memo of two pages or less with a recommendation, conditions and risks",
+    "Someone else can reproduce every number from the workbook"
+  ],
+  "p4": [
+    "Budget, actual and variance for at least six months with variance flags",
+    "Each material variance has a cause and an action",
+    "Remaining months re-forecast with stated assumptions"
+  ],
+  "p5": [
+    "Balance sheet balances and cash ties in every period, with visible check cells",
+    "Inputs, calculations and outputs are separate, with a scenario switch",
+    "The debt schedule drives interest without breaking the model"
+  ],
+  "p6": [
+    "WACC inputs sourced and dated, and terminal value share of enterprise value reported",
+    "Enterprise value to equity value bridge shown",
+    "Sensitivity table on WACC and growth, plus a paragraph defending the main assumption"
+  ]
+};
+    function critHtml(p) {
+      var c = CRIT[p.id];
+      if (!c) return "";
+      return (
+        '<div class="crit"><span class="eyebrow">Done when</span><ul>' +
+        c.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") +
+        "</ul></div>"
+      );
+    }
     var LV = { 1: "Master first", 2: "Stronger candidate", 3: "Specialize after" };
 
     var PATH = [
@@ -3647,7 +4531,7 @@
       ],
       [
         15,
-        "Exercises and revision",
+        "Exercises and spaced revision",
         "Solve one problem from memory and revisit an earlier concept.",
       ],
       [
@@ -3842,6 +4726,7 @@
       if (!S.cfg.end) S.cfg.end = "2027-10-31";
       if (!S.cfg.motion) S.cfg.motion = "full";
       if (typeof S.cfg.acc !== "string") S.cfg.acc = "";
+      if (typeof S.cfg.tilt !== "boolean") S.cfg.tilt = false;
     }
     norm();
     function ck(id, g, i) {
@@ -4071,6 +4956,11 @@
         gH = $("#hub"),
         gC = $("#clusters"),
         gN = $("#nodes");
+      var au = el("g", { class: "orbit aura" }, gH);
+      [0, 1, 2].forEach(function (q) {
+        var t = q * 2.094;
+        el("circle", { cx: Math.cos(t) * 74, cy: Math.sin(t) * 74, r: 170, fill: "url(#ag" + q + ")" }, au);
+      });
       el("circle", { class: "hub-breathe", r: 62 }, gH);
       el("circle", { class: "hub-core", r: 62, filter: "url(#sh)" }, gH);
       el("circle", { class: "hub-ring", r: 80, "stroke-dasharray": "2 6" }, gH);
@@ -4135,6 +5025,23 @@
             gE,
           );
           edgeEls.push({ e: p, a: rid, b: nd.id });
+          var pi = edgeEls.length;
+          if (!IS_M.matches || pi % 2 === 0) {
+            var dur = 3.4 + (pi % 5) * 0.75,
+              pk = el("g", { class: "pk", style: "fill:var(" + nd.area.c + ")" }, gE);
+            el("circle", { r: 8 }, pk);
+            el("circle", { r: 3.2 }, pk);
+            el(
+              "animateMotion",
+              {
+                dur: dur + "s",
+                begin: "-" + ((pi * 0.93) % dur).toFixed(2) + "s",
+                repeatCount: "indefinite",
+                path: p.getAttribute("d"),
+              },
+              pk
+            );
+          }
         });
       });
       NODES.forEach(function (nd, i) {
@@ -4164,6 +5071,7 @@
         var inn = el("g", { class: "in", style: "animation-delay:" + (i * 55 + 300) + "ms" }, fl);
         el("circle", { class: "halo", r: 46 }, inn);
         el("circle", { class: "base", r: 32, filter: "url(#sh)" }, inn);
+        el("circle", { class: "crown", r: 41 }, inn);
         var ring = el(
           "circle",
           { class: "ring", r: 32, transform: "rotate(-90)", "stroke-dasharray": "0 201" },
@@ -4178,6 +5086,9 @@
         g.addEventListener("click", function () {
           if (!moved) {
             hideTip();
+            var br = nodeEls[nd.id].g.getBoundingClientRect();
+            shock(br.left + br.width / 2, br.top + br.height / 2, PAL[nd.area.i], false);
+            burst(br.left + br.width / 2, br.top + br.height / 2, PAL[nd.area.i], 9, 2.6);
             openNode(nd.id);
           }
         });
@@ -4253,6 +5164,7 @@
     function fitTarget() {
       var r = svg.getBoundingClientRect(),
         desk = window.innerWidth > 860;
+      if (!desk) return mobileFit(r);
       var rw = desk ? (window.innerWidth > 1100 ? 372 : 332) : 0;
       var availW = r.width - rw,
         topPad = desk ? 60 : 96,
@@ -4356,6 +5268,7 @@
           cam.x = tg.x = nx;
           cam.y = tg.y = ny;
           applyCam();
+          trail(e.clientX, e.clientY);
         }
       }
     });
@@ -4369,6 +5282,7 @@
         startCam = { x: cam.x, y: cam.y };
       }
       if (left.length === 0) {
+        dblTap(e);
         startPt = null;
         dragging = false;
         svg.classList.remove("drag");
@@ -4842,7 +5756,7 @@
     /* ---------- views ---------- */
     function renderPath() {
       var h =
-        '<div class="eyebrow">Nov 2026 – Oct 2027 · about 10 hours a week</div><h2>Six blocks over twelve months.</h2><p class="prose">Study in this order. Each block ends with something you can show. Taking every subject in full would need more than a year, so pick one of audit, credit or insurance for the deep dive in August and September, and treat Level 3 subjects as basics.</p>';
+        '<div class="eyebrow">Nov 2026 – Oct 2027 · about 10 hours a week</div><h2>Six blocks over twelve months.</h2><p class="prose">Study in this order. Each block ends with something you can show. Taking every subject in full would need more than a year, so pick one of audit, credit or insurance for the deep dive in August and September, and treat Level 3 subjects as basics. Nothing here guarantees a job: check current requirements in real job postings, and verify Moroccan tax and regulation against current texts.</p>';
       h += PATH.map(function (b, i) {
         var tot = 0,
           dn = 0;
@@ -4927,7 +5841,9 @@
               return "<li>" + esc(s) + "</li>";
             })
             .join("") +
-          '</ol><p class="prv">' +
+          "</ol>" +
+          critHtml(p) +
+          '<p class="prv">' +
           esc(p.proves) +
           "</p></div></div>"
         );
@@ -4991,6 +5907,7 @@
         b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false");
       });
       placeInk();
+      syncTab();
       closeDrawer();
       renderView();
       hideTip();
@@ -5200,11 +6117,15 @@
       DPR = Math.min(2, window.devicePixelRatio || 1);
       CW = window.innerWidth;
       CH = window.innerHeight;
-      [bg, fxc].forEach(function (c) {
+      var bd = IS_M.matches ? Math.min(DPR, 1.5) : DPR;
+      [fxc, fx2c].forEach(function (c) {
         c.width = Math.round(CW * DPR);
         c.height = Math.round(CH * DPR);
       });
-      if (bctx) bctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      bg.width = Math.round(CW * bd);
+      bg.height = Math.round(CH * bd);
+      if (f2) f2.setTransform(DPR, 0, 0, DPR, 0, 0);
+      if (bctx) bctx.setTransform(bd, 0, 0, bd, 0, 0);
       if (fctx) fctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       bgDirty = true;
     }
@@ -5233,6 +6154,7 @@
       var w = CW,
         h = CH;
       bctx.clearRect(0, 0, w, h);
+      drawStars(t, w, h);
       var ao = DARK ? 0.15 : 0.24;
       for (var i = 0; i < ORBS.length; i++) {
         var o = ORBS[i],
@@ -5373,11 +6295,13 @@
         $("#spot").style.transform =
           "translate3d(" + spotC.x.toFixed(1) + "px," + spotC.y.toFixed(1) + "px,0)";
       stepTweens(t);
-      if (!reduced || bgDirty) {
+      FN++;
+      if ((!reduced || bgDirty) && (!IS_M.matches || (FN & 1) === 0 || bgDirty)) {
         drawBg((t / 1000) * (calm ? 0.35 : 1));
         bgDirty = false;
       }
       drawFx();
+      drawFx2();
       drawCurrents(t, dt);
       if (!document.hidden) raf = requestAnimationFrame(frame);
     }
@@ -5403,6 +6327,7 @@
       reduced = reducedMQ || c.motion === "off";
       calm = c.motion === "calm";
       bgDirty = true;
+      tiltArm();
     }
 
     /* ---------- history log: net topics ticked per day per area ---------- */
@@ -5981,9 +6906,12 @@
         ctx.lineJoin = "round";
         ctx.lineWidth = 4;
         ctx.strokeStyle = "rgba(" + halo + "," + 0.55 * fade + ")";
-        ctx.strokeText(name, xs[bj], y);
+        var mt = ctx.measureText(name),
+          tw = mt && mt.width ? mt.width : name.length * 9,
+          lx = Math.max(l + tw / 2 + 4, Math.min(W - r - tw / 2 - 4, xs[bj]));
+        ctx.strokeText(name, lx, y);
         ctx.fillStyle = "rgba(" + ink + "," + 0.92 * fade + ")";
-        ctx.fillText(name, xs[bj], y);
+        ctx.fillText(name, lx, y);
       });
       /* axis */
       ctx.font = "10px " + curFonts.mono;
@@ -6181,6 +7109,13 @@
           "</div></div>" +
           '<div class="atl-r"><span class="eyebrow">Weekly study goal</span><div class="step"><button data-st="-1" aria-label="Fewer hours">−</button><b id="atH">' + c.hrs + '</b><span>hours a week</span><button data-st="1" aria-label="More hours">+</button></div></div>' +
           '<div class="atl-r"><span class="eyebrow">Target finish date</span><input type="date" class="dt" id="atD" value="' + esc(c.end) + '"></div>' +
+          '<div class="atl-r"><span class="eyebrow">Tilt parallax · phone</span><div class="seg" id="atTilt">' +
+          [["1", "On"], ["0", "Off"]]
+            .map(function (m) {
+              return '<button data-t="' + m[0] + '" aria-pressed="' + ((c.tilt ? "1" : "0") === m[0]) + '">' + m[1] + "</button>";
+            })
+            .join("") +
+          "</div></div>" +
           '<div class="atl-r" id="atImp" hidden><span class="eyebrow">Paste a backup</span><textarea class="field" id="atTx" placeholder="Paste the text you copied from Copy backup"></textarea></div>' +
           '<div class="acts"><button class="btn ghost" id="atBk">Copy backup</button><button class="btn ghost" id="atIm">Import</button><button class="btn" data-x="1">Done</button></div></div>',
         function (v) {
@@ -6213,6 +7148,30 @@
               S.cfg.end = this.value;
               persist();
               refreshCur();
+            }
+          });
+          v.querySelector("#atTilt").addEventListener("click", function (e) {
+            var b = e.target.closest("button"),
+              box = this;
+            if (!b) return;
+            function mark(on) {
+              [].forEach.call(box.querySelectorAll("button"), function (x) {
+                x.setAttribute("aria-pressed", (x.dataset.t === "1") === on ? "true" : "false");
+              });
+            }
+            if (b.dataset.t === "1") {
+              askTilt(function (ok) {
+                S.cfg.tilt = ok;
+                mark(ok);
+                applyCfg();
+                persist();
+                if (!ok) toast("Allow Motion and Orientation access in Settings to use tilt");
+              });
+            } else {
+              S.cfg.tilt = false;
+              mark(false);
+              applyCfg();
+              persist();
             }
           });
           v.querySelector("#atBk").addEventListener("click", function () {
@@ -6327,6 +7286,357 @@
       if (e.key.length === 1 && vi > -1) setView(VIEWS[vi]);
     });
 
+    /* =====================================================================
+       v4 additions: phone layout, tab bar, sheets, haptics, starfield,
+       shockwaves, drag trail, tilt parallax, splash
+       ===================================================================== */
+    var IS_M = window.matchMedia ? window.matchMedia("(max-width:860px)") : { matches: false };
+    var FN = 0;
+
+    /* ---------- safe areas and phone geometry ---------- */
+    function cssPx(name) {
+      var v = parseFloat(getComputedStyle(root).getPropertyValue(name));
+      return isNaN(v) ? 0 : v;
+    }
+    function safeTop() {
+      var e = $("#satop");
+      return e ? e.offsetHeight : 0;
+    }
+    function safeBot() {
+      var e = $("#sabot");
+      return e ? e.offsetHeight : 0;
+    }
+    function tabPx() {
+      return cssPx("--tabh") + 14 + safeBot();
+    }
+    function mobileFit(r) {
+      var top = safeTop() + 118,
+        bot = cssPx("--peek") + tabPx() + 10,
+        aw = r.width - 16,
+        ah = Math.max(200, r.height - top - bot),
+        k = Math.max(0.3, Math.min(aw / 1340, ah / 1340));
+      return { x: r.width / 2, y: top + ah / 2, k: k };
+    }
+    function mobileFocus() {
+      if (!IS_M.matches || $("#app").dataset.view !== "map" || openId) return;
+      var nx = nextUp() || BY["01"],
+        r = svg.getBoundingClientRect(),
+        top = safeTop() + 118,
+        bot = cssPx("--peek") + tabPx() + 10,
+        k = 0.62;
+      tg.k = k;
+      tg.x = r.width / 2 - nx.x * k;
+      tg.y = top + (r.height - top - bot) / 2 - (nx.y + 20) * k;
+      vel.x = vel.y = 0;
+    }
+
+    /* ---------- haptics (iOS Safari 17.4+ switch trick, Android vibrate) ---------- */
+    var hapEl = null,
+      hapT = 0;
+    function haptic() {
+      var n = performance.now();
+      if (n - hapT < 40) return;
+      hapT = n;
+      try {
+        if (navigator.vibrate) navigator.vibrate(7);
+        if (!hapEl) {
+          hapEl = document.createElement("label");
+          hapEl.setAttribute("aria-hidden", "true");
+          hapEl.style.cssText = "position:fixed;left:-99px;top:-99px;opacity:0;pointer-events:none";
+          var i = document.createElement("input");
+          i.type = "checkbox";
+          i.setAttribute("switch", "");
+          hapEl.appendChild(i);
+          document.body.appendChild(hapEl);
+        }
+        hapEl.click();
+      } catch (e) {}
+    }
+    document.addEventListener(
+      "click",
+      function (e) {
+        if (e.target.closest && e.target.closest(".btn,.ibtn,.rit,.fbtn,.seg button,.tabbar button,.dr-tabs button,.zoom button,.check,.cbtn,.pal-i,.sw button,.step button,.next button"))
+          haptic();
+      },
+      true
+    );
+
+    /* ---------- tab bar ---------- */
+    function placeTabInk() {
+      var b = $("#tabbar").querySelector('[aria-pressed="true"]'),
+        ink = $("#tabInk");
+      if (!b || !b.offsetWidth) return;
+      ink.style.width = b.offsetWidth + "px";
+      ink.style.transform = "translateX(" + b.offsetLeft + "px)";
+    }
+    function syncTab() {
+      var v = $("#app").dataset.view;
+      [].forEach.call($("#tabbar").querySelectorAll("[data-v]"), function (b) {
+        b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false");
+      });
+      placeTabInk();
+    }
+    $("#tabbar").addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b) return;
+      if (b.id === "tabSearch") palOpen();
+      else setView(b.dataset.v);
+    });
+
+    /* ---------- bottom sheet scroll: depth on the map, header glass, haptic at the snap ---------- */
+    var sheetUp = false,
+      spRaf = 0,
+      scrollEl = $("#scroll");
+    scrollEl.addEventListener(
+      "scroll",
+      function () {
+        if (spRaf) return;
+        spRaf = requestAnimationFrame(function () {
+          spRaf = 0;
+          var H = $(".spacer").offsetHeight || 1,
+            p = Math.max(0, Math.min(1, scrollEl.scrollTop / H)),
+            up = p > 0.55;
+          $("#app").style.setProperty("--sp", p.toFixed(3));
+          if (up !== sheetUp) {
+            sheetUp = up;
+            $("#app").classList.toggle("sheet-up", up);
+            haptic();
+          }
+        });
+      },
+      { passive: true }
+    );
+
+    /* ---------- drag the subject sheet down to dismiss ---------- */
+    (function () {
+      var dr = $("#drawer"),
+        act = false,
+        y0 = 0,
+        dy = 0,
+        vy = 0,
+        ly = 0,
+        lt = 0;
+      function start(e) {
+        if (!IS_M.matches || !openId || (e.target.closest && e.target.closest("button"))) return;
+        act = true;
+        y0 = e.clientY;
+        dy = 0;
+        ly = y0;
+        lt = performance.now();
+        dr.style.transition = "none";
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+        } catch (_) {}
+      }
+      function move(e) {
+        if (!act) return;
+        var now = performance.now(),
+          raw = e.clientY - y0;
+        dy = raw < 0 ? raw * 0.12 : raw;
+        vy = (e.clientY - ly) / Math.max(1, now - lt);
+        ly = e.clientY;
+        lt = now;
+        dr.style.transform = "translateY(" + dy.toFixed(1) + "px)";
+        $("#scrim").style.opacity = String(Math.max(0, 1 - dy / (dr.offsetHeight * 0.7)));
+      }
+      function end() {
+        if (!act) return;
+        act = false;
+        dr.style.transition = "";
+        dr.style.transform = "";
+        $("#scrim").style.opacity = "";
+        if (dy > 110 || vy > 0.7) {
+          closeDrawer();
+          haptic();
+        }
+      }
+      [$("#drGrab"), $(".dr-head")].forEach(function (h) {
+        h.addEventListener("pointerdown", start);
+        h.addEventListener("pointermove", move);
+        h.addEventListener("pointerup", end);
+        h.addEventListener("pointercancel", end);
+      });
+    })();
+
+    /* ---------- double-tap to zoom the map ---------- */
+    var lastTap = { t: 0, x: 0, y: 0 };
+    function dblTap(e) {
+      if (moved || (e.target.closest && e.target.closest(".node"))) return;
+      var n = performance.now();
+      if (n - lastTap.t < 300 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 28) {
+        zoomAt(e.clientX, e.clientY, tg.k < 1 ? 1.9 : 0.5, false);
+        lastTap.t = 0;
+        haptic();
+      } else lastTap = { t: n, x: e.clientX, y: e.clientY };
+    }
+
+    /* ---------- starfield with constellations, parallaxed by pan and tilt ---------- */
+    var STARS = [];
+    (function () {
+      var n = IS_M.matches ? 46 : 84;
+      for (var i = 0; i < n; i++) {
+        STARS.push({
+          x: hsh(i * 17 + 3),
+          y: hsh(i * 53 + 11),
+          z: 0.25 + hsh(i * 97 + 5) * 0.9,
+          s: 0.7 + hsh(i * 13 + 1) * 1.6,
+          p: hsh(i * 29 + 9) * 6.28,
+          c: Math.floor(hsh(i * 41 + 2) * 7),
+        });
+      }
+    })();
+    function drawStars(t, w, h) {
+      var ox = cam.x * 0.06 + px * 18,
+        oy = cam.y * 0.06 + py * 18,
+        pts = [],
+        i,
+        j;
+      for (i = 0; i < STARS.length; i++) {
+        var s = STARS[i],
+          x = (((s.x * w + ox * s.z) % w) + w) % w,
+          y = (((s.y * h + oy * s.z) % h) + h) % h,
+          tw = 0.55 + 0.45 * Math.sin(t * 1.3 + s.p),
+          a = (DARK ? 0.8 : 0.6) * tw * s.z;
+        bctx.beginPath();
+        bctx.arc(x, y, s.s * s.z, 0, 6.283);
+        bctx.fillStyle = rgba(PAL[s.c], a);
+        bctx.fill();
+        if (i < 34) pts.push([x, y, s.c]);
+      }
+      bctx.lineWidth = 1;
+      for (i = 0; i < pts.length; i++) {
+        for (j = i + 1; j < pts.length; j++) {
+          var d = Math.hypot(pts[i][0] - pts[j][0], pts[i][1] - pts[j][1]);
+          if (d < 130) {
+            bctx.strokeStyle = rgba(PAL[pts[i][2]], (DARK ? 0.22 : 0.18) * (1 - d / 130));
+            bctx.beginPath();
+            bctx.moveTo(pts[i][0], pts[i][1]);
+            bctx.lineTo(pts[j][0], pts[j][1]);
+            bctx.stroke();
+          }
+        }
+      }
+    }
+
+    /* ---------- shockwaves and drag trail on their own canvas ---------- */
+    var fx2c = $("#fx2"),
+      f2 = fx2c.getContext && fx2c.getContext("2d"),
+      waves = [],
+      trl = [],
+      lastTrail = 0,
+      fx2d = false;
+    function shock(x, y, rgb, big) {
+      if (reduced || !f2) return;
+      waves.push({ x: x, y: y, r: 6, l: 1, c: rgb, m: big ? 190 : 96 });
+    }
+    function trail(x, y) {
+      if (reduced || !f2) return;
+      var n = performance.now();
+      if (n - lastTrail < 20) return;
+      lastTrail = n;
+      trl.push({
+        x: x + (Math.random() - 0.5) * 8,
+        y: y + (Math.random() - 0.5) * 8,
+        l: 1,
+        c: PAL[Math.floor((x + y) / 110) % 7] || PAL[0],
+        z: 2.5 + Math.random() * 2.8,
+      });
+      if (trl.length > 64) trl.shift();
+    }
+    function drawFx2() {
+      if (!f2) return;
+      if (!waves.length && !trl.length) {
+        if (fx2d) {
+          f2.clearRect(0, 0, CW, CH);
+          fx2d = false;
+        }
+        return;
+      }
+      fx2d = true;
+      f2.clearRect(0, 0, CW, CH);
+      waves = waves.filter(function (w) {
+        w.r += (w.m - w.r) * 0.075;
+        w.l -= 0.024;
+        if (w.l <= 0) return false;
+        f2.beginPath();
+        f2.arc(w.x, w.y, w.r, 0, 6.283);
+        f2.lineWidth = 2.6 * w.l + 0.4;
+        f2.strokeStyle = rgba(w.c, w.l * 0.75);
+        f2.stroke();
+        return true;
+      });
+      trl = trl.filter(function (p) {
+        p.l -= 0.05;
+        if (p.l <= 0) return false;
+        f2.beginPath();
+        f2.arc(p.x, p.y, p.z * p.l, 0, 6.283);
+        f2.fillStyle = rgba(p.c, p.l * 0.6);
+        f2.fill();
+        return true;
+      });
+    }
+
+    /* ---------- tilt parallax (opt-in, needs motion permission on iPhone) ---------- */
+    var tiltOn = false,
+      tiltAsked = false;
+    function tiltHandler(e) {
+      if (e.gamma == null) return;
+      pxT = Math.max(-1, Math.min(1, e.gamma / 28));
+      pyT = Math.max(-1, Math.min(1, (e.beta - 50) / 28));
+    }
+    function setTilt(on) {
+      if (on === tiltOn) return;
+      tiltOn = on;
+      if (on) window.addEventListener("deviceorientation", tiltHandler);
+      else window.removeEventListener("deviceorientation", tiltHandler);
+    }
+    function askTilt(cb) {
+      var D = window.DeviceOrientationEvent;
+      if (D && typeof D.requestPermission === "function") {
+        D.requestPermission()
+          .then(function (r) {
+            cb(r === "granted");
+          })
+          .catch(function () {
+            cb(false);
+          });
+      } else cb(!!D);
+    }
+    function tiltArm() {
+      var on = !!S.cfg.tilt;
+      setTilt(on);
+      var D = window.DeviceOrientationEvent;
+      if (on && D && typeof D.requestPermission === "function" && !tiltAsked) {
+        tiltAsked = true;
+        document.addEventListener(
+          "click",
+          function once() {
+            document.removeEventListener("click", once, true);
+            askTilt(function (ok) {
+              if (!ok) setTilt(false);
+            });
+          },
+          true
+        );
+      }
+    }
+
+    /* ---------- splash ---------- */
+    (function () {
+      var sp = $("#splash");
+      if (!sp) return;
+      if (reduced) {
+        sp.remove();
+        return;
+      }
+      setTimeout(function () {
+        sp.classList.add("out");
+        setTimeout(function () {
+          if (sp.parentNode) sp.parentNode.removeChild(sp);
+        }, 1000);
+      }, 1050);
+    })();
+
     /* ---------- boot ---------- */
     function updateAll(soft) {
       bgDirty = true;
@@ -6358,10 +7668,12 @@
       cam.y = f.y + 60;
       cam.k = f.k * (reduced ? 1 : 0.55);
       applyCam();
+      setTimeout(mobileFocus, 1250);
     })();
     var rzT = 0;
     window.addEventListener("resize", function () {
       placeInk();
+      placeTabInk();
       sizeCanvases();
       sizeCur();
       clearTimeout(rzT);
@@ -6370,7 +7682,10 @@
       }, 200);
     });
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(placeInk);
+      document.fonts.ready.then(function () {
+        placeInk();
+        placeTabInk();
+      });
     }
     applyCfg();
     setSync("local");
