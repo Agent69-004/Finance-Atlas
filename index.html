@@ -1,4 +1,4 @@
-<title>Finance ghost</title>
+<title>Finance Atlas</title>
 <meta name="claude:viewport-fit-sides" content="cover" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -3484,6 +3484,69 @@
   .tiles.t3 .tile small{display:none}
   .tiles.t3 .tile i{margin-bottom:4px}
   @media (max-width:860px){.src{grid-template-columns:auto 1fr}.src .go{grid-column:1/-1;justify-content:center}.fld{grid-template-columns:1fr 1fr}}
+  /* ===== v10: practice, career, daily, data ===== */
+  .lg{margin-top:18px}
+  .lg h4{margin:0 0 8px!important}
+  .lg .tiles{grid-template-columns:repeat(2,1fr)}
+  .lg .tile{padding:12px}
+  .lg .tile small{display:block;margin-top:2px}
+  .qz .qn{font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between;margin-top:14px}
+  .qz .qq{font:400 24px/1.2 var(--serif);margin:10px 0 14px}
+  .opt{display:block;width:100%;text-align:left;margin-bottom:8px;padding:13px 14px;border-radius:14px;border:1px solid var(--rule2);background:var(--bg2);color:var(--ink);font:500 14px var(--sans);cursor:pointer;transition:transform .3s var(--spring),border-color .25s,background .25s;animation:stg .5s var(--ease) both;animation-delay:calc(var(--i)*60ms)}
+  .opt:hover{border-color:var(--acc);transform:translateX(3px)}
+  .opt.ok{background:color-mix(in srgb,var(--good) 20%,var(--bg2));border-color:var(--good);animation:okp .6s var(--spring)}
+  .opt.no{background:color-mix(in srgb,var(--bad) 18%,var(--bg2));border-color:var(--bad);animation:shk .45s}
+  @keyframes okp{40%{transform:scale(1.03)}}
+  @keyframes shk{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+  .why{margin-top:10px;padding:12px 14px;border-radius:14px;background:var(--bg2);border:1px dashed var(--rule2);font-size:13px;line-height:1.55;color:var(--mute);animation:stg .5s var(--ease) both}
+  .sel2{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid var(--rule2);background:var(--bg2);color:var(--ink);font:500 14px var(--sans);margin-top:6px}
+  .jrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .jrow label{font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+  .scen{font:400 22px/1.25 var(--serif);margin:14px 0 2px;padding:16px;border-radius:16px;background:var(--bg2);border:1px solid var(--rule)}
+  .fb2{margin-top:12px;padding:12px 14px;border-radius:14px;font-size:13.5px;line-height:1.5;animation:stg .5s var(--ease) both}
+  .fb2.ok{background:color-mix(in srgb,var(--good) 18%,var(--bg2))}
+  .fb2.no{background:color-mix(in srgb,var(--bad) 16%,var(--bg2))}
+  .fm{display:grid;gap:8px;margin-top:10px}
+  .fm>button{text-align:left;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;background:var(--bg2);color:var(--ink);cursor:pointer;font:inherit;transition:transform .3s var(--spring),border-color .3s}
+  .fm>button:hover{transform:translateX(4px);border-color:var(--acc)}
+  .fm b{display:block;font-weight:500;font-size:13px;margin-bottom:3px}
+  .fm code{font:500 12.5px var(--mono);color:var(--acc);word-break:break-word}
+  .jb-cols{display:grid;gap:12px;margin-top:12px}
+  .jb-col h5{margin:0 0 6px;font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between}
+  .jb{display:flex;align-items:center;gap:10px;border:1px solid var(--rule);border-left:4px solid var(--sc);border-radius:12px;padding:10px 12px;background:var(--bg2);margin-bottom:6px;animation:stg .45s var(--ease) both}
+  .jb div{flex:1;min-width:0}
+  .jb b{display:block;font:500 14px var(--sans)}
+  .jb small{color:var(--mute);font-size:12px}
+  .jb button{border:1px solid var(--rule2);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 11px;font:500 11.5px var(--sans);cursor:pointer;transition:transform .3s var(--spring)}
+  .jb button:active{transform:scale(.92)}
+  .jb .x{border:0;background:none;color:var(--faint);font-size:15px;padding:4px}
+  .chp{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .chp button{border:1px dashed var(--rule2);background:none;color:var(--mute);border-radius:99px;padding:6px 11px;font:500 12px var(--sans);cursor:pointer;transition:all .25s}
+  .chp button:hover{border-color:var(--acc);color:var(--ink)}
+  .stry{border:1px solid var(--rule);border-radius:14px;background:var(--bg2);margin-bottom:8px;overflow:hidden}
+  .stry>button{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:0;background:none;color:var(--ink);font:500 14px var(--sans);cursor:pointer}
+  .stry>div{padding:0 14px 12px;font-size:13px;line-height:1.55;color:var(--mute);display:none}
+  .stry.open>div{display:block;animation:stg .4s var(--ease)}
+  .stry.open>button span{transform:rotate(90deg)}
+  .stry button span{transition:transform .3s var(--spring)}
+  .ev{display:flex;align-items:center;gap:12px;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;background:var(--bg2);margin-bottom:8px;animation:stg .45s var(--ease) both}
+  .ev .d{font:400 32px var(--serif);min-width:62px;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1}
+  .ev .d small{display:block;font:10px var(--mono);letter-spacing:.08em;color:var(--mute);text-transform:uppercase;margin-top:3px}
+  .ev div:nth-child(2){flex:1}
+  .ev .x{border:0;background:none;color:var(--faint);font-size:15px;cursor:pointer}
+  .ev.past .d{color:var(--faint)}
+  .q6{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--rule);border-radius:12px;background:var(--bg2);margin-bottom:6px;font-size:13.5px;animation:stg .45s var(--ease) both}
+  .q6 input{width:20px;height:20px;accent-color:var(--acc);flex:none}
+  .q6 span{flex:1}
+  .q6.done span{text-decoration:line-through;color:var(--faint)}
+  .cf5{display:flex;gap:6px;margin:8px 0}
+  .cf5 button{flex:1;padding:10px 0;border-radius:12px;border:1px solid var(--rule2);background:var(--bg2);color:var(--ink);font:500 15px var(--serif);cursor:pointer;transition:all .25s var(--spring)}
+  .cf5 button[aria-pressed="true"]{background:var(--acc);color:#fff;border-color:var(--acc);transform:scale(1.06)}
+  .hist{font-size:12.5px;color:var(--mute);line-height:1.5}
+  .hist>div{padding:8px 0;border-top:1px solid var(--rule)}
+  .hist b{color:var(--ink);font:500 12px var(--mono)}
+  .dbox{width:100%;box-sizing:border-box;min-height:120px;padding:12px;border-radius:12px;border:1px solid var(--rule2);background:var(--bg2);color:var(--ink);font:12px var(--mono);resize:vertical}
+  .rowb{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 </style>
 
 <div class="app" id="app" data-view="map">
@@ -3493,7 +3556,7 @@
       <path d="M5 31c5-6 9 1 13-3s7-4 13-2" stroke="#2DD4BF" />
       <path d="M5 20c5-10 9-1 13-7s7-5 13-2" stroke="#9B87FF" />
     </svg>
-    <b>Finance ghost</b>
+    <b>Finance Atlas</b>
     <small>Nov 2026 → Oct 2027</small>
   </div>
   <div id="satop" aria-hidden="true" style="position:fixed;left:0;top:0;width:0;height:env(safe-area-inset-top,0px);pointer-events:none"></div>
@@ -3540,7 +3603,7 @@
           <path d="M5 20c5-10 9-1 13-7s7-5 13-2" stroke="#9B87FF" />
         </svg>
       </span>
-      <b id="brandB" aria-label="Finance ghost">Finance ghost</b>
+      <b id="brandB" aria-label="Finance Atlas">Finance Atlas</b>
       <em>NOV 2026 → OCT 2027</em>
     </div>
     <div class="modes" id="modes" role="group" aria-label="View">
@@ -4972,7 +5035,7 @@
     });
 
     /* ---------- state ---------- */
-    var LS = "finance-ghost-v1",
+    var LS = "finance-atlas-v1",
       S = { c: {}, n: {}, s: {}, t: 0 };
     try {
       var raw = localStorage.getItem(LS);
@@ -4994,7 +5057,7 @@
       if (!S.cfg.motion) S.cfg.motion = "full";
       if (typeof S.cfg.acc !== "string") S.cfg.acc = "";
       if (typeof S.cfg.tilt !== "boolean") S.cfg.tilt = false;
-      if (typeof S.cfg.pal !== "string") S.cfg.pal = "ghost";
+      if (typeof S.cfg.pal !== "string") S.cfg.pal = "atlas";
     }
     norm();
     function ck(id, g, i) {
@@ -5961,7 +6024,7 @@
       }
       if (Math.floor(beforeAll / 25) < Math.floor(afterAll / 25) && afterAll > 0) {
         setTimeout(function () {
-          toast(afterAll + "% of the whole ghost. Keep going.");
+          toast(afterAll + "% of the whole atlas. Keep going.");
         }, 900);
       }
     }
@@ -6218,7 +6281,7 @@
       }, 2800);
     }
     $("#copyBtn").addEventListener("click", function () {
-      var out = "Finance ghost syllabus\n";
+      var out = "Finance Atlas syllabus\n";
       NODES.forEach(function (nd) {
         out +=
           "\n" + nd.n + ". " + nd.name + " (level " + nd.lvl + ", about " + nd.wk + " weeks)\n";
@@ -7357,7 +7420,7 @@
     function openAtelier() {
       var c = S.cfg;
       veil(
-        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="atT"><h3 id="atT">Atelier</h3><p>Make the ghost yours. These choices save with your progress.</p>' +
+        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="atT"><h3 id="atT">Atelier</h3><p>Make the atlas yours. These choices save with your progress.</p>' +
           '<div class="atl-r"><span class="eyebrow">Accent</span><div class="sw" id="atSw"><button class="auto" data-a="" aria-label="Automatic" aria-pressed="' + !c.acc + '"></button>' +
           ACCS.map(function (a) {
             return '<button style="--c:' + a + '" data-a="' + a + '" aria-label="' + a + '" aria-pressed="' + (c.acc === a) + '"></button>';
@@ -7904,8 +7967,8 @@
        Appearance: mode (auto, light, dark), colour themes, accent
        ===================================================================== */
     var PALS = {"midnight": {"n": "Midnight", "k": "dark", "bg": "#05060A", "bg2": "#0B0D14", "card": "#10131C", "ink": "#E8ECF8", "mute": "#8A93AD", "faint": "#454B60", "acc": "#7C9CFF", "c": ["#7C9CFF", "#5EEAD4", "#C4B5FD", "#38BDF8", "#F0ABFC", "#86EFAC", "#FDE68A"], "glass": "rgba(8,10,16,0.72)", "shadow": "rgba(0,0,0,0.7)", "rule": "232,236,248"}, "paper": {"n": "Paper", "k": "light", "bg": "#F6F0E4", "bg2": "#EDE4D2", "card": "#FFFBF2", "ink": "#2B2418", "mute": "#6E6350", "faint": "#B3A78F", "acc": "#B4532A", "c": ["#B4532A", "#3F7D5A", "#6D4C8F", "#2F6690", "#B23A48", "#7A8B3A", "#C48A1A"], "glass": "rgba(255,251,242,0.78)", "shadow": "rgba(90,66,30,0.22)", "rule": "43,36,24"}, "terminal": {"n": "Terminal", "k": "dark", "bg": "#030A05", "bg2": "#07130A", "card": "#0A1A0E", "ink": "#C8F7D2", "mute": "#6FB584", "faint": "#2F5A3C", "acc": "#39FF88", "c": ["#39FF88", "#00E5C0", "#B6FF3B", "#22D3EE", "#FFD84D", "#7CFF9E", "#9DFFCB"], "glass": "rgba(4,12,7,0.76)", "shadow": "rgba(0,0,0,0.7)", "rule": "200,247,210"}, "nord": {"n": "Nord", "k": "dark", "bg": "#2E3440", "bg2": "#353C4A", "card": "#3B4252", "ink": "#ECEFF4", "mute": "#A3ADBF", "faint": "#5E6A80", "acc": "#88C0D0", "c": ["#88C0D0", "#A3BE8C", "#B48EAD", "#81A1C1", "#BF616A", "#EBCB8B", "#D08770"], "glass": "rgba(46,52,64,0.76)", "shadow": "rgba(0,0,0,0.5)", "rule": "236,239,244"}, "dracula": {"n": "Dracula", "k": "dark", "bg": "#1E1F29", "bg2": "#272935", "card": "#2F3140", "ink": "#F8F8F2", "mute": "#A6A9C4", "faint": "#5A5D7A", "acc": "#FF79C6", "c": ["#BD93F9", "#50FA7B", "#FF79C6", "#8BE9FD", "#FF5555", "#F1FA8C", "#FFB86C"], "glass": "rgba(30,31,41,0.76)", "shadow": "rgba(0,0,0,0.55)", "rule": "248,248,242"}, "mint": {"n": "Mint", "k": "light", "bg": "#EAF6F1", "bg2": "#DCEEE6", "card": "#FFFFFF", "ink": "#10261E", "mute": "#52706A", "faint": "#9DBAB1", "acc": "#0E9F7A", "c": ["#0E9F7A", "#2D7FF9", "#7B61FF", "#E8A317", "#E5484D", "#14B8A6", "#D946EF"], "glass": "rgba(255,255,255,0.76)", "shadow": "rgba(20,80,60,0.2)", "rule": "16,38,30"}};
-    var PAL_ORDER = ["ghost", "midnight", "paper", "terminal", "nord", "dracula", "mint"];
-    var ghost_DOTS = {
+    var PAL_ORDER = ["atlas", "midnight", "paper", "terminal", "nord", "dracula", "mint"];
+    var ATLAS_DOTS = {
       l: ["#FF9F1C", "#12B5A6", "#7B61FF", "#2D7FF9", "#FF5C77", "#22C55E", "#D946EF"],
       d: ["#FFB020", "#2DD4BF", "#9B87FF", "#4C9AFF", "#FF7A90", "#4ADE80", "#E879F9"],
     };
@@ -7941,7 +8004,7 @@
         localStorage.setItem(LS + "-theme", m);
       } catch (e) {}
       root.classList.add("tx");
-      if (S.cfg.pal && PALS[S.cfg.pal]) { S.cfg.pal = "ghost"; persist(); }
+      if (S.cfg.pal && PALS[S.cfg.pal]) { S.cfg.pal = "atlas"; persist(); }
       if (m === "auto") root.removeAttribute("data-theme");
       else root.dataset.theme = m;
       readPal();
@@ -7967,7 +8030,7 @@
       });
     } catch (e) {}
     function palDots(k) {
-      var P = PALS[k], c = P ? P.c : isDark() ? ghost_DOTS.d : ghost_DOTS.l;
+      var P = PALS[k], c = P ? P.c : isDark() ? ATLAS_DOTS.d : ATLAS_DOTS.l;
       return c.map(function (x) { return '<i style="background:' + x + '"></i>'; }).join("");
     }
     function palStyle(k) {
@@ -7977,7 +8040,7 @@
     function openAppearance() {
       var mode = getMode();
       veil(
-        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="apT"><h3 id="apT">Appearance</h3><p>Choose how the ghost looks. Your choice is remembered.</p>' +
+        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="apT"><h3 id="apT">Appearance</h3><p>Choose how the atlas looks. Your choice is remembered.</p>' +
           '<div class="atl-r"><span class="eyebrow">Mode</span><div class="seg" id="apMode">' +
           [["auto", "Auto"], ["light", "Light"], ["dark", "Dark"]]
             .map(function (m) {
@@ -7988,7 +8051,7 @@
           '<div class="atl-r"><span class="eyebrow">Theme</span><div class="pals" id="apPals">' +
           PAL_ORDER.map(function (k) {
             return (
-              '<button class="palc" data-p="' + k + '"' + palStyle(k) + ' aria-pressed="' + ((S.cfg.pal || "ghost") === k) + '"><span class="dots" data-d="' + k + '">' + palDots(k) + "</span><b>" + (k === "ghost" ? "ghost" : PALS[k].n) + "</b><small>" + (k === "ghost" ? "Follows mode" : PALS[k].k) + "</small><b hidden>" + "</b></button>"
+              '<button class="palc" data-p="' + k + '"' + palStyle(k) + ' aria-pressed="' + ((S.cfg.pal || "atlas") === k) + '"><span class="dots" data-d="' + k + '">' + palDots(k) + "</span><b>" + (k === "atlas" ? "Atlas" : PALS[k].n) + "</b><small>" + (k === "atlas" ? "Follows mode" : PALS[k].k) + "</small><b hidden>" + "</b></button>"
             );
           }).join("") +
           "</div></div>" +
@@ -9247,6 +9310,398 @@
     })();
     updProg();
 
+    /* v10 */
+    var QZ = [["Accounting", "Which equation must always hold on the balance sheet?", ["Assets = Liabilities + Equity", "Assets = Liabilities − Equity", "Equity = Assets + Liabilities", "Assets = Revenue − Expenses"], 0, "Everything the firm owns is financed by creditors (liabilities) or owners (equity)."], ["Accounting", "A firm pays 12 months of rent in advance. What is the entry at payment?", ["Debit Rent expense, credit Cash", "Debit Prepaid expenses, credit Cash", "Debit Cash, credit Prepaid expenses", "Debit Rent payable, credit Cash"], 1, "The benefit is future, so it is an asset (prepaid) first, then expensed month by month."], ["Accounting", "Depreciation is best described as:", ["A cash payment to replace the asset", "A revaluation to market price", "An allocation of an asset’s cost over its useful life", "A reserve set aside for repairs"], 2, "Depreciation spreads cost. It is non-cash and is not a valuation."], ["Accounting", "An accrued expense is:", ["Paid but not yet incurred", "Incurred but not yet paid", "Paid and incurred", "Neither paid nor incurred"], 1, "Accrual accounting records the expense when incurred, creating a liability until it is paid."], ["Accounting", "Gross margin equals:", ["Net income / Revenue", "(Revenue − COGS) / Revenue", "EBIT / Revenue", "Operating cash flow / Revenue"], 1, "Gross margin shows what is left after direct costs of goods sold."], ["Analysis", "The quick ratio excludes which item from current assets?", ["Cash", "Receivables", "Inventory", "Short-term investments"], 2, "Inventory is the least liquid current asset, so the quick ratio removes it."], ["Analysis", "DuPont splits ROE into:", ["Margin × turnover × equity multiplier", "Margin + turnover + leverage", "EBIT × tax × growth", "Assets / liabilities / equity"], 0, "ROE = net margin × asset turnover × equity multiplier."], ["Analysis", "Days sales outstanding is calculated as:", ["Receivables / Revenue × 365", "Revenue / Receivables × 365", "Inventory / COGS × 365", "Payables / COGS × 365"], 0, "It measures how many days of sales are still sitting in receivables."], ["Analysis", "Interest coverage ratio is:", ["Net income / Interest", "EBIT / Interest expense", "Debt / EBITDA", "Cash / Interest"], 1, "EBIT divided by interest shows how comfortably profits cover interest."], ["Analysis", "A current ratio of 0.8 suggests:", ["Strong liquidity", "Current liabilities exceed current assets", "No debt", "High profitability"], 1, "Below 1 means short-term obligations exceed short-term assets, a possible liquidity pressure."], ["Corporate finance", "If the discount rate rises, the NPV of a conventional project:", ["Rises", "Falls", "Stays the same", "Becomes the IRR"], 1, "Later cash flows are discounted more heavily, so present value falls."], ["Corporate finance", "Under the NPV rule, accept a project when:", ["NPV > 0", "NPV < 0", "IRR < WACC", "Payback > 5 years"], 0, "A positive NPV adds value after meeting the required return."], ["Corporate finance", "Why does debt lower WACC, all else equal?", ["Debt is riskless", "Interest is tax deductible", "Debt has no cost", "Equity holders require less return"], 1, "The tax shield makes after-tax cost of debt lower than its stated rate."], ["Corporate finance", "In a DCF, the terminal growth rate should:", ["Exceed GDP growth", "Be above the discount rate", "Not exceed long-run economic growth", "Always be zero"], 2, "A firm cannot outgrow the economy forever."], ["Corporate finance", "A weakness of the payback period is that it:", ["Is too complex", "Ignores time value and flows after payback", "Needs a tax rate", "Requires beta"], 1, "It ignores discounting and everything after the payback point."], ["Audit", "Materiality is:", ["The total audit fee", "The size of misstatement that could influence users’ decisions", "The number of samples tested", "The auditor’s opinion"], 1, "It guides planning and the evaluation of errors."], ["Audit", "Which is a substantive procedure?", ["Walkthrough of a control", "Confirming receivable balances with customers", "Reading the control manual", "Interviewing the CFO about policy"], 1, "Substantive procedures test amounts directly. Confirmation is evidence from a third party."], ["Audit", "Going concern is the assumption that the entity will:", ["Be sold soon", "Continue operating for the foreseeable future", "Pay dividends", "Never lose money"], 1, "If it fails, the basis for preparing the statements changes."], ["Audit", "Cut-off testing mainly addresses:", ["Valuation of assets", "Recording transactions in the correct period", "Fraud by management only", "Related parties"], 1, "It checks that sales and purchases near year end land in the right period."], ["Audit", "Inherent risk is:", ["Risk the auditor misses an error", "Susceptibility to misstatement before considering controls", "Risk of weak sampling", "Risk of fines"], 1, "It exists before controls are taken into account."], ["Credit and banking", "Expected loss equals:", ["PD × LGD × EAD", "PD + LGD + EAD", "PD / LGD", "EAD − LGD"], 0, "Probability of default times loss given default times exposure at default."], ["Credit and banking", "A DSCR below 1.0 means:", ["Cash flow covers debt service with room to spare", "Cash flow does not cover debt service", "No debt exists", "Equity is negative"], 1, "There is not enough cash flow available to pay interest and principal."], ["Credit and banking", "A loan covenant is:", ["A type of collateral", "A condition in the loan agreement the borrower must respect", "The interest rate", "A guarantee fee"], 1, "Covenants protect the lender, for example a maximum leverage level."], ["Insurance", "A combined ratio of 95% means:", ["Underwriting profit", "Underwriting loss", "No premiums", "Investment loss"], 0, "Claims plus expenses are 95% of premiums, so the insurer earns 5% before investment income."], ["Insurance", "Reinsurance is:", ["Insurance for customers", "Insurance bought by an insurer to transfer part of its risk", "A savings product", "A tax"], 1, "It lets an insurer share large or concentrated risks."], ["Markets", "When market interest rates rise, existing fixed-rate bond prices:", ["Rise", "Fall", "Stay constant", "Double"], 1, "Higher discount rates reduce the present value of fixed coupons."], ["Markets", "The Macaulay duration of a zero-coupon bond equals:", ["Half its maturity", "Its maturity", "Zero", "Its coupon rate"], 1, "There is a single cash flow at maturity."], ["Markets", "A call option gives the holder the right to:", ["Sell at a fixed price", "Buy at a fixed price", "Receive coupons", "Vote at meetings"], 1, "A right, not an obligation, to buy at the strike price."], ["Portfolio", "Diversification mainly reduces:", ["Systematic risk", "Unsystematic (specific) risk", "Inflation", "Taxes"], 1, "Firm-specific risks offset across holdings, market risk remains."], ["Portfolio", "A beta of 1.5 means the stock tends to:", ["Move 1.5 times the market", "Move half as much as the market", "Never move", "Equal the risk-free rate"], 0, "It amplifies market moves by about 1.5 times."], ["Morocco", "Which body regulates the Moroccan capital market?", ["AMMC", "ACAPS", "CNSS", "DGI"], 0, "The Autorité Marocaine du Marché des Capitaux supervises markets and issuers."], ["Morocco", "Which institution supervises Moroccan banks?", ["Bank Al-Maghrib", "HCP", "AMMC", "Trésorerie Générale"], 0, "Bank Al-Maghrib is the central bank and banking supervisor."], ["Excel", "Excel’s NPV function assumes the first cash flow occurs:", ["Today (t = 0)", "At the end of period 1", "At the end of period 0", "Randomly"], 1, "Add the time-zero flow outside the function."], ["Excel", "Which key cycles absolute and relative references?", ["F2", "F4", "F9", "F12"], 1, "F4 toggles $A$1, A$1, $A1 and A1."]];
+    var JE = [["The owners invest 50,000 in cash", "Cash", "Share capital"], ["The company buys equipment for cash", "Equipment", "Cash"], ["The company sells services on credit", "Accounts receivable", "Revenue"], ["A customer pays an outstanding invoice", "Cash", "Accounts receivable"], ["The company pays monthly salaries in cash", "Salaries expense", "Cash"], ["The company buys inventory on credit", "Inventory", "Accounts payable"], ["The company pays a supplier", "Accounts payable", "Cash"], ["Record the year’s depreciation", "Depreciation expense", "Accumulated depreciation"], ["The company receives a bank loan", "Cash", "Bank loan"], ["Accrue interest not yet paid", "Interest expense", "Interest payable"], ["Pay 12 months of insurance upfront", "Prepaid expenses", "Cash"], ["A customer pays in advance for services not yet delivered", "Cash", "Deferred revenue"], ["The board declares a dividend", "Retained earnings", "Dividends payable"], ["Write off an uncollectible receivable (allowance method)", "Allowance for doubtful accounts", "Accounts receivable"]];
+    var FORMS = [["Accounting", "Accounting equation", "Assets = Liabilities + Equity"], ["Accounting", "Gross margin", "(Revenue − COGS) / Revenue"], ["Accounting", "Net working capital", "Current assets − Current liabilities"], ["Analysis", "Current ratio", "Current assets / Current liabilities"], ["Analysis", "Quick ratio", "(Current assets − Inventory) / Current liabilities"], ["Analysis", "ROE (DuPont)", "Net income/Revenue × Revenue/Assets × Assets/Equity"], ["Analysis", "ROA", "Net income / Total assets"], ["Analysis", "Debt to equity", "Total debt / Total equity"], ["Analysis", "Interest coverage", "EBIT / Interest expense"], ["Analysis", "DSO", "Receivables / Revenue × 365"], ["Analysis", "DIO", "Inventory / COGS × 365"], ["Analysis", "DPO", "Payables / COGS × 365"], ["Analysis", "Cash conversion cycle", "DSO + DIO − DPO"], ["Corporate finance", "Present value", "PV = FV / (1 + r)^n"], ["Corporate finance", "NPV", "Σ CFt / (1 + r)^t − initial investment"], ["Corporate finance", "CAGR", "(End / Start)^(1/n) − 1"], ["Corporate finance", "WACC", "E/V × Re + D/V × Rd × (1 − t)"], ["Corporate finance", "CAPM", "Re = Rf + β × (Rm − Rf)"], ["Corporate finance", "Free cash flow to firm", "EBIT(1 − t) + D&A − Capex − ΔNWC"], ["Valuation", "Terminal value (Gordon)", "FCF × (1 + g) / (WACC − g)"], ["Valuation", "Enterprise value", "Equity value + Net debt + Minorities"], ["Valuation", "EV/EBITDA", "Enterprise value / EBITDA"], ["Valuation", "P/E", "Share price / Earnings per share"], ["Fixed income", "Bond price", "Σ C/(1+y)^t + F/(1+y)^n"], ["Fixed income", "Modified duration", "Macaulay duration / (1 + y/m)"], ["Fixed income", "Price change estimate", "ΔP/P ≈ − Modified duration × Δy"], ["Derivatives", "Call payoff at expiry", "max(S − K, 0)"], ["Derivatives", "Put payoff at expiry", "max(K − S, 0)"], ["Derivatives", "Put-call parity", "C + K/(1+r)^T = P + S"], ["Portfolio", "Expected return (2 assets)", "w1 × R1 + w2 × R2"], ["Portfolio", "Sharpe ratio", "(Rp − Rf) / σp"], ["Portfolio", "Beta", "Cov(Ri, Rm) / Var(Rm)"], ["Credit", "Expected loss", "PD × LGD × EAD"], ["Credit", "DSCR", "Cash flow available for debt service / Debt service"], ["Credit", "Altman Z (public manufacturers)", "1.2A + 1.4B + 3.3C + 0.6D + 1.0E"], ["Insurance", "Combined ratio", "(Claims + Expenses) / Premiums"], ["Management accounting", "Break-even units", "Fixed costs / (Price − Variable cost)"], ["Management accounting", "Contribution margin ratio", "(Price − Variable cost) / Price"], ["Management accounting", "Variance", "Actual − Budget"], ["Statistics", "Standard deviation (sample)", "√[ Σ(x − mean)² / (n − 1) ]"]];
+    /* ---------- page helper ---------- */
+    function page(id, title, sub, body, after, back) {
+      veil(
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="' + id + 'T"><h3 id="' + id + 'T">' + title + "</h3>" + (sub ? "<p>" + sub + "</p>" : "") + '<div id="' + id + 'B">' + body + '</div><div class="acts"><button class="btn ghost" data-back="1">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        function (v) {
+          v.querySelector("[data-back]").addEventListener("click", back || openLauncher);
+          if (after) after(v);
+        },
+      );
+    }
+    function shuffle(a) {
+      a = a.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1)),
+          t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+      }
+      return a;
+    }
+    function copyText(t, msg) {
+      try {
+        navigator.clipboard.writeText(t).then(function () { toast(msg || "Copied"); }, function () { toast("Copying is blocked here"); });
+      } catch (e) {
+        toast("Copying is blocked here");
+      }
+    }
+    /* ---------- quiz ---------- */
+    function openQuiz() {
+      var S2 = V8();
+      if (!S2.qz) S2.qz = { n: 0, c: 0, by: {} };
+      var Z = S2.qz;
+      page("qz", "Quiz", "Ten quick questions across every area. Stats are kept per area.", '<div class="qz" id="qzz"></div>', function (v) {
+        var run = shuffle(QZ).slice(0, 10), i = 0, right = 0, locked = false;
+        function draw() {
+          var q = run[i], idx = shuffle([0, 1, 2, 3]);
+          locked = false;
+          v.querySelector("#qzz").innerHTML =
+            '<div class="qn"><span>' + q[0] + "</span><span>" + (i + 1) + " / " + run.length + '</span></div><div class="lib-prog"><i style="width:' + (i / run.length) * 100 + '%"></i></div><div class="qq">' + esc(q[1]) + "</div>" +
+            idx.map(function (o, k) { return '<button class="opt" style="--i:' + k + '" data-o="' + o + '">' + esc(q[2][o]) + "</button>"; }).join("") + '<div id="qwhy"></div>';
+        }
+        function end() {
+          var p = Math.round((right / run.length) * 100);
+          v.querySelector("#qzz").innerHTML = '<div class="iv"><span class="cat">Result</span><div class="tm" style="margin:12px 0" id="qzp">0</div><p style="color:var(--mute);margin:0">percent correct · ' + right + " of " + run.length + '</p><div class="row"><button class="btn" id="qzAg">Another round</button></div></div>' + statsHtml();
+          countUp(v.querySelector("#qzp"), p, 900);
+          if (p >= 80) confetti(null, null, 100);
+          v.querySelector("#qzAg").onclick = function () { openQuiz(); };
+          V8().xb += right * 2;
+          persist();
+          v8refresh();
+        }
+        function statsHtml() {
+          var by = Z.by, ks = Object.keys(by);
+          if (!ks.length) return "";
+          return '<div class="hist" style="margin-top:14px"><b>By area</b>' + ks.map(function (k) { return "<div>" + esc(k) + " · " + Math.round((by[k][1] / by[k][0]) * 100) + "% of " + by[k][0] + " answered</div>"; }).join("") + "</div>";
+        }
+        v.querySelector("#qzz").addEventListener("click", function (e) {
+          var b = e.target.closest(".opt");
+          if (!b || locked) return;
+          locked = true;
+          var q = run[i], o = +b.dataset.o, ok = o === q[3];
+          Z.n++;
+          if (!Z.by[q[0]]) Z.by[q[0]] = [0, 0];
+          Z.by[q[0]][0]++;
+          if (ok) { Z.c++; Z.by[q[0]][1]++; right++; }
+          [].forEach.call(this.querySelectorAll(".opt"), function (x) {
+            if (+x.dataset.o === q[3]) x.classList.add("ok");
+          });
+          if (!ok) b.classList.add("no");
+          if (ok) { var r = b.getBoundingClientRect(); xpop("+2 XP", r.left + r.width / 2, r.top); }
+          v.querySelector("#qwhy").innerHTML = '<div class="why">' + esc(q[4]) + '</div><div class="rowb"><button class="btn" id="qNx">' + (i + 1 === run.length ? "See result" : "Next") + "</button></div>";
+          v.querySelector("#qNx").onclick = function () { i++; i < run.length ? draw() : end(); };
+          persist();
+        });
+        draw();
+      });
+    }
+    /* ---------- journal entry trainer ---------- */
+    function openJournal() {
+      var ACC = JE.reduce(function (a, j) { [j[1], j[2]].forEach(function (x) { if (a.indexOf(x) < 0) a.push(x); }); return a; }, []).sort();
+      page("je", "Journal entries", "Pick the account to debit and the account to credit.", "", function (v) {
+        var cur, done = 0, good = 0;
+        function opts() { return '<option value="">Choose an account</option>' + ACC.map(function (a) { return "<option>" + a + "</option>"; }).join(""); }
+        function next() {
+          cur = JE[Math.floor(Math.random() * JE.length)];
+          v.querySelector("#jeB").innerHTML = '<div class="scen">' + esc(cur[0]) + '</div><div class="jrow"><label>Debit<select class="sel2" id="jD">' + opts() + '</select></label><label>Credit<select class="sel2" id="jC">' + opts() + '</select></label></div><div class="rowb"><button class="btn" id="jGo">Check</button><button class="btn ghost" id="jSk">Skip</button></div><div id="jF"></div><p style="font:11px var(--mono);color:var(--mute);margin-top:14px">' + good + " correct of " + done + " this session</p>";
+          v.querySelector("#jSk").onclick = next;
+          v.querySelector("#jGo").onclick = function () {
+            var d = v.querySelector("#jD").value, c = v.querySelector("#jC").value;
+            if (!d || !c) return toast("Choose both accounts");
+            done++;
+            var ok = d === cur[1] && c === cur[2];
+            if (ok) { good++; V8().xb += 2; persist(); xpop("+2 XP"); v8refresh(); }
+            v.querySelector("#jF").innerHTML = '<div class="fb2 ' + (ok ? "ok" : "no") + '">' + (ok ? "Correct. " : "Not quite. ") + "Debit <b>" + esc(cur[1]) + "</b>, credit <b>" + esc(cur[2]) + "</b>.</div>" + '<div class="rowb"><button class="btn" id="jNx">Next</button></div>';
+            v.querySelector("#jNx").onclick = next;
+            v.querySelector("#jGo").disabled = true;
+          };
+        }
+        next();
+      });
+    }
+    /* ---------- formula book ---------- */
+    function openFormulas() {
+      var cats = ["All"].concat(FORMS.reduce(function (a, x) { return a.indexOf(x[0]) < 0 ? a.concat(x[0]) : a; }, [])), cat = "All";
+      page("fm", "Formula book", "Tap a formula to copy it.", '<div class="tabs2" id="fmT">' + cats.map(function (c) { return '<button data-c="' + c + '" aria-pressed="' + (c === cat) + '">' + c + "</button>"; }).join("") + '</div><div class="lib-h" style="margin-top:6px"><input class="field2" id="fmQ" type="search" placeholder="Search a formula" autocomplete="off"></div><div class="fm" id="fmL"></div>', function (v) {
+        function draw() {
+          var f = v.querySelector("#fmQ").value.toLowerCase();
+          v.querySelector("#fmL").innerHTML = FORMS.filter(function (x) { return (cat === "All" || x[0] === cat) && (!f || (x[1] + x[2]).toLowerCase().indexOf(f) > -1); }).map(function (x, i) { return '<button data-i="' + FORMS.indexOf(x) + '" style="animation:stg .45s var(--ease) both;animation-delay:' + Math.min(i, 12) * 30 + 'ms"><b>' + esc(x[1]) + "</b><code>" + esc(x[2]) + "</code></button>"; }).join("");
+        }
+        draw();
+        v.querySelector("#fmQ").addEventListener("input", draw);
+        v.querySelector("#fmT").addEventListener("click", function (e) {
+          var b = e.target.closest("button");
+          if (!b) return;
+          cat = b.dataset.c;
+          [].forEach.call(this.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === b); });
+          draw();
+        });
+        v.querySelector("#fmL").addEventListener("click", function (e) {
+          var b = e.target.closest("button");
+          if (b) copyText(FORMS[+b.dataset.i][2]);
+        });
+      });
+    }
+    /* ---------- more calculators ---------- */
+    TOOLS.push(
+      { id: "dupont", n: "DuPont", f: [["ni", "Net income", 90], ["rev", "Revenue", 1000], ["ta", "Total assets", 1200], ["eq", "Equity", 500]], c: function (v) {
+        return [["Net margin", nf((v.ni / v.rev) * 100, 2) + "%"], ["Asset turnover", nf(v.rev / v.ta, 2) + "x"], ["Equity multiplier", nf(v.ta / v.eq, 2) + "x"], ["ROE", nf((v.ni / v.eq) * 100, 2) + "%"]];
+      } },
+      { id: "wc", n: "Cash cycle", f: [["rec", "Receivables", 180], ["rev", "Revenue", 1500], ["inv", "Inventory", 220], ["cogs", "COGS", 900], ["pay", "Payables", 140]], c: function (v) {
+        var a = (v.rec / v.rev) * 365, b = (v.inv / v.cogs) * 365, c = (v.pay / v.cogs) * 365;
+        return [["DSO", nf(a, 1) + " d"], ["DIO", nf(b, 1) + " d"], ["DPO", nf(c, 1) + " d"], ["Cash conversion cycle", nf(a + b - c, 1) + " d"]];
+      } },
+      { id: "capm", n: "CAPM and Sharpe", f: [["rf", "Risk-free %", 3], ["b", "Beta", 1.2], ["mrp", "Market premium %", 6], ["rp", "Portfolio return %", 9], ["sd", "Portfolio volatility %", 12]], c: function (v) {
+        return [["Cost of equity", nf(v.rf + v.b * v.mrp, 2) + "%"], ["Sharpe ratio", nf((v.rp - v.rf) / v.sd, 2)], ["Excess return", nf(v.rp - v.rf, 2) + "%"]];
+      } },
+      { id: "altman", n: "Altman Z", f: [["wc", "Working capital", 200], ["re", "Retained earnings", 300], ["ebit", "EBIT", 150], ["mve", "Market value of equity", 800], ["tl", "Total liabilities", 700], ["s", "Sales", 1500], ["ta", "Total assets", 1400]], c: function (v) {
+        var z = 1.2 * (v.wc / v.ta) + 1.4 * (v.re / v.ta) + 3.3 * (v.ebit / v.ta) + 0.6 * (v.mve / v.tl) + 1.0 * (v.s / v.ta);
+        return [["Z-score", nf(z, 2)], ["Zone", z > 2.99 ? "Safe" : z >= 1.81 ? "Grey" : "Distress"]];
+      } },
+      { id: "dep", n: "Depreciation", f: [["c", "Cost", 100000], ["sv", "Salvage value", 10000], ["l", "Life in years", 5], ["y", "Year", 2]], c: function (v) {
+        var sl = (v.c - v.sv) / v.l, r = 2 / v.l, nbv = v.c, ch = 0, k;
+        for (k = 1; k <= v.y; k++) { ch = Math.min(nbv * r, Math.max(0, nbv - v.sv)); nbv -= ch; }
+        return [["Straight-line per year", nf(sl, 0)], ["Declining balance, year " + v.y, nf(ch, 0)], ["Net book value after", nf(nbv, 0)]];
+      } },
+      { id: "vat", n: "VAT and margin", f: [["a", "Amount excl. VAT", 1000], ["r", "VAT rate % (verify current)", 20], ["cost", "Unit cost", 60], ["pr", "Selling price", 100]], c: function (v) {
+        return [["VAT", nf(v.a * v.r / 100, 2)], ["Amount incl. VAT", nf(v.a * (1 + v.r / 100), 2)], ["Markup", nf(((v.pr - v.cost) / v.cost) * 100, 1) + "%"], ["Margin", nf(((v.pr - v.cost) / v.pr) * 100, 1) + "%"]];
+      } },
+      { id: "fvc", n: "Savings growth", f: [["p", "Starting amount", 10000], ["m", "Monthly deposit", 500], ["r", "Annual return %", 6], ["y", "Years", 10]], c: function (v) {
+        var r = v.r / 1200, n = v.y * 12, fv = v.p * Math.pow(1 + r, n) + (r ? v.m * ((Math.pow(1 + r, n) - 1) / r) : v.m * n), put = v.p + v.m * n;
+        return [["Future value", nf(fv, 0)], ["Total contributed", nf(put, 0)], ["Growth earned", nf(fv - put, 0)]];
+      } },
+      { id: "bal", n: "Loan balance", f: [["P", "Loan amount", 500000], ["r", "Annual rate %", 5], ["y", "Years", 20], ["k", "After how many years", 5]], c: function (v) {
+        var r = v.r / 1200, n = v.y * 12, p = r ? (v.P * r) / (1 - Math.pow(1 + r, -n)) : v.P / n, m = v.k * 12, bal = r ? v.P * Math.pow(1 + r, m) - p * ((Math.pow(1 + r, m) - 1) / r) : v.P - p * m;
+        return [["Monthly payment", nf(p, 2)], ["Balance remaining", nf(bal, 0)], ["Principal repaid", nf(v.P - bal, 0)], ["Interest paid so far", nf(p * m - (v.P - bal), 0)]];
+      } },
+    );
+    /* ---------- job tracker ---------- */
+    var STG = ["Wishlist", "Applied", "Interview", "Offer", "Closed"], STC = ["--c3", "--c4", "--c1", "--c6", "--faint"];
+    var COS = ["Deloitte", "PwC", "EY", "KPMG", "Attijariwafa bank", "Bank of Africa", "CIH Bank", "Banque Populaire", "Wafa Assurance", "AXA Assurance Maroc", "RMA", "SAHAM Assurance", "Maroc Telecom", "OCP"];
+    function jobs() { if (!V8().jb) V8().jb = []; return V8().jb; }
+    function openJobs() {
+      page("jb", "Job tracker", "Keep every application in one place. Tap the pill to move a card forward.", '<div class="fld"><label class="wide">Company<input id="jbC" placeholder="Company" autocomplete="off"></label><label class="wide">Role<input id="jbR" placeholder="Audit intern, credit analyst..." autocomplete="off"></label></div><div class="rowb"><button class="btn" id="jbA">Add</button></div><div class="chp" id="jbS">' + COS.map(function (c) { return '<button data-c="' + c + '">+ ' + c + "</button>"; }).join("") + '</div><div class="jb-cols" id="jbL"></div>', function (v) {
+        function draw() {
+          var L = jobs();
+          v.querySelector("#jbL").innerHTML = STG.map(function (s, si) {
+            var rows = L.map(function (j, i) { return [j, i]; }).filter(function (x) { return x[0].s === si; });
+            if (!rows.length) return "";
+            return '<div class="jb-col"><h5><span>' + s + "</span><span>" + rows.length + "</span></h5>" + rows.map(function (x) {
+              return '<div class="jb" style="--sc:var(' + STC[si] + ')"><div><b>' + esc(x[0].c) + "</b><small>" + esc(x[0].r || "No role set") + '</small></div>' + (si < 4 ? '<button data-n="' + x[1] + '">' + STG[si + 1] + " →</button>" : "") + '<button class="x" data-d="' + x[1] + '" aria-label="Delete">✕</button></div>';
+            }).join("") + "</div>";
+          }).join("") || '<p class="prose">Nothing here yet. Add a company above, or tap a suggestion.</p>';
+        }
+        function add(c, r, s) {
+          if (!c.trim()) return toast("Enter a company");
+          jobs().unshift({ c: c.trim(), r: (r || "").trim(), s: s || 0, t: Date.now() });
+          persist(); draw();
+        }
+        v.querySelector("#jbA").onclick = function () { add(v.querySelector("#jbC").value, v.querySelector("#jbR").value, 0); v.querySelector("#jbC").value = ""; v.querySelector("#jbR").value = ""; };
+        v.querySelector("#jbS").onclick = function (e) { var b = e.target.closest("button"); if (b) add(b.dataset.c, "", 0); };
+        v.querySelector("#jbL").onclick = function (e) {
+          var n = e.target.closest("[data-n]"), d = e.target.closest("[data-d]");
+          if (n) { var j = jobs()[+n.dataset.n]; j.s = Math.min(4, j.s + 1); persist(); draw(); if (j.s === 3) { confetti(null, null, 100); toast("Offer. Congratulations."); } }
+          else if (d) { jobs().splice(+d.dataset.d, 1); persist(); draw(); }
+        };
+        draw();
+      });
+    }
+    /* ---------- story bank ---------- */
+    function openStories() {
+      var L = function () { if (!V8().st) V8().st = []; return V8().st; };
+      page("st", "Story bank", "Prepare STAR stories once and reuse them: Situation, Task, Action, Result.", '<div class="fld"><label class="wide">Title<input id="stT" placeholder="Led a group project under deadline" autocomplete="off"></label><label class="wide">Situation and task<textarea class="field2" id="stS" rows="2"></textarea></label><label class="wide">Action<textarea class="field2" id="stA" rows="2"></textarea></label><label class="wide">Result<textarea class="field2" id="stR" rows="2"></textarea></label></div><div class="rowb"><button class="btn" id="stAdd">Save story</button></div><div id="stL" style="margin-top:14px"></div>', function (v) {
+        function draw() {
+          v.querySelector("#stL").innerHTML = L().map(function (s, i) { return '<div class="stry"><button data-t="' + i + '">' + esc(s.t) + "<span>›</span></button><div><b>Situation</b><br>" + esc(s.s) + "<br><b>Action</b><br>" + esc(s.a) + "<br><b>Result</b><br>" + esc(s.r) + '<div class="rowb"><button class="btn ghost" data-r="' + i + '">Delete</button></div></div></div>'; }).join("") || '<p class="prose">No stories yet. Aim for five: teamwork, pressure, mistake, leadership, problem solving.</p>';
+        }
+        v.querySelector("#stAdd").onclick = function () {
+          var t = v.querySelector("#stT").value.trim();
+          if (!t) return toast("Give the story a title");
+          L().unshift({ t: t, s: v.querySelector("#stS").value, a: v.querySelector("#stA").value, r: v.querySelector("#stR").value });
+          ["#stT", "#stS", "#stA", "#stR"].forEach(function (k) { v.querySelector(k).value = ""; });
+          persist(); draw(); toast("Story saved");
+        };
+        v.querySelector("#stL").onclick = function (e) {
+          var b = e.target.closest("[data-t]"), r = e.target.closest("[data-r]");
+          if (b) b.parentNode.classList.toggle("open");
+          else if (r) { L().splice(+r.dataset.r, 1); persist(); draw(); }
+        };
+        draw();
+      });
+    }
+    /* ---------- deadlines ---------- */
+    function openDeadlines() {
+      var L = function () { if (!V8().ev) V8().ev = []; return V8().ev; };
+      page("ev", "Deadlines", "Exams, applications, interviews. Everything with a date.", '<div class="fld"><label>Name<input id="evN" placeholder="PwC application" autocomplete="off"></label><label>Date<input id="evD" type="date"></label></div><div class="rowb"><button class="btn" id="evA">Add</button></div><div id="evL" style="margin-top:14px"></div>', function (v) {
+        function draw() {
+          var all = [{ n: "Your target date", d: S.cfg.end, fixed: 1 }].concat(L().map(function (e, i) { return { n: e.n, d: e.d, i: i }; }));
+          all.sort(function (a, b) { return a.d < b.d ? -1 : 1; });
+          v.querySelector("#evL").innerHTML = all.map(function (e, k) {
+            var dd = Math.ceil((parseDate(e.d) - dayAt(0)) / 864e5);
+            return '<div class="ev' + (dd < 0 ? " past" : "") + '" style="animation-delay:' + k * 50 + 'ms"><div class="d">' + Math.abs(dd) + "<small>" + (dd < 0 ? "days ago" : dd === 0 ? "today" : "days left") + "</small></div><div><b>" + esc(e.n) + "</b><br><small style=\"color:var(--mute)\">" + e.d + "</small></div>" + (e.fixed ? "" : '<button class="x" data-d="' + e.i + '" aria-label="Delete">✕</button>') + "</div>";
+          }).join("");
+        }
+        v.querySelector("#evA").onclick = function () {
+          var n = v.querySelector("#evN").value.trim(), d = v.querySelector("#evD").value;
+          if (!n || !d) return toast("Add a name and a date");
+          L().push({ n: n, d: d }); persist(); draw();
+          v.querySelector("#evN").value = "";
+        };
+        v.querySelector("#evL").onclick = function (e) { var b = e.target.closest("[data-d]"); if (b) { L().splice(+b.dataset.d, 1); persist(); draw(); } };
+        draw();
+      });
+    }
+    /* ---------- daily log ---------- */
+    function openLog() {
+      var K = dayKey(new Date());
+      function J() { if (!V8().jr) V8().jr = {}; return V8().jr; }
+      page("lg", "Daily log", "Three lines at the end of the day: what you learned and what is still unclear.", '<div class="eyebrow" style="margin-top:12px">Confidence today</div><div class="cf5" id="lgC">' + [1, 2, 3, 4, 5].map(function (n) { return '<button data-c="' + n + '" aria-pressed="' + ((J()[K] || {}).c === n) + '">' + n + "</button>"; }).join("") + '</div><textarea class="field2" id="lgT" rows="4" placeholder="Learned: ...&#10;Unclear: ...&#10;Tomorrow: ...">' + esc((J()[K] || {}).t || "") + '</textarea><div class="rowb"><button class="btn" id="lgS">Save</button></div><div class="hist" id="lgH" style="margin-top:14px"></div>', function (v) {
+        function hist() {
+          var ks = Object.keys(J()).sort().reverse().filter(function (k) { return k !== K && (J()[k].t || J()[k].c); }).slice(0, 10);
+          v.querySelector("#lgH").innerHTML = ks.length ? "<b>Earlier</b>" + ks.map(function (k) { return "<div><b>" + k + (J()[k].c ? " · confidence " + J()[k].c : "") + "</b><br>" + esc(J()[k].t || "") + "</div>"; }).join("") : "";
+        }
+        v.querySelector("#lgC").onclick = function (e) {
+          var b = e.target.closest("button");
+          if (!b) return;
+          if (!J()[K]) J()[K] = {};
+          J()[K].c = +b.dataset.c;
+          [].forEach.call(this.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === b); });
+          persist();
+        };
+        v.querySelector("#lgS").onclick = function () {
+          if (!J()[K]) J()[K] = {};
+          var first = !J()[K].t;
+          J()[K].t = v.querySelector("#lgT").value;
+          if (first && J()[K].t) { V8().xb += 5; xpop("+5 XP"); v8refresh(); }
+          persist(); toast("Saved"); hist();
+        };
+        hist();
+      });
+    }
+    /* ---------- today's queue ---------- */
+    function openQueue() {
+      page("qu", "Today’s queue", "The next topics in your plan. Tick them as you finish.", '<div id="quL"></div><h4 style="margin:20px 0 8px;font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:500">Weak spots</h4><div class="chp" id="quW"></div>', function (v) {
+        function draw() {
+          var out = [], n;
+          for (var i = 0; i < ORDER.length && out.length < 7; i++) {
+            n = BY[ORDER[i]];
+            n.groups.forEach(function (g, gi) { g[1].forEach(function (t, ii) { if (out.length < 7 && !S.c[ck(n.id, gi, ii)]) out.push([n, gi, ii, t]); }); });
+          }
+          v.querySelector("#quL").innerHTML = out.map(function (o, k) { return '<label class="q6" style="animation-delay:' + k * 50 + 'ms"><input type="checkbox" data-n="' + o[0].id + '" data-g="' + o[1] + '" data-i="' + o[2] + '"><span>' + esc(o[3]) + '<br><small style="color:var(--mute)">' + esc(o[0].name) + "</small></span></label>"; }).join("") || '<p class="prose">Everything is ticked. Check the Projects tab.</p>';
+          var cnt = {};
+          for (var key in V8().rv) if (V8().rv[key].b === 0) { var id = key.split(":")[0]; cnt[id] = (cnt[id] || 0) + 1; }
+          var ids = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; }).slice(0, 5);
+          v.querySelector("#quW").innerHTML = ids.length ? ids.map(function (id) { return '<button data-o="' + id + '">' + esc(BY[id].name) + " · " + cnt[id] + "</button>"; }).join("") : '<span style="color:var(--mute);font-size:13px">None yet. Missed recall cards will show up here.</span>';
+        }
+        v.querySelector("#quL").onchange = function (e) {
+          var c = e.target;
+          if (!c.dataset.n) return;
+          var nd = BY[c.dataset.n], k = ck(nd.id, +c.dataset.g, +c.dataset.i);
+          S.c[k] = c.checked;
+          logTick(nd, c.checked ? 1 : -1);
+          persist(); updateAll();
+          c.closest(".q6").classList.toggle("done", c.checked);
+          if (c.checked) { var r = c.getBoundingClientRect(); burst(r.left + 10, r.top + 10, PAL[nd.area.i], 14, 3); }
+        };
+        v.querySelector("#quW").onclick = function (e) { var b = e.target.closest("[data-o]"); if (b) { $("#veil").hidden = true; openNode(b.dataset.o); } };
+        draw();
+      });
+    }
+    /* ---------- data, backup, report ---------- */
+    function weekReport() {
+      var m = 0, i, st = allStats(), nx = nextUp();
+      for (i = 0; i < 7; i++) m += Math.floor((S.s[dayKey(dayAt(-i))] || 0) / 60);
+      var tk = 0;
+      for (i = 0; i < 7; i++) { var r = S.h[dayKey(dayAt(-i))] || []; r.forEach(function (x) { tk += Math.max(0, x || 0); }); }
+      var cd = 0;
+      for (i = 0; i < 7; i++) cd += V8().rd[dayKey(dayAt(-i))] || 0;
+      return "Finance Atlas weekly report\nStudy time: " + m + " min over 7 days\nTopics ticked: " + tk + "\nRecall cards reviewed: " + cd + "\nStreak: " + streak() + " days\nOverall: " + st.d + " of " + st.t + " topics (" + st.p + "%), " + st.m + " subjects mastered\nLevel " + lvlInfo(calcXP()).L + " · " + calcXP() + " XP\nNext up: " + (nx ? nx.name : "everything done");
+    }
+    function openData() {
+      page("dt", "Data and backup", "Your progress lives on this device and in your account. A backup copy is cheap insurance.", '<div class="rowb"><button class="btn" id="dtR">Copy weekly report</button><button class="btn ghost" id="dtX">Export backup</button></div><textarea class="dbox" id="dtT" placeholder="Paste a backup here to restore it" style="margin-top:12px"></textarea><div class="rowb"><button class="btn ghost" id="dtI">Restore from text</button></div>', function (v) {
+        v.querySelector("#dtR").onclick = function () { copyText(weekReport(), "Report copied"); };
+        v.querySelector("#dtX").onclick = function () {
+          var j = JSON.stringify(S);
+          v.querySelector("#dtT").value = j;
+          copyText(j, "Backup copied and shown below");
+        };
+        v.querySelector("#dtI").onclick = function () {
+          var t = v.querySelector("#dtT").value.trim(), p;
+          try { p = JSON.parse(t); } catch (e) { return toast("That is not a valid backup"); }
+          if (!p || !p.c) return toast("That is not a Finance Atlas backup");
+          if (!this.dataset.sure) { this.dataset.sure = "1"; this.textContent = "Tap again to replace everything"; return; }
+          S = p; norm(); persist(); updateAll(); renderView(); renderSess(); toast("Backup restored");
+        };
+      });
+    }
+    /* ---------- launcher ---------- */
+    var REG = [
+      ["Practice", "quiz", "✓", "Quiz", "34 questions, 10 per round", openQuiz],
+      ["Practice", "recall", "✎", "Recall Lab", "Spaced flashcards", openRecall],
+      ["Practice", "je", "±", "Journal entries", "Debit and credit drill", openJournal],
+      ["Practice", "interview", "?", "Interview drill", "Timed questions", openInterview],
+      ["Reference", "formulas", "ƒ", "Formula book", "40 key formulas", openFormulas],
+      ["Reference", "toolbox", "Σ", "Toolbox", "15 calculators", function () { openToolbox(); }],
+      ["Reference", "glossary", "Aa", "Glossary", "English and French", openGlossary],
+      ["Reference", "excel", "fx", "Excel sheet", "Functions and shortcuts", openExcel],
+      ["Reference", "library", "▤", "Library", "Free sources, tracked", function () { openLibrary(); }],
+      ["Career", "jobs", "⌖", "Job tracker", "Applications by stage", openJobs],
+      ["Career", "stories", "❝", "Story bank", "STAR answers", openStories],
+      ["Career", "deadlines", "⏱", "Deadlines", "Dates and countdowns", openDeadlines],
+      ["Daily", "queue", "☰", "Today’s queue", "Next topics, weak spots", openQueue],
+      ["Daily", "log", "✍", "Daily log", "Reflection and confidence", openLog],
+      ["Daily", "focus", "◉", "Focus mode", "Full-screen session", openFocus],
+      ["Daily", "badges", "★", "Badges", "Achievements", openBadges],
+      ["Data", "data", "⇅", "Backup and report", "Export, restore, weekly text", openData],
+      ["Data", "look", "◐", "Themes", "Mode and colours", function () { openAppearance(); }],
+    ];
+    function openLauncher() {
+      var groups = REG.reduce(function (a, r) { return a.indexOf(r[0]) < 0 ? a.concat(r[0]) : a; }, []);
+      veil(
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="lcT"><h3 id="lcT">All tools</h3><p>' + REG.length + " tools in one place. Press M anywhere to open this.</p>" +
+          groups.map(function (g) { return '<div class="lg"><h4 style="font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:500">' + g + '</h4><div class="tiles">' + REG.filter(function (r) { return r[0] === g; }).map(function (r) { return '<button class="tile" data-k="' + r[1] + '"><i>' + r[2] + "</i><b>" + r[3] + "</b><small>" + r[4] + "</small></button>"; }).join("") + "</div></div>"; }).join("") +
+          '<div class="acts"><button class="btn ghost" id="lcB">Hub</button><button class="btn" data-x="1">Close</button></div></div>',
+        function (v) {
+          v.querySelector("#lcB").onclick = openHub;
+          v.querySelector(".hub").addEventListener("click", function (e) {
+            var b = e.target.closest("[data-k]");
+            if (!b) return;
+            var r = REG.filter(function (x) { return x[1] === b.dataset.k; })[0];
+            v.hidden = true;
+            r[5]();
+          });
+          [].forEach.call(v.querySelectorAll(".tile"), function (t) {
+            t.addEventListener("pointermove", function (e) { var r = t.getBoundingClientRect(); t.style.transform = "perspective(500px) rotateX(" + (((e.clientY - r.top) / r.height - 0.5) * -8).toFixed(1) + "deg) rotateY(" + (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(1) + "deg) translateY(-2px)"; });
+            t.addEventListener("pointerleave", function () { t.style.transform = ""; });
+          });
+        },
+      );
+    }
+    var _openHub10 = openHub;
+    openHub = function () {
+      _openHub10();
+      var h = $("#veil .hub"), tip = h && h.querySelector(".tipc");
+      if (!tip) return;
+      var b = document.createElement("button");
+      b.className = "btn stg";
+      b.style.cssText = "--i:10;width:100%;justify-content:center;margin-top:12px";
+      b.textContent = "All tools (" + REG.length + ")";
+      b.onclick = openLauncher;
+      h.insertBefore(b, tip);
+    };
+    var _pc10 = palCommands;
+    palCommands = function () {
+      var c = _pc10();
+      REG.forEach(function (r, i) { c.splice(4 + i, 0, { t: r[3], s: r[0] + " · " + r[4], k: r[3] + " " + r[4] + " " + r[0], run: r[5] }); });
+      c.splice(4, 0, { t: "All tools", s: "Launcher · M", k: "tools launcher menu all features", run: openLauncher });
+      return c;
+    };
+    window.addEventListener("keydown", function (e) {
+      var t = e.target;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+      if (!$("#veil").hidden || !$("#pal").hidden || !fo.hidden) return;
+      var k = e.key.toLowerCase();
+      if (k === "m") openLauncher();
+      else if (k === "q") openQuiz();
+      else if (k === "d") openLog();
+      else if (k === "j") openJobs();
+    });
     /* ---------- boot ---------- */
     function updateAll(soft) {
       bgDirty = true;
@@ -9255,7 +9710,7 @@
       if (CUR.mounted) refreshCur();
       if ($("#app").dataset.view !== "map" && soft !== true) renderView();
     }
-    $("#brandB").innerHTML = "Finance ghost"
+    $("#brandB").innerHTML = "Finance Atlas"
       .split("")
       .map(function (c, i) {
         return '<span style="--i:' + i + '">' + (c === " " ? "&nbsp;" : c) + "</span>";
