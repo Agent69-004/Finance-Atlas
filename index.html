@@ -1,4 +1,4 @@
-<title>Finance ghost</title>
+<title>Finance Ninja 🥷🏼</title>
 <meta name="claude:viewport-fit-sides" content="cover" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1024,12 +1024,12 @@
   .btn:active {
     transform: scale(0.95);
   }
-  .btn.ghost {
+  .btn.Ninja 🥷🏼 {
     background: transparent;
     color: var(--ink);
     border: 1px solid var(--rule2);
   }
-  .btn.ghost:hover {
+  .btn.Ninja 🥷🏼:hover {
     border-color: var(--ink);
   }
   .btn.danger {
@@ -3493,7 +3493,7 @@
       <path d="M5 31c5-6 9 1 13-3s7-4 13-2" stroke="#2DD4BF" />
       <path d="M5 20c5-10 9-1 13-7s7-5 13-2" stroke="#9B87FF" />
     </svg>
-    <b>Finance ghost</b>
+    <b>Finance Ninja 🥷🏼</b>
     <small>Nov 2026 → Oct 2027</small>
   </div>
   <div id="satop" aria-hidden="true" style="position:fixed;left:0;top:0;width:0;height:env(safe-area-inset-top,0px);pointer-events:none"></div>
@@ -3540,7 +3540,7 @@
           <path d="M5 20c5-10 9-1 13-7s7-5 13-2" stroke="#9B87FF" />
         </svg>
       </span>
-      <b id="brandB" aria-label="Finance ghost">Finance ghost</b>
+      <b id="brandB" aria-label="Finance Ninja 🥷🏼">Finance Ninja 🥷🏼</b>
       <em>NOV 2026 → OCT 2027</em>
     </div>
     <div class="modes" id="modes" role="group" aria-label="View">
@@ -3617,7 +3617,7 @@
       <div class="eyebrow idx">Index</div>
       <ul class="areas" id="areas"></ul>
       <div class="led-foot">
-        <button class="btn ghost" id="copyBtn">Copy syllabus</button>
+        <button class="btn Ninja 🥷🏼" id="copyBtn">Copy syllabus</button>
         <button class="btn danger" id="resetBtn">Reset</button>
       </div>
     </aside>
@@ -4972,7 +4972,7 @@
     });
 
     /* ---------- state ---------- */
-    var LS = "finance-ghost-v1",
+    var LS = "finance-Ninja 🥷🏼-v1",
       S = { c: {}, n: {}, s: {}, t: 0 };
     try {
       var raw = localStorage.getItem(LS);
@@ -4994,7 +4994,7 @@
       if (!S.cfg.motion) S.cfg.motion = "full";
       if (typeof S.cfg.acc !== "string") S.cfg.acc = "";
       if (typeof S.cfg.tilt !== "boolean") S.cfg.tilt = false;
-      if (typeof S.cfg.pal !== "string") S.cfg.pal = "ghost";
+      if (typeof S.cfg.pal !== "string") S.cfg.pal = "Ninja 🥷🏼";
     }
     norm();
     function ck(id, g, i) {
@@ -5961,7 +5961,7 @@
       }
       if (Math.floor(beforeAll / 25) < Math.floor(afterAll / 25) && afterAll > 0) {
         setTimeout(function () {
-          toast(afterAll + "% of the whole ghost. Keep going.");
+          toast(afterAll + "% of the whole Ninja 🥷🏼. Keep going.");
         }, 900);
       }
     }
@@ -6218,7 +6218,7 @@
       }, 2800);
     }
     $("#copyBtn").addEventListener("click", function () {
-      var out = "Finance ghost syllabus\n";
+      var out = "Finance Ninja 🥷🏼 syllabus\n";
       NODES.forEach(function (nd) {
         out +=
           "\n" + nd.n + ". " + nd.name + " (level " + nd.lvl + ", about " + nd.wk + " weeks)\n";
@@ -6255,7 +6255,7 @@
     }
     $("#resetBtn").addEventListener("click", function () {
       veil(
-        '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="rt"><h3 id="rt">Reset all progress?</h3><p>Every ticked topic, mastery check, finished project, note and study streak will be cleared. This cannot be undone.</p><div class="acts"><button class="btn ghost" data-x="1">Keep it</button><button class="btn danger" id="doReset">Reset everything</button></div></div>',
+        '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="rt"><h3 id="rt">Reset all progress?</h3><p>Every ticked topic, mastery check, finished project, note and study streak will be cleared. This cannot be undone.</p><div class="acts"><button class="btn Ninja 🥷🏼" data-x="1">Keep it</button><button class="btn danger" id="doReset">Reset everything</button></div></div>',
         function (v) {
           v.querySelector("#doReset").addEventListener("click", function () {
             S = { c: {}, n: {}, s: {}, h: {}, cfg: S.cfg, t: 0 };
@@ -7357,7 +7357,7 @@
     function openAtelier() {
       var c = S.cfg;
       veil(
-        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="atT"><h3 id="atT">Atelier</h3><p>Make the ghost yours. These choices save with your progress.</p>' +
+        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="atT"><h3 id="atT">Atelier</h3><p>Make the Ninja 🥷🏼 yours. These choices save with your progress.</p>' +
           '<div class="atl-r"><span class="eyebrow">Accent</span><div class="sw" id="atSw"><button class="auto" data-a="" aria-label="Automatic" aria-pressed="' + !c.acc + '"></button>' +
           ACCS.map(function (a) {
             return '<button style="--c:' + a + '" data-a="' + a + '" aria-label="' + a + '" aria-pressed="' + (c.acc === a) + '"></button>';
@@ -7380,7 +7380,7 @@
             .join("") +
           "</div></div>" +
           '<div class="atl-r" id="atImp" hidden><span class="eyebrow">Paste a backup</span><textarea class="field" id="atTx" placeholder="Paste the text you copied from Copy backup"></textarea></div>' +
-          '<div class="acts"><button class="btn ghost" id="atBk">Copy backup</button><button class="btn ghost" id="atIm">Import</button><button class="btn" data-x="1">Done</button></div></div>',
+          '<div class="acts"><button class="btn Ninja 🥷🏼" id="atBk">Copy backup</button><button class="btn Ninja 🥷🏼" id="atIm">Import</button><button class="btn" data-x="1">Done</button></div></div>',
         function (v) {
           v.querySelector("#atSw").addEventListener("click", function (e) {
             var b = e.target.closest("button");
@@ -7904,8 +7904,8 @@
        Appearance: mode (auto, light, dark), colour themes, accent
        ===================================================================== */
     var PALS = {"midnight": {"n": "Midnight", "k": "dark", "bg": "#05060A", "bg2": "#0B0D14", "card": "#10131C", "ink": "#E8ECF8", "mute": "#8A93AD", "faint": "#454B60", "acc": "#7C9CFF", "c": ["#7C9CFF", "#5EEAD4", "#C4B5FD", "#38BDF8", "#F0ABFC", "#86EFAC", "#FDE68A"], "glass": "rgba(8,10,16,0.72)", "shadow": "rgba(0,0,0,0.7)", "rule": "232,236,248"}, "paper": {"n": "Paper", "k": "light", "bg": "#F6F0E4", "bg2": "#EDE4D2", "card": "#FFFBF2", "ink": "#2B2418", "mute": "#6E6350", "faint": "#B3A78F", "acc": "#B4532A", "c": ["#B4532A", "#3F7D5A", "#6D4C8F", "#2F6690", "#B23A48", "#7A8B3A", "#C48A1A"], "glass": "rgba(255,251,242,0.78)", "shadow": "rgba(90,66,30,0.22)", "rule": "43,36,24"}, "terminal": {"n": "Terminal", "k": "dark", "bg": "#030A05", "bg2": "#07130A", "card": "#0A1A0E", "ink": "#C8F7D2", "mute": "#6FB584", "faint": "#2F5A3C", "acc": "#39FF88", "c": ["#39FF88", "#00E5C0", "#B6FF3B", "#22D3EE", "#FFD84D", "#7CFF9E", "#9DFFCB"], "glass": "rgba(4,12,7,0.76)", "shadow": "rgba(0,0,0,0.7)", "rule": "200,247,210"}, "nord": {"n": "Nord", "k": "dark", "bg": "#2E3440", "bg2": "#353C4A", "card": "#3B4252", "ink": "#ECEFF4", "mute": "#A3ADBF", "faint": "#5E6A80", "acc": "#88C0D0", "c": ["#88C0D0", "#A3BE8C", "#B48EAD", "#81A1C1", "#BF616A", "#EBCB8B", "#D08770"], "glass": "rgba(46,52,64,0.76)", "shadow": "rgba(0,0,0,0.5)", "rule": "236,239,244"}, "dracula": {"n": "Dracula", "k": "dark", "bg": "#1E1F29", "bg2": "#272935", "card": "#2F3140", "ink": "#F8F8F2", "mute": "#A6A9C4", "faint": "#5A5D7A", "acc": "#FF79C6", "c": ["#BD93F9", "#50FA7B", "#FF79C6", "#8BE9FD", "#FF5555", "#F1FA8C", "#FFB86C"], "glass": "rgba(30,31,41,0.76)", "shadow": "rgba(0,0,0,0.55)", "rule": "248,248,242"}, "mint": {"n": "Mint", "k": "light", "bg": "#EAF6F1", "bg2": "#DCEEE6", "card": "#FFFFFF", "ink": "#10261E", "mute": "#52706A", "faint": "#9DBAB1", "acc": "#0E9F7A", "c": ["#0E9F7A", "#2D7FF9", "#7B61FF", "#E8A317", "#E5484D", "#14B8A6", "#D946EF"], "glass": "rgba(255,255,255,0.76)", "shadow": "rgba(20,80,60,0.2)", "rule": "16,38,30"}};
-    var PAL_ORDER = ["ghost", "midnight", "paper", "terminal", "nord", "dracula", "mint"];
-    var ghost_DOTS = {
+    var PAL_ORDER = ["Ninja 🥷🏼", "midnight", "paper", "terminal", "nord", "dracula", "mint"];
+    var Ninja 🥷🏼_DOTS = {
       l: ["#FF9F1C", "#12B5A6", "#7B61FF", "#2D7FF9", "#FF5C77", "#22C55E", "#D946EF"],
       d: ["#FFB020", "#2DD4BF", "#9B87FF", "#4C9AFF", "#FF7A90", "#4ADE80", "#E879F9"],
     };
@@ -7941,7 +7941,7 @@
         localStorage.setItem(LS + "-theme", m);
       } catch (e) {}
       root.classList.add("tx");
-      if (S.cfg.pal && PALS[S.cfg.pal]) { S.cfg.pal = "ghost"; persist(); }
+      if (S.cfg.pal && PALS[S.cfg.pal]) { S.cfg.pal = "Ninja 🥷🏼"; persist(); }
       if (m === "auto") root.removeAttribute("data-theme");
       else root.dataset.theme = m;
       readPal();
@@ -7967,7 +7967,7 @@
       });
     } catch (e) {}
     function palDots(k) {
-      var P = PALS[k], c = P ? P.c : isDark() ? ghost_DOTS.d : ghost_DOTS.l;
+      var P = PALS[k], c = P ? P.c : isDark() ? Ninja 🥷🏼_DOTS.d : Ninja 🥷🏼_DOTS.l;
       return c.map(function (x) { return '<i style="background:' + x + '"></i>'; }).join("");
     }
     function palStyle(k) {
@@ -7977,7 +7977,7 @@
     function openAppearance() {
       var mode = getMode();
       veil(
-        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="apT"><h3 id="apT">Appearance</h3><p>Choose how the ghost looks. Your choice is remembered.</p>' +
+        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="apT"><h3 id="apT">Appearance</h3><p>Choose how the Ninja 🥷🏼 looks. Your choice is remembered.</p>' +
           '<div class="atl-r"><span class="eyebrow">Mode</span><div class="seg" id="apMode">' +
           [["auto", "Auto"], ["light", "Light"], ["dark", "Dark"]]
             .map(function (m) {
@@ -7988,7 +7988,7 @@
           '<div class="atl-r"><span class="eyebrow">Theme</span><div class="pals" id="apPals">' +
           PAL_ORDER.map(function (k) {
             return (
-              '<button class="palc" data-p="' + k + '"' + palStyle(k) + ' aria-pressed="' + ((S.cfg.pal || "ghost") === k) + '"><span class="dots" data-d="' + k + '">' + palDots(k) + "</span><b>" + (k === "ghost" ? "ghost" : PALS[k].n) + "</b><small>" + (k === "ghost" ? "Follows mode" : PALS[k].k) + "</small><b hidden>" + "</b></button>"
+              '<button class="palc" data-p="' + k + '"' + palStyle(k) + ' aria-pressed="' + ((S.cfg.pal || "Ninja 🥷🏼") === k) + '"><span class="dots" data-d="' + k + '">' + palDots(k) + "</span><b>" + (k === "Ninja 🥷🏼" ? "Ninja 🥷🏼" : PALS[k].n) + "</b><small>" + (k === "Ninja 🥷🏼" ? "Follows mode" : PALS[k].k) + "</small><b hidden>" + "</b></button>"
             );
           }).join("") +
           "</div></div>" +
@@ -8398,7 +8398,7 @@
             var on = !!v8.ach[a[0]];
             return '<div class="bd' + (on ? " on" : "") + '" style="--i:' + i + '"><i>' + a[1] + "</i><b>" + a[2] + "</b><small>" + a[3] + "</small></div>";
           }).join("") +
-          '</div><div class="acts"><button class="btn ghost" id="bgBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+          '</div><div class="acts"><button class="btn Ninja 🥷🏼" id="bgBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
         function (v) {
           v.querySelector("#bgBack").addEventListener("click", openHub);
         },
@@ -8515,7 +8515,7 @@
         p = n ? Math.round((RL.got / n) * 100) : 0;
       box.innerHTML =
         '<div class="rl-end"><h3>' + (p >= 80 ? "Sharp." : p >= 50 ? "Solid session." : "Good, now it sticks.") + '</h3><div class="rbig" id="rlP">0</div><p style="color:var(--mute);font-size:13px;margin:6px 0 0">percent got it · ' + RL.got + " got it, " + RL.fuzzy + " fuzzy, " + RL.miss + " missed</p>" +
-        '<div class="acts"><button class="btn ghost" data-x="1">Done</button><button class="btn" id="rlAgain">Another round</button></div></div>';
+        '<div class="acts"><button class="btn Ninja 🥷🏼" data-x="1">Done</button><button class="btn" id="rlAgain">Another round</button></div></div>';
       countUp($("#rlP"), p, 900);
       if (p >= 80) confetti(null, null, 120);
       $("#rlAgain").addEventListener("click", openRecall);
@@ -8539,7 +8539,7 @@
     fo.id = "focus";
     fo.hidden = true;
     fo.innerHTML =
-      '<i class="bl b1"></i><i class="bl b2"></i><i class="bl b3"></i><div class="fc"><div class="fn" id="fnN"></div><div class="fring"><svg viewBox="0 0 100 100"><circle class="a" cx="50" cy="50" r="47"/><circle class="b" id="fnR" cx="50" cy="50" r="47" stroke-dasharray="0 295.3"/></svg><div class="ft" id="fnT">00:00</div></div><div class="breath" id="fnB">Breathe in…</div><div class="fd" id="fnD"></div><div class="fb"><button class="btn" id="fnP">Pause</button><button class="btn ghost" id="fnS">Skip block</button><button class="btn ghost" id="fnX">Exit</button></div></div>';
+      '<i class="bl b1"></i><i class="bl b2"></i><i class="bl b3"></i><div class="fc"><div class="fn" id="fnN"></div><div class="fring"><svg viewBox="0 0 100 100"><circle class="a" cx="50" cy="50" r="47"/><circle class="b" id="fnR" cx="50" cy="50" r="47" stroke-dasharray="0 295.3"/></svg><div class="ft" id="fnT">00:00</div></div><div class="breath" id="fnB">Breathe in…</div><div class="fd" id="fnD"></div><div class="fb"><button class="btn" id="fnP">Pause</button><button class="btn Ninja 🥷🏼" id="fnS">Skip block</button><button class="btn Ninja 🥷🏼" id="fnX">Exit</button></div></div>';
     $("#app").appendChild(fo);
     var foT = 0,
       wl = null;
@@ -8762,7 +8762,7 @@
           (list.length
             ? list.map(function (s, i) { return srcCard(nd.id, i, s, i); }).join("")
             : '<p class="prose">No source listed for this subject yet.</p>') +
-          '<button class="btn ghost" id="openLib" style="margin-top:8px">Open the whole library</button>';
+          '<button class="btn Ninja 🥷🏼" id="openLib" style="margin-top:8px">Open the whole library</button>';
         $("#drBody").scrollTop = 0;
         bindSrc($("#drBody"));
         $("#openLib").addEventListener("click", function () { openLibrary(); });
@@ -8787,7 +8787,7 @@
     /* library */
     function openLibrary(q) {
       veil(
-        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="lbT"><h3 id="lbT">Library</h3><p>Every free source for every subject, in your own order. Tap a circle to track it.</p><div class="lib-prog"><i style="width:0"></i></div><p style="margin-top:8px;font:11px var(--mono);color:var(--mute)" id="libCount">' + srcDone() + " of " + srcTotal() + ' finished</p><div class="lib-h"><input class="field2" id="libQ" type="search" placeholder="Search a subject or source" autocomplete="off" /></div><div id="libBody"></div><p class="prose" style="margin-top:20px;font-size:12px">Links go to each publisher’s own pages and may move over time. OpenStax is free online and as PDF. IFRS full texts and some AFP, CFI and Big Interview content need an account or payment: use the free parts. If you have no Excel, LibreOffice Calc is a free alternative.</p><div class="acts"><button class="btn ghost" id="lbBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="lbT"><h3 id="lbT">Library</h3><p>Every free source for every subject, in your own order. Tap a circle to track it.</p><div class="lib-prog"><i style="width:0"></i></div><p style="margin-top:8px;font:11px var(--mono);color:var(--mute)" id="libCount">' + srcDone() + " of " + srcTotal() + ' finished</p><div class="lib-h"><input class="field2" id="libQ" type="search" placeholder="Search a subject or source" autocomplete="off" /></div><div id="libBody"></div><p class="prose" style="margin-top:20px;font-size:12px">Links go to each publisher’s own pages and may move over time. OpenStax is free online and as PDF. IFRS full texts and some AFP, CFI and Big Interview content need an account or payment: use the free parts. If you have no Excel, LibreOffice Calc is a free alternative.</p><div class="acts"><button class="btn Ninja 🥷🏼" id="lbBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
         function (v) {
           function draw(f) {
             f = (f || "").toLowerCase().trim();
@@ -8880,7 +8880,7 @@
       veil(
         '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="tbT"><h3 id="tbT">Toolbox</h3><p>Check your Excel models with quick calculators. Results update as you type.</p><div class="tabs2" id="tbTabs">' +
           TOOLS.map(function (t) { return '<button data-t="' + t.id + '" aria-pressed="' + (t.id === cur) + '">' + t.n + "</button>"; }).join("") +
-          '</div><div id="tbBody"></div><div class="acts"><button class="btn ghost" id="tbBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+          '</div><div id="tbBody"></div><div class="acts"><button class="btn Ninja 🥷🏼" id="tbBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
         function (v) {
           var last = [];
           function render() {
@@ -8971,7 +8971,7 @@
     ];
     function openGlossary() {
       veil(
-        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="glT"><h3 id="glT">Glossary</h3><p>English and French side by side, because interviews in Morocco switch between both.</p><div class="lib-h"><input class="field2" id="glQ" type="search" placeholder="Search a term in English or French" autocomplete="off" /></div><div class="gl" id="glB"></div><div class="acts"><button class="btn ghost" id="glBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="glT"><h3 id="glT">Glossary</h3><p>English and French side by side, because interviews in Morocco switch between both.</p><div class="lib-h"><input class="field2" id="glQ" type="search" placeholder="Search a term in English or French" autocomplete="off" /></div><div class="gl" id="glB"></div><div class="acts"><button class="btn Ninja 🥷🏼" id="glBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
         function (v) {
           function draw(f) {
             f = (f || "").toLowerCase();
@@ -9029,7 +9029,7 @@
       veil(
         '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="xlT"><h3 id="xlT">Excel sheet</h3><p>Tap any entry to copy it.</p><div class="tabs2" id="xlTabs">' +
           cats.map(function (c) { return '<button data-c="' + c + '" aria-pressed="' + (c === cat) + '">' + c + "</button>"; }).join("") +
-          '</div><div class="lib-h" style="margin-top:6px"><input class="field2" id="xlQ" type="search" placeholder="Search a function or shortcut" autocomplete="off" /></div><div class="xl" id="xlB"></div><div class="acts"><button class="btn ghost" id="xlBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+          '</div><div class="lib-h" style="margin-top:6px"><input class="field2" id="xlQ" type="search" placeholder="Search a function or shortcut" autocomplete="off" /></div><div class="xl" id="xlB"></div><div class="acts"><button class="btn Ninja 🥷🏼" id="xlBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
         function (v) {
           function draw() {
             var f = v.querySelector("#xlQ").value.toLowerCase();
@@ -9094,7 +9094,7 @@
     function openInterview() {
       var q = null, T = 120, tmr = 0;
       veil(
-        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="ivT"><h3 id="ivT">Interview drill</h3><p>Answer out loud, in English or French, before you look at the hint. <span id="ivN"></span></p><div class="iv" id="ivB"></div><div class="acts"><button class="btn ghost" id="ivBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="ivT"><h3 id="ivT">Interview drill</h3><p>Answer out loud, in English or French, before you look at the hint. <span id="ivN"></span></p><div class="iv" id="ivB"></div><div class="acts"><button class="btn Ninja 🥷🏼" id="ivBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
         function (v) {
           function pick(c) {
             var pool = IVQ.filter(function (x) { return !c || x[0] === c; });
@@ -9117,7 +9117,7 @@
             v.querySelector("#ivB").innerHTML =
               '<span class="cat">' + q[0] + '</span><div class="q">' + esc(q[1]) + '</div><div class="tm" id="ivTm">' + fmt(T) + "</div>" +
               (show ? '<div class="hintx"><b>A strong answer covers:</b> ' + esc(q[2]) + "</div>" : "") +
-              '<div class="row"><button class="btn ghost" id="ivH">' + (show ? "Hide hint" : "Show hint") + '</button><button class="btn ghost" id="ivNx">Another</button><button class="btn" id="ivD">Practised ✓</button></div>';
+              '<div class="row"><button class="btn Ninja 🥷🏼" id="ivH">' + (show ? "Hide hint" : "Show hint") + '</button><button class="btn Ninja 🥷🏼" id="ivNx">Another</button><button class="btn" id="ivD">Practised ✓</button></div>';
             v.querySelector("#ivH").onclick = function () { draw(!show); };
             v.querySelector("#ivNx").onclick = function () { pick(); };
             v.querySelector("#ivD").onclick = function () {
@@ -9255,7 +9255,7 @@
       if (CUR.mounted) refreshCur();
       if ($("#app").dataset.view !== "map" && soft !== true) renderView();
     }
-    $("#brandB").innerHTML = "Finance ghost"
+    $("#brandB").innerHTML = "Finance Ninja 🥷🏼"
       .split("")
       .map(function (c, i) {
         return '<span style="--i:' + i + '">' + (c === " " ? "&nbsp;" : c) + "</span>";
