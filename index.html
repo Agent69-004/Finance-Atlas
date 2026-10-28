@@ -3411,6 +3411,79 @@
     .tile{padding:12px}
     #spot{display:none}
   }
+  /* ===== v9: library, toolbox, glossary, excel sheet, interviews, polish ===== */
+  #prog{position:fixed;left:0;top:0;height:3px;width:0;z-index:150;pointer-events:none;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5),var(--c6),var(--c7),var(--c1));background-size:200% 100%;animation:flow 6s linear infinite;transition:width 1.2s var(--ease);border-radius:0 3px 3px 0;box-shadow:0 0 12px var(--acc)}
+  @keyframes flow{to{background-position:-200% 0}}
+  button,.tile,.bd,.src{-webkit-tap-highlight-color:transparent}
+  .btn:active,.ibtn:active,.tile:active{transform:scale(.95)}
+  :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  .app.vt #view>*{animation-delay:calc(var(--si,0)*60ms)}
+  .app.vt.dir-r #view>*{animation-name:vtr}.app.vt.dir-l #view>*{animation-name:vtl}
+  @keyframes vtr{from{opacity:0;transform:translateX(34px);filter:blur(4px)}}
+  @keyframes vtl{from{opacity:0;transform:translateX(-34px);filter:blur(4px)}}
+  .dr-tabs button{white-space:nowrap}
+  .srcbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:10px 12px;border:1px solid var(--rule);border-radius:14px;background:var(--bg2);font-size:12.5px;color:var(--mute);animation:stg .7s var(--ease) both}
+  .srcbar a{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:1.5px solid var(--acc)}
+  .srcbar button{margin-left:auto;background:none;border:0;color:var(--acc);font:inherit;font-weight:500;cursor:pointer}
+  .src{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--rule);border-radius:16px;padding:13px 14px;margin-bottom:8px;background:var(--bg2);transition:transform .35s var(--spring),border-color .3s;animation:stg .7s var(--ease) both;animation-delay:calc(var(--i,0)*60ms);position:relative;overflow:hidden}
+  .src:hover{transform:translateY(-2px);border-color:var(--dc,var(--acc))}
+  .src .st{width:26px;height:26px;border-radius:50%;border:2px solid var(--rule2);background:none;cursor:pointer;display:grid;place-items:center;font-size:12px;color:#fff;transition:all .4s var(--spring);padding:0}
+  .src .st[data-s="1"]{border-color:var(--c1);background:conic-gradient(var(--c1) 0 50%,transparent 0);}
+  .src .st[data-s="2"]{border-color:var(--good);background:var(--good)}
+  .src .st[data-s="2"]::after{content:"✓"}
+  .src h5{margin:0 0 3px;font:500 14px var(--sans)}
+  .src p{margin:0;font-size:12px;color:var(--mute);line-height:1.45}
+  .src .ty{display:inline-block;font:10px var(--mono);letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:99px;border:1px solid var(--rule2);margin-right:6px;color:var(--mute)}
+  .src .go{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:#fff;background:var(--ink);color:var(--bg);padding:9px 13px;border-radius:99px;font:500 12px var(--sans);white-space:nowrap;transition:transform .3s var(--spring),box-shadow .3s}
+  .src .go:hover{transform:translateX(3px);box-shadow:0 8px 20px -8px var(--acc)}
+  .src .cp{position:absolute;right:8px;top:6px;background:none;border:0;color:var(--faint);font-size:11px;cursor:pointer;display:none}
+  .lib-h{display:flex;gap:10px;align-items:center;margin:16px 0 4px}
+  .lib-h input{flex:1}
+  .lib-sec{margin-top:22px}
+  .lib-sec>h4{display:flex;align-items:center;gap:8px;margin:0 0 4px!important}
+  .lib-sec>h4::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--dc);box-shadow:0 0 10px var(--dc)}
+  .lib-sub{font:500 13px var(--sans);margin:12px 0 6px;color:var(--ink)}
+  .lib-sub small{color:var(--mute);font-weight:400}
+  .lib-prog{height:5px;border-radius:5px;background:var(--rule2);overflow:hidden;margin-top:10px}
+  .lib-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width 1.1s var(--ease)}
+  .tabs2{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:14px -2px 6px;padding:2px}
+  .tabs2::-webkit-scrollbar{display:none}
+  .tabs2 button{flex:none;border:1px solid var(--rule2);background:var(--bg2);color:var(--ink);padding:8px 13px;border-radius:99px;font:500 12.5px var(--sans);cursor:pointer;transition:all .3s var(--spring)}
+  .tabs2 button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);transform:scale(1.04)}
+  .fld{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .fld label{display:grid;gap:5px;font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+  .fld input,.field2{width:100%;box-sizing:border-box;padding:11px 12px;border-radius:12px;border:1px solid var(--rule2);background:var(--bg2);color:var(--ink);font:500 15px var(--sans);outline:none;transition:border-color .25s,box-shadow .25s}
+  .fld input:focus,.field2:focus{border-color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 18%,transparent)}
+  .fld .wide{grid-column:1/-1}
+  .res{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:16px}
+  .res>div{border:1px solid var(--rule);border-radius:14px;padding:12px;background:var(--bg2);position:relative;overflow:hidden}
+  .res b{display:block;font:400 28px var(--serif);color:var(--acc);font-variant-numeric:tabular-nums}
+  .res span{font:10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+  .res>div.fl::after{content:"";position:absolute;inset:0;background:var(--acc);opacity:.18;animation:flsh .7s var(--ease) forwards}
+  @keyframes flsh{to{opacity:0}}
+  .gl{display:grid;gap:8px;margin-top:10px}
+  .gl>div{border:1px solid var(--rule);border-radius:14px;padding:11px 14px;background:var(--bg2);animation:stg .5s var(--ease) both}
+  .gl b{font:500 14px var(--sans)}.gl em{font:italic 15px var(--serif);color:var(--acc);margin-left:8px}
+  .gl p{margin:4px 0 0;font-size:12.5px;color:var(--mute);line-height:1.5}
+  .xl{display:grid;gap:8px;margin-top:10px}
+  .xl>button{text-align:left;border:1px solid var(--rule);border-radius:14px;padding:11px 14px;background:var(--bg2);color:var(--ink);cursor:pointer;font:inherit;transition:transform .3s var(--spring),border-color .3s;animation:stg .5s var(--ease) both}
+  .xl>button:hover{transform:translateX(4px);border-color:var(--acc)}
+  .xl code{display:block;font:500 12.5px var(--mono);color:var(--acc);margin-bottom:3px;word-break:break-word}
+  .xl span{font-size:12.5px;color:var(--mute)}
+  .iv{margin-top:14px;border:1px solid var(--rule2);border-radius:20px;padding:20px;background:var(--bg2);text-align:center}
+  .iv .cat{display:inline-block;font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--acc);color:#fff}
+  .iv .q{font:400 25px/1.2 var(--serif);margin:16px 0}
+  .iv .tm{font:400 54px var(--serif);font-variant-numeric:tabular-nums;color:var(--ink)}
+  .iv .tm.low{color:var(--bad);animation:hpulse 1s infinite}
+  .iv .hintx{margin-top:10px;font-size:13px;color:var(--mute);line-height:1.55;text-align:left;border-top:1px dashed var(--rule2);padding-top:12px}
+  .iv .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .tipc{margin-top:22px;padding:14px 16px;border-radius:16px;background:color-mix(in srgb,var(--acc) 10%,var(--bg2));border:1px solid color-mix(in srgb,var(--acc) 30%,transparent);font-size:13px;line-height:1.55}
+  .tipc b{font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--acc);display:block;margin-bottom:4px}
+  .tiles.t3{grid-template-columns:repeat(3,1fr)}
+  .tiles.t3 .tile{padding:12px 10px;text-align:center}
+  .tiles.t3 .tile small{display:none}
+  .tiles.t3 .tile i{margin-bottom:4px}
+  @media (max-width:860px){.src{grid-template-columns:auto 1fr}.src .go{grid-column:1/-1;justify-content:center}.fld{grid-template-columns:1fr 1fr}}
 </style>
 
 <div class="app" id="app" data-view="map">
@@ -8585,6 +8658,594 @@
     });
     checkAch(true);
     updChip();
+
+    /* =====================================================================
+       v9: source library, toolbox calculators, glossary, Excel sheet,
+       interview drill, swipe views, progress line, staggered views
+       ===================================================================== */
+    var SRC = {
+      "01": [["Fundamentals of Accounting", "Open University · OpenLearn", "https://www.open.edu/openlearn/money-business/fundamentals-accounting", "Course", "Free course. Start here for double-entry, ledgers and the accounting equation."]],
+      "02": [["Principles of Accounting", "OpenStax", "https://openstax.org/details/books/principles-financial-accounting", "Textbook", "Free online and as a PDF download. Use the statements chapters."]],
+      "03": [["IFRS Standards and supporting materials", "IFRS Foundation", "https://www.ifrs.org/issued-standards/list-of-standards/", "Reference", "Official standards list. Some detailed materials sit behind access restrictions."]],
+      "04": [["Financial ratios guide", "Corporate Finance Institute", "https://corporatefinanceinstitute.com/resources/accounting/financial-ratios/", "Guide", "Free article. Most full CFI courses are paid, so stay with the free guides."]],
+      "19": [["Principles of Finance", "OpenStax", "https://openstax.org/details/books/principles-finance", "Textbook", "Use the budgeting and forecasting chapters."]],
+      "20": [["Free articles and resources", "AFP · Association for Financial Professionals", "https://www.afponline.org/", "Articles", "Treasury and cash management. Some content is member only."]],
+      "21": [["Economic and monetary data", "Bank Al-Maghrib", "https://www.bkam.ma", "Data", "Reports, statistics and sector figures for Morocco."], ["National statistics", "HCP Morocco", "https://www.hcp.ma", "Data", "Official demographic and economic statistics."]],
+      "06": [["Principles of Finance", "OpenStax", "https://openstax.org/details/books/principles-finance", "Textbook", "Time value of money, capital budgeting, cost of capital."]],
+      "10": [["Valuation materials and datasets", "Aswath Damodaran · NYU Stern", "https://pages.stern.nyu.edu/~adamodar/", "Reference", "Free lectures, spreadsheets and industry datasets. The best free valuation source."]],
+      "16": [["Valuation materials", "Aswath Damodaran · NYU Stern", "https://pages.stern.nyu.edu/~adamodar/", "Reference", "Acquisition valuation and LBO logic."], ["Valuation resources", "Corporate Finance Institute", "https://corporatefinanceinstitute.com/resources/valuation/", "Guide", "Free M&A and LBO articles and templates."]],
+      "05": [["Economics and Finance", "Khan Academy", "https://www.khanacademy.org/economics-finance-domain", "Course", "Free video lessons: micro, macro, money and banking."]],
+      "13": [["Free educational articles", "CFA Institute", "https://www.cfainstitute.org/insights", "Articles", "Search for fixed income, duration and yield."]],
+      "14": [["Education", "CME Group", "https://www.cmegroup.com/education.html", "Course", "Free futures and options courses and explainers."]],
+      "15": [["OpenIntro Statistics", "OpenIntro", "https://www.openintro.org/book/os/", "Textbook", "Free textbook with labs and exercises."]],
+      "07": [["Free study resources", "ACCA", "https://www.accaglobal.com/", "Reference", "Official ACCA site with study resources for students."], ["Audit and Assurance lectures", "Opentuition (third party)", "https://opentuition.com/acca/aa/", "Course", "Free ACCA lectures and notes. Not run by ACCA."]],
+      "08": [["Commercial lending and credit analysis", "Corporate Finance Institute", "https://corporatefinanceinstitute.com/resources/commercial-lending/", "Guide", "Free guides on credit analysis and lending."]],
+      "09": [["Insurance supervision", "ACAPS Morocco", "https://www.acaps.ma", "Regulator", "Moroccan insurance and pension regulator: rules, reports, statistics."]],
+      "17": [["Auditing standards", "IAASB", "https://www.iaasb.org/standards-pronouncements", "Reference", "International standards on auditing (ISA)."], ["Ministry of Economy and Finance", "Morocco", "https://www.finances.gov.ma", "Regulator", "Moroccan public finance and regulation."]],
+      "11": [["Central bank", "Bank Al-Maghrib", "https://www.bkam.ma", "Regulator", "Banking supervision and monetary policy."], ["Capital markets authority", "AMMC", "https://www.ammc.ma", "Regulator", "Market rules, issuers, investor information."], ["Ministry of Economy and Finance", "Morocco", "https://www.finances.gov.ma", "Regulator", "Budget, tax policy, public finance."]],
+      "12": [["Interview practice resources", "Big Interview", "https://biginterview.com", "Practice", "Free resources. Full practice platform is paid."], ["Careers in Finance", "Corporate Finance Institute", "https://corporatefinanceinstitute.com/resources/career/", "Course", "Free career guides and the free Careers in Finance course."]],
+      xl: [["Excel Help and Training", "Microsoft", "https://support.microsoft.com/excel", "Docs", "Official free documentation for every function."], ["LibreOffice Calc", "The Document Foundation", "https://www.libreoffice.org/discover/calc/", "Tool", "Free spreadsheet if you do not have Excel."]],
+      sql: [["SQLBolt", "SQLBolt", "https://sqlbolt.com", "Course", "Short interactive lessons. Finish it in a weekend."]],
+      bi: [["Power BI training", "Microsoft Learn", "https://learn.microsoft.com/en-us/training/powerbi/", "Course", "Free learning paths."]],
+      py: [["Python for Everybody", "Dr. Chuck · py4e.com", "https://www.py4e.com", "Course", "Free course, book and exercises."]],
+    };
+    var STAT = ["Not started", "Started", "Finished"];
+    function sKey(id, i) {
+      return id + ":" + i;
+    }
+    function spMap() {
+      var v = V8();
+      if (!v.sp) v.sp = {};
+      return v.sp;
+    }
+    function srcCard(id, i, s, j) {
+      var st = spMap()[sKey(id, i)] || 0,
+        nd = BY[id];
+      return (
+        '<div class="src" style="--i:' + j + ";--dc:var(" + nd.area.c + ')"><button class="st" data-sk="' + sKey(id, i) + '" data-s="' + st + '" aria-label="Progress: ' + STAT[st] + '. Tap to change"></button><div><h5>' + esc(s[0]) + "</h5><p><span class=\"ty\">" + esc(s[3]) + "</span>" + esc(s[1]) + "</p><p style=\"margin-top:5px\">" + esc(s[4]) + '</p></div><a class="go" href="' + s[2] + '" target="_blank" rel="noopener noreferrer">Open <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>'
+      );
+    }
+    function bindSrc(root0) {
+      root0.addEventListener("click", function (e) {
+        var b = e.target.closest(".st");
+        if (!b) return;
+        var m = spMap(),
+          k = b.dataset.sk,
+          n = ((m[k] || 0) + 1) % 3;
+        m[k] = n;
+        b.dataset.s = n;
+        b.setAttribute("aria-label", "Progress: " + STAT[n] + ". Tap to change");
+        persist();
+        if (n === 2) {
+          var r = b.getBoundingClientRect();
+          confetti(r.left + 13, r.top + 13, 36);
+          xpop("+15 XP", r.left + 13, r.top);
+          V8().xb += 15;
+          v8refresh();
+        }
+        var p = root0.querySelector(".lib-prog i");
+        if (p) p.style.width = srcPct() + "%";
+        var c = root0.querySelector("#libCount");
+        if (c) c.textContent = srcDone() + " of " + srcTotal() + " finished";
+      });
+    }
+    function srcTotal() {
+      var t = 0;
+      for (var k in SRC) t += SRC[k].length;
+      return t;
+    }
+    function srcDone() {
+      var t = 0,
+        m = spMap();
+      for (var k in m) if (m[k] === 2) t++;
+      return t;
+    }
+    function srcPct() {
+      return (srcDone() / srcTotal()) * 100;
+    }
+    /* sources tab in the drawer */
+    (function () {
+      var b = document.createElement("button");
+      b.setAttribute("role", "tab");
+      b.dataset.t = "src";
+      b.setAttribute("aria-selected", "false");
+      b.textContent = "Sources";
+      $("#drTabs").appendChild(b);
+    })();
+    var _renderBody = renderBody;
+    renderBody = function () {
+      var nd = BY[openId];
+      if (tab === "src" && nd) {
+        var list = SRC[nd.id] || [];
+        $("#drBody").innerHTML =
+          '<section class="grp"><div class="eyebrow">Where to study this, free</div><p class="prose">Tap the circle to track it: once for started, twice for finished. Links open the publisher’s own site.</p></section>' +
+          (list.length
+            ? list.map(function (s, i) { return srcCard(nd.id, i, s, i); }).join("")
+            : '<p class="prose">No source listed for this subject yet.</p>') +
+          '<button class="btn ghost" id="openLib" style="margin-top:8px">Open the whole library</button>';
+        $("#drBody").scrollTop = 0;
+        bindSrc($("#drBody"));
+        $("#openLib").addEventListener("click", function () { openLibrary(); });
+        return;
+      }
+      _renderBody();
+      if (tab === "study" && nd && SRC[nd.id]) {
+        var s0 = SRC[nd.id][0],
+          bar = document.createElement("div");
+        bar.className = "srcbar";
+        bar.innerHTML = "Study from <a href=\"" + s0[2] + '" target="_blank" rel="noopener noreferrer">' + esc(s0[0]) + " ↗</a><span>" + esc(s0[1]) + '</span><button data-gosrc="1">All sources</button>';
+        $("#drBody").insertBefore(bar, $("#drBody").firstChild);
+        bar.querySelector("button").addEventListener("click", function () {
+          tab = "src";
+          [].forEach.call($("#drTabs").querySelectorAll("button"), function (x) {
+            x.setAttribute("aria-selected", x.dataset.t === "src" ? "true" : "false");
+          });
+          renderBody();
+        });
+      }
+    };
+    /* library */
+    function openLibrary(q) {
+      veil(
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="lbT"><h3 id="lbT">Library</h3><p>Every free source for every subject, in your own order. Tap a circle to track it.</p><div class="lib-prog"><i style="width:0"></i></div><p style="margin-top:8px;font:11px var(--mono);color:var(--mute)" id="libCount">' + srcDone() + " of " + srcTotal() + ' finished</p><div class="lib-h"><input class="field2" id="libQ" type="search" placeholder="Search a subject or source" autocomplete="off" /></div><div id="libBody"></div><p class="prose" style="margin-top:20px;font-size:12px">Links go to each publisher’s own pages and may move over time. OpenStax is free online and as PDF. IFRS full texts and some AFP, CFI and Big Interview content need an account or payment: use the free parts. If you have no Excel, LibreOffice Calc is a free alternative.</p><div class="acts"><button class="btn ghost" id="lbBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        function (v) {
+          function draw(f) {
+            f = (f || "").toLowerCase().trim();
+            var h = "",
+              j = 0;
+            AREAS.forEach(function (a) {
+              var rows = "";
+              a.ids.forEach(function (id) {
+                var nd = BY[id],
+                  list = SRC[id] || [];
+                list.forEach(function (s, i) {
+                  var hay = (nd.name + " " + s[0] + " " + s[1] + " " + s[3]).toLowerCase();
+                  if (f && hay.indexOf(f) < 0) return;
+                  if (!i) rows += '<div class="lib-sub">' + (/^\d+$/.test(nd.n) ? nd.n + " · " : "") + esc(nd.name) + " <small>L" + nd.lvl + "</small></div>";
+                  rows += srcCard(id, i, s, j++ % 8);
+                });
+              });
+              if (rows) h += '<div class="lib-sec" style="--dc:var(' + a.c + ')"><h4>' + esc(a.name) + "</h4>" + rows + "</div>";
+            });
+            v.querySelector("#libBody").innerHTML = h || '<p class="prose" style="margin-top:16px">Nothing matches.</p>';
+          }
+          draw(q);
+          bindSrc(v.querySelector(".hub"));
+          v.querySelector("#libQ").addEventListener("input", function () { draw(this.value); });
+          v.querySelector("#lbBack").addEventListener("click", openHub);
+          requestAnimationFrame(function () {
+            setTimeout(function () { v.querySelector(".lib-prog i").style.width = srcPct() + "%"; }, 100);
+          });
+          if (q === undefined && fine) v.querySelector("#libQ").focus();
+        },
+      );
+    }
+    /* ---------- toolbox ---------- */
+    function nf(x, d) {
+      if (!isFinite(x)) return "n/a";
+      return x.toLocaleString("en-US", { maximumFractionDigits: d == null ? 2 : d, minimumFractionDigits: d == null ? 0 : d });
+    }
+    function npv(r, cf) {
+      var s = 0;
+      cf.forEach(function (c, t) { s += c / Math.pow(1 + r, t); });
+      return s;
+    }
+    function irr(cf) {
+      var lo = -0.99, hi = 10, i;
+      if (npv(lo, cf) * npv(hi, cf) > 0) return NaN;
+      for (i = 0; i < 120; i++) {
+        var m = (lo + hi) / 2;
+        if (npv(lo, cf) * npv(m, cf) <= 0) hi = m;
+        else lo = m;
+      }
+      return (lo + hi) / 2;
+    }
+    var TOOLS = [
+      { id: "loan", n: "Loan payment", f: [["P", "Loan amount", 500000], ["r", "Annual rate %", 5], ["y", "Years", 20]], c: function (v) {
+        var r = v.r / 1200, n = v.y * 12, p = r ? (v.P * r) / (1 - Math.pow(1 + r, -n)) : v.P / n;
+        return [["Monthly payment", nf(p, 2)], ["Total paid", nf(p * n, 0)], ["Total interest", nf(p * n - v.P, 0)]];
+      } },
+      { id: "npv", n: "NPV and IRR", f: [["r", "Discount rate %", 10], ["cf", "Cash flows, year 0 first", "-1000, 300, 400, 500, 200", "wide"]], c: function (v) {
+        var cf = String(v.cf).split(/[,;\s]+/).filter(Boolean).map(Number).filter(function (x) { return !isNaN(x); });
+        if (cf.length < 2) return [["NPV", "n/a"]];
+        var pb = "never", cum = 0, i;
+        for (i = 0; i < cf.length; i++) { var pv = cum; cum += cf[i]; if (cum >= 0 && i > 0) { pb = nf(i - 1 + -pv / cf[i], 1) + " yrs"; break; } }
+        var ir = irr(cf);
+        return [["NPV", nf(npv(v.r / 100, cf), 2)], ["IRR", isNaN(ir) ? "n/a" : nf(ir * 100, 2) + "%"], ["Payback", pb], ["Decision", npv(v.r / 100, cf) > 0 ? "Accept" : "Reject"]];
+      } },
+      { id: "cagr", n: "Growth and CAGR", f: [["a", "Start value", 100], ["b", "End value", 180], ["y", "Years", 5]], c: function (v) {
+        var g = Math.pow(v.b / v.a, 1 / v.y) - 1;
+        return [["CAGR", nf(g * 100, 2) + "%"], ["Total growth", nf((v.b / v.a - 1) * 100, 1) + "%"], ["Rule of 72 doubling", nf(72 / (g * 100), 1) + " yrs"]];
+      } },
+      { id: "wacc", n: "WACC", f: [["E", "Equity value", 600], ["D", "Debt value", 400], ["re", "Cost of equity %", 11], ["rd", "Cost of debt %", 6], ["t", "Tax rate %", 31]], c: function (v) {
+        var V = v.E + v.D, w = (v.E / V) * v.re + (v.D / V) * v.rd * (1 - v.t / 100);
+        return [["WACC", nf(w, 2) + "%"], ["Equity weight", nf((v.E / V) * 100, 1) + "%"], ["After-tax cost of debt", nf(v.rd * (1 - v.t / 100), 2) + "%"]];
+      } },
+      { id: "ratio", n: "Ratios", f: [["rev", "Revenue", 1000], ["ni", "Net income", 90], ["ta", "Total assets", 1200], ["eq", "Equity", 500], ["ca", "Current assets", 600], ["cl", "Current liabilities", 400], ["inv", "Inventory", 150], ["debt", "Total debt", 450]], c: function (v) {
+        return [["Net margin", nf((v.ni / v.rev) * 100, 1) + "%"], ["ROA", nf((v.ni / v.ta) * 100, 1) + "%"], ["ROE", nf((v.ni / v.eq) * 100, 1) + "%"], ["Current ratio", nf(v.ca / v.cl, 2)], ["Quick ratio", nf((v.ca - v.inv) / v.cl, 2)], ["Debt / equity", nf(v.debt / v.eq, 2)], ["Asset turnover", nf(v.rev / v.ta, 2)], ["Equity multiplier", nf(v.ta / v.eq, 2)]];
+      } },
+      { id: "bond", n: "Bond price", f: [["F", "Face value", 1000], ["cp", "Coupon %", 5], ["y", "Yield %", 6], ["n", "Years", 10], ["m", "Payments per year", 2]], c: function (v) {
+        var m = v.m || 1, N = Math.round(v.n * m), c = (v.F * v.cp) / 100 / m, y = v.y / 100 / m, P = 0, W = 0, k;
+        for (k = 1; k <= N; k++) { var pv = (c + (k === N ? v.F : 0)) / Math.pow(1 + y, k); P += pv; W += (k / m) * pv; }
+        var D = W / P;
+        return [["Price", nf(P, 2)], ["Macaulay duration", nf(D, 2) + " yrs"], ["Modified duration", nf(D / (1 + y), 2)], ["Price vs face", nf((P / v.F - 1) * 100, 1) + "%"]];
+      } },
+      { id: "be", n: "Break-even", f: [["fc", "Fixed costs", 50000], ["p", "Price per unit", 80], ["vc", "Variable cost per unit", 45]], c: function (v) {
+        var u = v.fc / (v.p - v.vc);
+        return [["Break-even units", nf(Math.ceil(u), 0)], ["Break-even revenue", nf(u * v.p, 0)], ["Contribution margin", nf(((v.p - v.vc) / v.p) * 100, 1) + "%"]];
+      } },
+    ];
+    function openToolbox(which) {
+      var cur = which || (V8().tb || "loan");
+      veil(
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="tbT"><h3 id="tbT">Toolbox</h3><p>Check your Excel models with quick calculators. Results update as you type.</p><div class="tabs2" id="tbTabs">' +
+          TOOLS.map(function (t) { return '<button data-t="' + t.id + '" aria-pressed="' + (t.id === cur) + '">' + t.n + "</button>"; }).join("") +
+          '</div><div id="tbBody"></div><div class="acts"><button class="btn ghost" id="tbBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        function (v) {
+          var last = [];
+          function render() {
+            var t = TOOLS.filter(function (x) { return x.id === cur; })[0];
+            V8().tb = cur;
+            var saved = (V8().tbv || {})[cur] || {};
+            v.querySelector("#tbBody").innerHTML =
+              '<div class="fld">' + t.f.map(function (f) {
+                var val = saved[f[0]] != null ? saved[f[0]] : f[2];
+                return '<label class="' + (f[3] || "") + '">' + f[1] + '<input data-k="' + f[0] + '" value="' + esc(val) + '" inputmode="' + (typeof f[2] === "number" ? "decimal" : "text") + '" autocomplete="off"></label>';
+              }).join("") + '</div><div class="res" id="tbRes"></div>';
+            last = [];
+            calc();
+          }
+          function calc() {
+            var t = TOOLS.filter(function (x) { return x.id === cur; })[0], vals = {}, store = {};
+            [].forEach.call(v.querySelectorAll("#tbBody input"), function (i) {
+              var f = t.f.filter(function (x) { return x[0] === i.dataset.k; })[0];
+              store[i.dataset.k] = i.value;
+              vals[i.dataset.k] = typeof f[2] === "number" ? parseFloat(String(i.value).replace(",", ".")) || 0 : i.value;
+            });
+            if (!V8().tbv) V8().tbv = {};
+            V8().tbv[cur] = store;
+            var out = t.c(vals);
+            v.querySelector("#tbRes").innerHTML = out.map(function (o, i) {
+              return '<div class="' + (last[i] !== o[1] ? "fl" : "") + '"><b>' + o[1] + "</b><span>" + o[0] + "</span></div>";
+            }).join("");
+            last = out.map(function (o) { return o[1]; });
+          }
+          v.querySelector("#tbTabs").addEventListener("click", function (e) {
+            var b = e.target.closest("button");
+            if (!b) return;
+            cur = b.dataset.t;
+            [].forEach.call(this.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === b); });
+            render();
+          });
+          v.querySelector("#tbBody").addEventListener("input", function () { calc(); clearTimeout(window.__tbp); window.__tbp = setTimeout(persist, 600); });
+          v.querySelector("#tbBack").addEventListener("click", openHub);
+          render();
+        },
+      );
+    }
+    /* ---------- glossary (EN / FR) ---------- */
+    var GLOSS = [
+      ["Asset", "Actif", "A resource the firm controls that is expected to bring future economic benefits."],
+      ["Liability", "Passif / dette", "A present obligation to give up economic resources."],
+      ["Equity", "Capitaux propres", "Assets minus liabilities: the owners’ residual claim."],
+      ["Accrual", "Comptabilité d’engagement", "Record income and expense when earned or incurred, not when cash moves."],
+      ["Depreciation", "Amortissement", "Spreading the cost of a tangible asset over its useful life."],
+      ["Provision", "Provision", "A liability of uncertain timing or amount that is probable and measurable."],
+      ["Working capital", "Besoin en fonds de roulement (BFR)", "Operating current assets minus operating current liabilities."],
+      ["EBITDA", "EBE / EBITDA", "Earnings before interest, tax, depreciation and amortisation."],
+      ["Free cash flow", "Flux de trésorerie disponible", "Operating cash flow minus capital expenditure."],
+      ["Net present value", "Valeur actuelle nette (VAN)", "Present value of future cash flows minus the initial investment."],
+      ["Internal rate of return", "Taux de rentabilité interne (TRI)", "The discount rate that makes NPV equal zero."],
+      ["WACC", "Coût moyen pondéré du capital (CMPC)", "Blended cost of equity and debt, weighted by capital structure."],
+      ["Leverage", "Effet de levier", "Using debt to amplify returns, and risk, on equity."],
+      ["Liquidity", "Liquidité", "Ability to meet short-term obligations with available cash."],
+      ["Solvency", "Solvabilité", "Ability to meet long-term obligations."],
+      ["Materiality", "Seuil de signification", "The size of error that could change a user’s decision."],
+      ["Internal control", "Contrôle interne", "Processes that protect assets and make reporting reliable."],
+      ["Substantive test", "Contrôle de substance", "Audit procedure that checks amounts and disclosures directly."],
+      ["Going concern", "Continuité d’exploitation", "Assumption that the entity will keep operating for the foreseeable future."],
+      ["Impairment", "Dépréciation", "Writing an asset down when its carrying value exceeds its recoverable amount."],
+      ["Non-performing loan", "Créance douteuse / NPL", "A loan where payments are significantly overdue."],
+      ["Expected credit loss", "Perte de crédit attendue", "Probability-weighted estimate of credit losses (IFRS 9)."],
+      ["Probability of default", "Probabilité de défaut (PD)", "Likelihood a borrower fails to repay within a period."],
+      ["Loss given default", "Perte en cas de défaut (LGD)", "Share of exposure lost if the borrower defaults."],
+      ["Covenant", "Engagement contractuel (covenant)", "Condition in a loan agreement the borrower must respect."],
+      ["Premium", "Prime d’assurance", "The price paid for insurance cover."],
+      ["Reinsurance", "Réassurance", "Insurance bought by an insurer to share its risk."],
+      ["Combined ratio", "Ratio combiné", "Claims plus expenses divided by premiums. Below 100% means underwriting profit."],
+      ["Yield to maturity", "Taux de rendement actuariel", "Annual return if a bond is held to maturity."],
+      ["Duration", "Duration / sensibilité", "Weighted average time to cash flows, and a gauge of rate sensitivity."],
+      ["Hedging", "Couverture", "Taking a position to offset another risk."],
+      ["Option", "Option", "Right, not obligation, to buy or sell at a set price."],
+      ["Beta", "Bêta", "Sensitivity of a stock’s returns to market returns."],
+      ["Standard deviation", "Écart-type", "A measure of how widely returns are spread around the mean."],
+      ["Diversification", "Diversification", "Spreading investments so that individual risks offset."],
+      ["Synergy", "Synergie", "Value created when two firms combine beyond their separate values."],
+      ["Terminal value", "Valeur terminale", "Value of cash flows beyond the explicit forecast period."],
+      ["Enterprise value", "Valeur d’entreprise", "Equity value plus net debt: what the whole business is worth."],
+      ["Withholding tax", "Retenue à la source", "Tax deducted at source on a payment such as interest or dividends."],
+      ["VAT", "TVA", "Value added tax, charged at each stage and recovered on inputs."],
+      ["Corporate income tax", "Impôt sur les sociétés (IS)", "Tax on a company’s taxable profit."],
+      ["Budget variance", "Écart budgétaire", "Difference between actual and budgeted figures."],
+      ["Bank reconciliation", "État de rapprochement bancaire", "Matching the cash book to the bank statement and explaining differences."],
+    ];
+    function openGlossary() {
+      veil(
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="glT"><h3 id="glT">Glossary</h3><p>English and French side by side, because interviews in Morocco switch between both.</p><div class="lib-h"><input class="field2" id="glQ" type="search" placeholder="Search a term in English or French" autocomplete="off" /></div><div class="gl" id="glB"></div><div class="acts"><button class="btn ghost" id="glBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        function (v) {
+          function draw(f) {
+            f = (f || "").toLowerCase();
+            v.querySelector("#glB").innerHTML = GLOSS.filter(function (g) { return !f || (g[0] + " " + g[1] + " " + g[2]).toLowerCase().indexOf(f) > -1; }).map(function (g, i) {
+              return '<div style="animation-delay:' + Math.min(i, 12) * 30 + 'ms"><b>' + esc(g[0]) + "</b><em>" + esc(g[1]) + "</em><p>" + esc(g[2]) + "</p></div>";
+            }).join("") || '<p class="prose">Nothing matches.</p>';
+          }
+          draw();
+          v.querySelector("#glQ").addEventListener("input", function () { draw(this.value); });
+          v.querySelector("#glBack").addEventListener("click", openHub);
+        },
+      );
+    }
+    /* ---------- Excel sheet ---------- */
+    var XL = [
+      ["XLOOKUP", "=XLOOKUP(key, lookup_range, return_range, \"not found\")", "Lookup in any direction. Replaces VLOOKUP.", "Lookup"],
+      ["INDEX/MATCH", "=INDEX(return_range, MATCH(key, lookup_range, 0))", "Flexible lookup that works in every Excel version.", "Lookup"],
+      ["SUMIFS", "=SUMIFS(sum_range, range1, crit1, range2, crit2)", "Sum with several conditions.", "Aggregate"],
+      ["COUNTIFS", "=COUNTIFS(range1, crit1, range2, crit2)", "Count rows meeting several conditions.", "Aggregate"],
+      ["SUMPRODUCT", "=SUMPRODUCT(range1, range2)", "Weighted totals and conditional math without helper columns.", "Aggregate"],
+      ["IFERROR", "=IFERROR(formula, \"\")", "Catch errors cleanly.", "Logic"],
+      ["IF + AND/OR", "=IF(AND(a>0, b>0), \"ok\", \"check\")", "Combined tests for flags and checks.", "Logic"],
+      ["PV", "=PV(rate, nper, pmt, [fv])", "Present value of payments or a lump sum.", "Finance"],
+      ["FV", "=FV(rate, nper, pmt, [pv])", "Future value of an investment.", "Finance"],
+      ["PMT", "=PMT(rate/12, years*12, -loan)", "Loan payment per period.", "Finance"],
+      ["NPV", "=NPV(rate, year1:yearN) + year0", "Excel NPV discounts from period 1, so add year 0 yourself.", "Finance"],
+      ["IRR / XIRR", "=XIRR(values, dates)", "Return for regular or dated cash flows.", "Finance"],
+      ["RATE", "=RATE(nper, pmt, pv)", "Interest rate implied by a loan or annuity.", "Finance"],
+      ["PRICE / YIELD", "=PRICE(settle, maturity, rate, yld, redemption, freq)", "Bond price from a yield, and the reverse with YIELD.", "Finance"],
+      ["DURATION", "=DURATION(settle, maturity, coupon, yld, freq)", "Macaulay duration of a bond.", "Finance"],
+      ["EOMONTH", "=EOMONTH(start, months)", "Month-end dates for timelines and schedules.", "Date"],
+      ["EDATE", "=EDATE(start, months)", "Same day, N months later.", "Date"],
+      ["TEXTJOIN", "=TEXTJOIN(\", \", TRUE, range)", "Join text with a separator, skipping blanks.", "Text"],
+      ["TRIM / CLEAN", "=TRIM(CLEAN(cell))", "Remove stray spaces and hidden characters from imported data.", "Text"],
+      ["Named range", "Formulas > Define Name", "Give inputs readable names such as TaxRate.", "Model"],
+      ["Data validation", "Data > Data Validation", "Restrict inputs to a list or range.", "Model"],
+      ["Goal Seek", "Data > What-If > Goal Seek", "Find the input that produces a target result.", "Model"],
+      ["Data table", "Data > What-If > Data Table", "Sensitivity table across two inputs.", "Model"],
+      ["Check cell", "=IF(ABS(assets-(liabilities+equity))<0.01,0,1)", "Balance check for every three-statement model.", "Model"],
+      ["Ctrl + Shift + L", "Ctrl + Shift + L", "Toggle filters.", "Shortcut"],
+      ["Ctrl + T", "Ctrl + T", "Turn a range into a Table.", "Shortcut"],
+      ["F4", "F4", "Cycle absolute and relative references.", "Shortcut"],
+      ["Ctrl + [", "Ctrl + [", "Jump to precedent cells.", "Shortcut"],
+      ["Ctrl + `", "Ctrl + `", "Show all formulas on the sheet.", "Shortcut"],
+      ["Alt + =", "Alt + =", "AutoSum.", "Shortcut"],
+      ["Ctrl + Arrow", "Ctrl + Arrow", "Jump to the edge of data.", "Shortcut"],
+      ["Ctrl + Shift + Arrow", "Ctrl + Shift + Arrow", "Select to the edge of data.", "Shortcut"],
+      ["Alt, H, O, I", "Alt, H, O, I", "Autofit column width.", "Shortcut"],
+      ["Power Query", "Data > Get Data", "Import, clean and combine files without formulas. Refresh in one click.", "Data"],
+      ["PivotTable", "Insert > PivotTable", "Summarise thousands of rows in seconds.", "Data"],
+    ];
+    function openExcel() {
+      var cats = ["All"].concat(XL.reduce(function (a, x) { return a.indexOf(x[3]) < 0 ? a.concat(x[3]) : a; }, [])),
+        cat = "All";
+      veil(
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="xlT"><h3 id="xlT">Excel sheet</h3><p>Tap any entry to copy it.</p><div class="tabs2" id="xlTabs">' +
+          cats.map(function (c) { return '<button data-c="' + c + '" aria-pressed="' + (c === cat) + '">' + c + "</button>"; }).join("") +
+          '</div><div class="lib-h" style="margin-top:6px"><input class="field2" id="xlQ" type="search" placeholder="Search a function or shortcut" autocomplete="off" /></div><div class="xl" id="xlB"></div><div class="acts"><button class="btn ghost" id="xlBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        function (v) {
+          function draw() {
+            var f = v.querySelector("#xlQ").value.toLowerCase();
+            v.querySelector("#xlB").innerHTML = XL.filter(function (x) { return (cat === "All" || x[3] === cat) && (!f || (x[0] + x[1] + x[2]).toLowerCase().indexOf(f) > -1); }).map(function (x, i) {
+              return '<button data-i="' + XL.indexOf(x) + '" style="animation-delay:' + Math.min(i, 12) * 30 + 'ms"><code>' + esc(x[1]) + "</code><span><b>" + esc(x[0]) + "</b> · " + esc(x[2]) + "</span></button>";
+            }).join("");
+          }
+          draw();
+          v.querySelector("#xlQ").addEventListener("input", draw);
+          v.querySelector("#xlTabs").addEventListener("click", function (e) {
+            var b = e.target.closest("button");
+            if (!b) return;
+            cat = b.dataset.c;
+            [].forEach.call(this.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === b); });
+            draw();
+          });
+          v.querySelector("#xlB").addEventListener("click", function (e) {
+            var b = e.target.closest("button");
+            if (!b) return;
+            var t = XL[+b.dataset.i][1];
+            try {
+              navigator.clipboard.writeText(t).then(function () { toast("Copied"); }, function () { toast(t); });
+            } catch (er) {
+              toast(t);
+            }
+          });
+          v.querySelector("#xlBack").addEventListener("click", openHub);
+        },
+      );
+    }
+    /* ---------- interview drill ---------- */
+    var IVQ = [
+      ["Motivation", "Why finance, and why Morocco’s market in particular?", "A concrete story, one or two skills you built, and a link to the firm’s work."],
+      ["Motivation", "Why audit rather than banking, or the reverse?", "Be honest about what you like in the work itself. Show you understand the day to day."],
+      ["Motivation", "Where do you see yourself in five years?", "Growth inside the firm: certification, responsibility, a specialty. Avoid vague answers."],
+      ["Accounting", "Walk me through the three financial statements and how they link.", "Net income to retained earnings, cash from the balance sheet changes, the cash flow ties to the balance sheet cash."],
+      ["Accounting", "If depreciation rises by 100, what happens to the three statements?", "Net income falls, assets fall, cash flow adds back depreciation and tax effects change cash slightly."],
+      ["Accounting", "What is the difference between cash and accrual accounting?", "Timing of recognition; why accrual gives a fairer picture; an example with a credit sale."],
+      ["Analysis", "A company’s margins are falling while revenue grows. What do you check?", "Pricing, input costs, mix, one-offs, operating leverage, then cash conversion."],
+      ["Analysis", "Which ratios would you look at first for a new company?", "Liquidity, leverage, profitability, efficiency, with a reason for each."],
+      ["Corporate finance", "What is WACC and why does it matter?", "Blended cost of capital, the discount rate for valuation, how debt and tax change it."],
+      ["Corporate finance", "A project has a positive NPV but a low IRR. How can that be?", "Check discount rate, cash flow shape or scale, non-conventional flows, compare mutually exclusive options."],
+      ["Valuation", "Walk me through a DCF.", "Forecast FCF, discount at WACC, terminal value, enterprise to equity bridge, sensitivity."],
+      ["Valuation", "How would you value a company with negative earnings?", "Revenue multiples, DCF with a path to profit, sum of parts, comparable transactions."],
+      ["Audit", "What is materiality and how is it used?", "Threshold for decision-relevant misstatements; planning, evaluating errors, qualitative factors."],
+      ["Audit", "How would you test revenue for fraud risk?", "Cut-off, confirmations, unusual journals, analytics, contracts to cash."],
+      ["Audit", "What are internal controls and how do you test them?", "Design and operating effectiveness, walkthroughs, inspection, re-performance, sampling."],
+      ["Credit", "How would you decide whether to lend to this company?", "Cash flow repayment capacity, leverage, collateral, covenants, sector risk, management."],
+      ["Credit", "What are the five Cs of credit?", "Character, capacity, capital, collateral, conditions, with one example of each."],
+      ["Banking", "What is the difference between PD, LGD and EAD?", "Probability, severity, exposure; expected loss equals their product."],
+      ["Insurance", "How does an insurer make money?", "Underwriting margin and investment income, combined ratio, reserves, reinsurance."],
+      ["Markets", "If interest rates rise, what happens to bond prices and why?", "Inverse relationship, discounting, duration as the measure of sensitivity."],
+      ["Markets", "What is the difference between a forward and an option?", "Obligation versus right, payoff shape, cost upfront."],
+      ["Excel", "How do you check a financial model is correct?", "Balance checks, formula tracing, sensitivity sanity, no hardcodes, separate inputs and outputs."],
+      ["Excel", "VLOOKUP, INDEX/MATCH or XLOOKUP: which and why?", "XLOOKUP for flexibility and readability, INDEX/MATCH for compatibility, avoid VLOOKUP column counting."],
+      ["Morocco", "What does the AMMC do, and how is it different from Bank Al-Maghrib?", "Capital market regulator versus central bank and banking supervisor."],
+      ["Morocco", "Name one trend affecting Moroccan banks today.", "Pick one you have actually read about, explain the effect on margins or risk."],
+      ["Behaviour", "Tell me about a time you worked under a tight deadline.", "Situation, your action, result, what you learned. Keep it under two minutes."],
+      ["Behaviour", "Tell me about a mistake you made and how you fixed it.", "Own it, show the fix, show what changed in your process."],
+      ["Behaviour", "Describe a time you explained something technical to a non-expert.", "Know your audience, simple analogy, check understanding."],
+    ];
+    function openInterview() {
+      var q = null, T = 120, tmr = 0;
+      veil(
+        '<div class="modal hub" role="dialog" aria-modal="true" aria-labelledby="ivT"><h3 id="ivT">Interview drill</h3><p>Answer out loud, in English or French, before you look at the hint. <span id="ivN"></span></p><div class="iv" id="ivB"></div><div class="acts"><button class="btn ghost" id="ivBack">Back</button><button class="btn" data-x="1">Close</button></div></div>',
+        function (v) {
+          function pick(c) {
+            var pool = IVQ.filter(function (x) { return !c || x[0] === c; });
+            q = pool[Math.floor(Math.random() * pool.length)];
+            T = 120;
+            draw(false);
+            clearInterval(tmr);
+            tmr = setInterval(tick, 1000);
+          }
+          function tick() {
+            if (v.hidden || !v.querySelector("#ivTm")) return clearInterval(tmr);
+            T = Math.max(0, T - 1);
+            var el = v.querySelector("#ivTm");
+            el.textContent = fmt(T);
+            el.classList.toggle("low", T <= 15);
+            if (!T) clearInterval(tmr);
+          }
+          function draw(show) {
+            v.querySelector("#ivN").textContent = (V8().iv || 0) + " practised so far.";
+            v.querySelector("#ivB").innerHTML =
+              '<span class="cat">' + q[0] + '</span><div class="q">' + esc(q[1]) + '</div><div class="tm" id="ivTm">' + fmt(T) + "</div>" +
+              (show ? '<div class="hintx"><b>A strong answer covers:</b> ' + esc(q[2]) + "</div>" : "") +
+              '<div class="row"><button class="btn ghost" id="ivH">' + (show ? "Hide hint" : "Show hint") + '</button><button class="btn ghost" id="ivNx">Another</button><button class="btn" id="ivD">Practised ✓</button></div>';
+            v.querySelector("#ivH").onclick = function () { draw(!show); };
+            v.querySelector("#ivNx").onclick = function () { pick(); };
+            v.querySelector("#ivD").onclick = function () {
+              V8().iv = (V8().iv || 0) + 1;
+              V8().xb += 5;
+              persist();
+              var r = this.getBoundingClientRect();
+              xpop("+5 XP", r.left + r.width / 2, r.top);
+              confetti(r.left + r.width / 2, r.top, 30);
+              v8refresh();
+              pick();
+            };
+          }
+          v.querySelector("#ivBack").addEventListener("click", function () { clearInterval(tmr); openHub(); });
+          pick();
+        },
+      );
+    }
+    /* ---------- hub additions ---------- */
+    var TIPS = [
+      "Explain it out loud. If you cannot say it simply, you do not own it yet.",
+      "Build every model from a blank sheet at least once. Templates teach less than mistakes.",
+      "Twenty minutes a day beats a six-hour Sunday. Keep the streak alive on the bad days.",
+      "Check the balance sheet balances before you check anything else.",
+      "Change one assumption and predict the result before you look. That is the real test.",
+      "Read one real annual report page a day. Learn what the notes actually say.",
+      "Practise in French and English: the same concept, two vocabularies.",
+      "When stuck, reduce the problem to a three-line example with round numbers.",
+      "Write down what you got wrong. That list is your best revision sheet.",
+      "Sleep counts as study. Memory is built overnight.",
+    ];
+    var OPENERS = { library: openLibrary, toolbox: openToolbox, glossary: openGlossary, excel: openExcel, interview: openInterview, atelier: function () { openAtelier(); }, look: function () { openAppearance(); } };
+    var _openHub = openHub;
+    openHub = function () {
+      _openHub();
+      var h = $("#veil .hub");
+      if (!h) return;
+      var acts = h.querySelector(".acts"),
+        tip = TIPS[hashStr(dayKey(new Date())) % TIPS.length],
+        d = document.createElement("div");
+      d.innerHTML =
+        '<h4 class="stg" style="--i:9">Toolkit</h4><div class="tiles t3 stg" style="--i:10">' +
+        [["library", "▤", "Library"], ["toolbox", "∑", "Toolbox"], ["glossary", "Aa", "Glossary"], ["excel", "fx", "Excel"], ["interview", "?", "Interview"], ["look", "◐", "Themes"]]
+          .map(function (t) { return '<button class="tile" data-open="' + t[0] + '"><i>' + t[1] + "</i><b>" + t[2] + "</b></button>"; })
+          .join("") +
+        '</div><div class="tipc stg" style="--i:11"><b>Tip of the day</b>' + esc(tip) + "</div>";
+      while (d.firstChild) h.insertBefore(d.firstChild, acts);
+      h.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-open]");
+        if (!b) return;
+        $("#veil").hidden = true;
+        OPENERS[b.dataset.open]();
+      });
+      [].forEach.call(h.querySelectorAll(".tile[data-open]"), function (t) {
+        t.addEventListener("pointermove", function (e) {
+          var r = t.getBoundingClientRect();
+          t.style.transform = "perspective(500px) rotateX(" + (((e.clientY - r.top) / r.height - 0.5) * -8).toFixed(1) + "deg) rotateY(" + (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(1) + "deg) translateY(-2px)";
+        });
+        t.addEventListener("pointerleave", function () { t.style.transform = ""; });
+      });
+    };
+    hubBtn.removeEventListener("click", _openHub);
+    hubBtn.addEventListener("click", function () { openHub(); });
+    /* ---------- palette commands and keys ---------- */
+    var _pc9 = palCommands;
+    palCommands = function () {
+      var c = _pc9();
+      c.splice(4, 0,
+        { t: "Library: free sources for every subject", s: "Links · L", k: "library sources links books free study openstax khan damodaran", run: function () { openLibrary(); } },
+        { t: "Toolbox: finance calculators", s: "NPV, IRR, loan, WACC · T", k: "calculator toolbox npv irr loan wacc bond cagr ratio break-even", run: function () { openToolbox(); } },
+        { t: "Glossary: English and French", s: "Terms · G", k: "glossary dictionary french français terms vocabulary", run: openGlossary },
+        { t: "Excel sheet: functions and shortcuts", s: "Cheat sheet · X", k: "excel cheat sheet shortcuts functions xlookup sumifs", run: openExcel },
+        { t: "Interview drill", s: "Practice · I", k: "interview questions practice drill behavioural", run: openInterview });
+      return c;
+    };
+    window.addEventListener("keydown", function (e) {
+      var t = e.target;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+      if (!$("#veil").hidden || !$("#pal").hidden || !fo.hidden) return;
+      var k = e.key.toLowerCase();
+      if (k === "l") openLibrary();
+      else if (k === "t") openToolbox();
+      else if (k === "g") openGlossary();
+      else if (k === "x") openExcel();
+      else if (k === "i") openInterview();
+    });
+    /* ---------- progress line, stagger, swipe between views ---------- */
+    var prog = document.createElement("div");
+    prog.id = "prog";
+    $("#app").appendChild(prog);
+    function updProg() {
+      prog.style.width = allStats().p + "%";
+    }
+    var _ua9 = updateAll;
+    updateAll = function (s) {
+      _ua9(s);
+      updProg();
+    };
+    var _rv9 = renderView;
+    renderView = function () {
+      _rv9();
+      [].forEach.call($("#view").children, function (c, i) {
+        c.style.setProperty("--si", Math.min(i, 8));
+      });
+    };
+    (function () {
+      var sx = 0, sy = 0, st = 0, ok = false;
+      var host = $("#view");
+      host.addEventListener("touchstart", function (e) {
+        var t = e.touches[0];
+        sx = t.clientX; sy = t.clientY; st = Date.now();
+        ok = e.touches.length === 1 && !e.target.closest("canvas, input, textarea, .tabs2, [data-noswipe]");
+      }, { passive: true });
+      host.addEventListener("touchend", function (e) {
+        if (!ok) return;
+        var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.abs(dx) < 80 || Math.abs(dy) > 50 || Date.now() - st > 600) return;
+        var i = VIEWS.indexOf($("#app").dataset.view), n = i + (dx < 0 ? 1 : -1);
+        if (n < 0 || n >= VIEWS.length) return;
+        var a = $("#app");
+        a.classList.remove("dir-l", "dir-r");
+        a.classList.add(dx < 0 ? "dir-r" : "dir-l");
+        setView(VIEWS[n]);
+        setTimeout(function () { a.classList.remove("dir-l", "dir-r"); }, 800);
+      }, { passive: true });
+    })();
+    updProg();
 
     /* ---------- boot ---------- */
     function updateAll(soft) {
