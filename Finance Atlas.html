@@ -1,0 +1,905 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Finance Atlas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a night map. Seven constellations of subjects around a hub, a pannable canvas;
+   the index (overall mastery, areas, progress) sits as a quiet ledger on the right; a subject opens as a folio. */
+:root{
+  --bg:#09090A; --bg2:#121213; --ink:#ECE9E2; --mute:#8E8B85; --faint:#4B4A47;
+  --rule:rgba(236,233,226,.12); --rule2:rgba(236,233,226,.22); --glass:rgba(10,10,11,.72);
+  --acc:#E9A23B; --good:#8FD1A8; --bad:#E8857A;
+  --c1:#E9A23B; --c2:#4FB3A9; --c3:#A593FF; --c4:#5AA2F2; --c5:#E8857A; --c6:#8FD1A8; --c7:#D58FC0;
+  --serif:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:"Geist","Helvetica Neue","Segoe UI",system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --gx:max(16px,env(safe-area-inset-left,0px)); --gxr:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#ECECE8; --bg2:#E2E2DD; --ink:#151515; --mute:#64625D; --faint:#A6A49E;
+  --rule:rgba(21,21,21,.13); --rule2:rgba(21,21,21,.26); --glass:rgba(236,236,232,.78);
+  --acc:#B8460F; --good:#2E7D55; --bad:#B3402F;
+  --c1:#B8660F; --c2:#1E8077; --c3:#6A55D6; --c4:#2A6FC4; --c5:#C24B3A; --c6:#2E7D55; --c7:#A5428D;
+  color-scheme:light; } }
+:root[data-theme="light"]{
+  --bg:#ECECE8; --bg2:#E2E2DD; --ink:#151515; --mute:#64625D; --faint:#A6A49E;
+  --rule:rgba(21,21,21,.13); --rule2:rgba(21,21,21,.26); --glass:rgba(236,236,232,.78);
+  --acc:#B8460F; --good:#2E7D55; --bad:#B3402F;
+  --c1:#B8660F; --c2:#1E8077; --c3:#6A55D6; --c4:#2A6FC4; --c5:#C24B3A; --c6:#2E7D55; --c7:#A5428D;
+  color-scheme:light; }
+:root[data-theme="dark"]{
+  --bg:#09090A; --bg2:#121213; --ink:#ECE9E2; --mute:#8E8B85; --faint:#4B4A47;
+  --rule:rgba(236,233,226,.12); --rule2:rgba(236,233,226,.22); --glass:rgba(10,10,11,.72);
+  --acc:#E9A23B; --good:#8FD1A8; --bad:#E8857A;
+  --c1:#E9A23B; --c2:#4FB3A9; --c3:#A593FF; --c4:#5AA2F2; --c5:#E8857A; --c6:#8FD1A8; --c7:#D58FC0;
+  color-scheme:dark; }
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+*{box-sizing:border-box}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;touch-action:manipulation}
+:focus-visible{outline:1.5px solid var(--acc);outline-offset:3px;border-radius:4px}
+::selection{background:var(--acc);color:var(--bg)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.serif{font-family:var(--serif);font-weight:400}
+
+.app{position:fixed;inset:0;background:var(--bg);color:var(--ink);overflow:hidden}
+.map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.map:active{cursor:grabbing}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 45% 45%,transparent 58%,color-mix(in srgb,var(--bg) 85%,transparent))}
+
+/* map elements */
+.edge{fill:none;stroke:var(--rule2);stroke-width:1;transition:stroke .3s,opacity .3s}
+.edge.hi{stroke:var(--ink);stroke-width:1.4}
+.spoke{fill:none;stroke:var(--rule);stroke-width:1;stroke-dasharray:2 6}
+.hub-ring{fill:none;stroke:var(--rule2);stroke-width:1}
+.hub-t1{font-family:var(--serif);font-style:italic;font-size:26px;fill:var(--ink);text-anchor:middle}
+.hub-t2{font-family:var(--mono);font-size:10px;letter-spacing:.14em;fill:var(--mute);text-anchor:middle;text-transform:uppercase}
+.cl-name{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;fill:var(--mute);text-anchor:middle}
+.cl-pct{font-family:var(--serif);font-size:34px;fill:var(--dc);text-anchor:middle}
+.node{cursor:pointer;outline:none}
+.node .in{animation:pop .9s var(--ease) both;transform-box:fill-box;transform-origin:center}
+.node .halo{fill:var(--dc);opacity:0;transition:opacity .3s}
+.node:hover .halo,.node:focus-visible .halo,.node.sel .halo{opacity:.16}
+.node .base{fill:var(--bg);stroke:var(--rule2);stroke-width:1.5;transition:fill .4s}
+.node[data-l="1"] .base{stroke:var(--mute)}
+.node[data-l="3"] .base{stroke-dasharray:3 4}
+.node.mastered .base{fill:color-mix(in srgb,var(--dc) 28%,var(--bg))}
+.node .ring{fill:none;stroke:var(--dc);stroke-width:3;stroke-linecap:round;transition:stroke-dasharray 1s var(--ease)}
+.node .nn{font-family:var(--mono);font-size:13px;fill:var(--ink);text-anchor:middle}
+.node .nl{font-family:var(--serif);font-style:italic;font-size:22px;fill:var(--ink);text-anchor:middle;paint-order:stroke;stroke:var(--bg);stroke-width:5px;stroke-linejoin:round}
+.node .nm{font-family:var(--mono);font-size:10.5px;fill:var(--mute);text-anchor:middle;paint-order:stroke;stroke:var(--bg);stroke-width:4px}
+.node:hover .nl,.node.sel .nl{fill:var(--dc)}
+.map[data-f="1"] .node:not([data-l="1"]),.map[data-f="2"] .node:not([data-l="2"]),.map[data-f="3"] .node:not([data-l="3"]){opacity:.16}
+.node{transition:opacity .4s}
+
+/* top */
+.top{position:absolute;z-index:20;top:calc(16px + env(safe-area-inset-top,0px));left:var(--gx);right:var(--gxr);display:flex;align-items:center;gap:16px;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{display:flex;align-items:baseline;gap:12px;min-width:0}
+.brand b{font-family:var(--serif);font-size:30px;font-weight:400;letter-spacing:-.01em;line-height:1;white-space:nowrap}
+.brand span{font-family:var(--mono);font-size:10.5px;color:var(--mute);letter-spacing:.08em;white-space:nowrap}
+.modes{margin:0 auto;display:flex;gap:2px;padding:3px;border:1px solid var(--rule2);border-radius:99px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);position:relative}
+.modes button{position:relative;z-index:1;height:30px;padding:0 16px;border-radius:99px;font-size:12.5px;color:var(--mute);transition:color .4s}
+.modes button[aria-pressed="true"]{color:var(--bg)}
+.modes .ink{position:absolute;top:3px;bottom:3px;left:0;border-radius:99px;background:var(--ink);transition:left .7s cubic-bezier(.34,1.4,.4,1),width .7s cubic-bezier(.34,1.4,.4,1)}
+.tright{display:flex;align-items:center;gap:10px}
+.sync{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.sync i{width:6px;height:6px;border-radius:50%;background:var(--faint)}
+.sync[data-s="synced"] i{background:var(--good)}
+.sync[data-s="saving"] i{background:var(--acc);animation:blink .7s infinite}
+.sync[data-s="local"] i{background:var(--mute)}
+.ibtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--rule2);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;transition:border-color .3s}
+.ibtn:hover{border-color:var(--ink)}
+.ibtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* canvas tools */
+.tools{position:absolute;z-index:15;left:var(--gx);bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.zoom{display:flex;gap:6px}
+.zoom button{height:32px;min-width:32px;padding:0 11px;border-radius:99px;border:1px solid var(--rule2);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-family:var(--mono);font-size:12px;transition:border-color .3s}
+.zoom button:hover{border-color:var(--ink)}
+.legend{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.legend .eyebrow{margin-right:4px}
+.fbtn{height:28px;padding:0 11px;border-radius:99px;border:1px solid var(--rule2);background:var(--glass);font-size:12px;color:var(--mute);transition:all .3s;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.06em}
+
+/* ledger */
+.ledger{position:absolute;z-index:10;right:var(--gxr);top:calc(70px + env(safe-area-inset-top,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));width:340px;display:flex;flex-direction:column;padding:20px 18px 0;border-top:1px solid var(--rule2);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:opacity .6s var(--ease),transform .8s var(--ease)}
+.big{margin-top:6px;font-family:var(--serif);font-size:96px;line-height:.8;letter-spacing:-.04em;display:flex;align-items:flex-start;gap:4px}
+.big sup{font-size:.26em;letter-spacing:0;margin-top:.3em;color:var(--mute);font-style:italic}
+.sb{display:flex;gap:3px;height:6px;margin:16px 0 10px}
+.sb i{flex:var(--t) 1 0;background:var(--rule);position:relative;border-radius:2px;overflow:hidden}
+.sb i b{position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--dc);transition:width 1.2s var(--ease)}
+.subl{font-family:var(--mono);font-size:11px;color:var(--mute);line-height:1.6}
+.next{margin-top:12px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--mute)}
+.next button{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:var(--rule2);transition:text-decoration-color .3s}
+.next button:hover{text-decoration-color:var(--acc)}
+.idx{margin-top:18px;padding-top:12px;border-top:1px solid var(--rule)}
+.areas{list-style:none;margin:6px 0 0;padding:0 0 30px;overflow:auto;flex:1;scrollbar-width:none;mask-image:linear-gradient(#000 calc(100% - 30px),transparent);-webkit-mask-image:linear-gradient(#000 calc(100% - 30px),transparent)}
+.areas::-webkit-scrollbar{display:none}
+.areas li{border-bottom:1px solid var(--rule);padding:12px 0;animation:rise .9s var(--ease) both;animation-delay:calc(var(--i)*60ms + 200ms)}
+.a-row{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:baseline}
+.a-row .ix{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.a-row .nm{font-family:var(--serif);font-size:22px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-row .pc{font-family:var(--mono);font-size:12px;text-align:right}
+.a-row .pc::after{content:"%";color:var(--faint)}
+.a-prog{height:1px;background:var(--rule);margin:9px 0 0 32px;position:relative}
+.a-prog i{position:absolute;left:0;top:-.5px;height:2px;width:var(--w);background:var(--dc);transition:width 1.2s var(--ease)}
+.rits{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0 32px}
+.rit{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px 0 7px;border-radius:99px;border:1px solid var(--rule2);font-size:12px;color:var(--mute);transition:all .35s var(--ease)}
+.rit i{width:11px;height:11px;border-radius:50%;border:1px solid currentColor;transition:all .35s var(--ease);position:relative;overflow:hidden;flex:none}
+.rit i::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--p,0%);background:var(--dc)}
+.rit:hover{border-color:var(--dc);color:var(--ink)}
+.rit[aria-pressed="true"]{color:var(--ink);border-color:var(--dc);background:color-mix(in srgb,var(--dc) 14%,transparent)}
+.rit[aria-pressed="true"] i{background:var(--dc);border-color:var(--dc);box-shadow:0 0 0 3px color-mix(in srgb,var(--dc) 22%,transparent)}
+.led-foot{display:flex;gap:8px;padding:12px 0 14px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.btn{height:34px;padding:0 16px;border-radius:99px;background:var(--ink);color:var(--bg);font-size:12.5px;font-weight:500;transition:transform .3s var(--ease);white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--rule2)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.danger{background:transparent;color:var(--bad);border:1px solid color-mix(in srgb,var(--bad) 45%,transparent)}
+
+/* drawer */
+.drawer{position:absolute;z-index:40;top:0;right:0;bottom:0;width:min(580px,100%);background:var(--bg);border-left:1px solid var(--rule2);display:flex;flex-direction:column;transform:translateX(102%);transition:transform .9s var(--ease),visibility 0s .9s;visibility:hidden;box-shadow:-40px 0 80px -40px rgba(0,0,0,.5)}
+.app.open .drawer{transform:none;visibility:visible;transition:transform .9s var(--ease),visibility 0s}
+.app.open .ledger{opacity:0;transform:translateX(30px);pointer-events:none}
+.dr-head{padding:calc(22px + env(safe-area-inset-top,0px)) 32px 0;position:relative}
+.dr-head .close{z-index:3;background:var(--bg);position:absolute;right:24px;top:calc(22px + env(safe-area-inset-top,0px));width:36px;height:36px;border-radius:50%;border:1px solid var(--rule2);display:grid;place-items:center;transition:transform .5s var(--ease),border-color .3s}
+.dr-head .close:hover{transform:rotate(90deg);border-color:var(--ink)}
+.dr-head .close svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round}
+.dr-head h1{margin:12px 0 0;padding-right:48px;font-family:var(--serif);font-weight:400;font-size:clamp(42px,6.4vw,66px);line-height:.92;letter-spacing:-.03em;overflow-wrap:anywhere;text-wrap:balance}
+.dr-head h1 em{color:var(--dc);font-style:italic}
+.dr-head .note{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--mute);margin:12px 0 0;line-height:1.35;max-width:48ch}
+.dr-stats{display:grid;grid-template-columns:repeat(4,1fr);margin:20px 0 0;border-top:1px solid var(--rule2);border-bottom:1px solid var(--rule)}
+.dr-stats div{padding:12px 0;border-right:1px solid var(--rule);min-width:0}
+.dr-stats div+div{padding-left:14px}
+.dr-stats div:last-child{border-right:0}
+.dr-stats b{display:block;font-family:var(--serif);font-size:30px;font-weight:400;line-height:1}
+.dr-stats span{font-family:var(--mono);font-size:9.5px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase}
+.dr-bar{height:2px;background:var(--rule);position:relative;margin-top:-1px}
+.dr-bar i{position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--dc);transition:width 1s var(--ease)}
+.dr-tabs{display:flex;gap:22px;padding:0 32px;margin-top:6px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
+.dr-tabs button{position:relative;padding:12px 0;font-size:13.5px;color:var(--mute);white-space:nowrap;transition:color .3s}
+.dr-tabs button[aria-selected="true"]{color:var(--ink)}
+.dr-tabs button[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1.5px;background:var(--dc)}
+.dr-body{flex:1;overflow:auto;padding:22px 32px 48px;overscroll-behavior:contain;scrollbar-width:thin}
+.grp{animation:rise .7s var(--ease) both;animation-delay:calc(var(--i,0)*70ms)}
+.grp+.grp{margin-top:26px}
+.grp-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1px solid var(--rule2);padding-bottom:8px}
+.grp-h h3{margin:0;font-family:var(--serif);font-weight:400;font-size:26px;letter-spacing:-.01em}
+.lnk{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);transition:color .3s}
+.lnk:hover{color:var(--ink)}
+.ck{list-style:none;margin:0;padding:0}
+.ck li{border-bottom:1px solid var(--rule)}
+.ci{display:grid;grid-template-columns:20px minmax(0,1fr);gap:14px;align-items:start;padding:12px 0;cursor:pointer;font-size:14px;line-height:1.45}
+.ci span{transition:color .3s}
+.check{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--rule2);display:grid;place-items:center;cursor:pointer;margin:1px 0 0;transition:all .3s;flex:none}
+.check:hover{border-color:var(--dc)}
+.check:checked{background:var(--dc);border-color:var(--dc)}
+.check:checked::after{content:"";width:5px;height:9px;border:solid var(--bg);border-width:0 1.6px 1.6px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.ci:has(.check:checked) span{color:var(--faint);text-decoration:line-through;text-decoration-thickness:1px}
+.prose{font-size:14px;color:var(--mute);line-height:1.65;margin:6px 0 14px;max-width:54ch}
+.deliver{font-family:var(--serif);font-size:26px;line-height:1.18;margin:8px 0 6px;letter-spacing:-.01em;text-wrap:pretty}
+.field{width:100%;border:0;border-bottom:1px solid var(--rule2);background:transparent;padding:8px 2px;border-radius:0;font-family:var(--serif);font-size:19px;line-height:1.5;resize:vertical;min-height:90px;transition:border-color .3s}
+.field:focus{outline:none;border-color:var(--dc,var(--acc))}
+.field::placeholder{color:var(--faint)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+
+/* views */
+.view{position:absolute;z-index:8;left:var(--gx);right:calc(var(--gxr) + 372px);top:calc(70px + env(safe-area-inset-top,0px));bottom:0;overflow:auto;padding:20px 10px calc(60px + env(safe-area-inset-bottom,0px)) 0;scrollbar-width:thin;background:var(--bg)}
+.view[hidden]{display:none}
+.view h2{margin:8px 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(40px,5vw,64px);line-height:.95;letter-spacing:-.03em;text-wrap:balance}
+.blk{display:grid;grid-template-columns:130px minmax(0,1fr);gap:22px;padding:22px 0;border-bottom:1px solid var(--rule);animation:rise .8s var(--ease) both;animation-delay:calc(var(--i)*70ms)}
+.blk .when{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase;padding-top:8px}
+.blk h3{margin:0;font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.02;letter-spacing:-.01em}
+.blk .out{font-size:13.5px;color:var(--mute);line-height:1.6;margin:10px 0 0;max-width:60ch}
+.sec-h{font-family:var(--serif);font-size:34px;font-weight:400;margin:40px 0 4px;letter-spacing:-.01em}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 28px}
+.trk{padding:14px 0;border-bottom:1px solid var(--rule)}
+.trk h4{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:22px}
+.trk p{margin:0;font-size:13px;color:var(--mute);line-height:1.55}
+.rt{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.rt b{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1}
+.rt b small{font-family:var(--mono);font-size:10px;color:var(--mute);margin-left:2px}
+.rt h4{margin:0;font-family:var(--serif);font-weight:400;font-size:21px}
+.rt p{margin:3px 0 0;font-size:13px;color:var(--mute);line-height:1.5}
+.proj{display:grid;grid-template-columns:20px minmax(0,1fr);gap:16px;padding:22px 0;border-bottom:1px solid var(--rule);animation:rise .8s var(--ease) both;animation-delay:calc(var(--i)*50ms)}
+.proj .check{margin-top:8px}
+.proj h3{margin:0;font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.05;letter-spacing:-.01em}
+.proj .tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-right:10px}
+.proj.done h3{color:var(--faint);text-decoration:line-through;text-decoration-thickness:1px}
+.proj ol{margin:10px 0 0;padding-left:18px;font-size:13.5px;color:var(--mute);line-height:1.65}
+.proj .prv{margin:10px 0 0;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink)}
+
+.veil{position:absolute;inset:0;z-index:60;background:color-mix(in srgb,var(--bg) 60%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px var(--gxr) 20px var(--gx);animation:fade .4s both}
+.modal{width:min(440px,100%);background:var(--bg);border:1px solid var(--rule2);padding:28px;animation:rise .7s var(--ease) both;box-shadow:0 40px 80px -30px rgba(0,0,0,.5)}
+.modal h3{margin:0 0 8px;font-family:var(--serif);font-weight:400;font-size:34px;line-height:1}
+.modal p{margin:0;color:var(--mute);font-size:13.5px;line-height:1.6}
+.modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
+.toast{position:absolute;z-index:80;left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);opacity:0;padding:10px 18px;border-radius:99px;background:var(--ink);color:var(--bg);font-size:13px;transition:.6s var(--ease);pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@keyframes blink{50%{opacity:.25}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.7)}}
+.top{animation:fade 1.2s var(--ease) .1s both}
+.app[data-view="map"] .view{display:none}
+.app:not([data-view="map"]) .map,.app:not([data-view="map"]) .vignette,.app:not([data-view="map"]) .tools{visibility:hidden}
+
+.scroll{display:contents}
+.spacer{display:none}
+@media (max-width:1100px){ .ledger{width:300px} .view{right:calc(var(--gxr) + 332px)} }
+@media (max-width:860px){
+  .map{height:58%;bottom:auto}
+  .vignette{height:58%;bottom:auto}
+  .brand b{font-size:26px}
+  .brand span,.sync span{display:none}
+  .top{flex-wrap:wrap;row-gap:10px}
+  .modes{order:3;width:100%;margin:0;justify-content:space-between}
+  .modes button{flex:1;padding:0 6px}
+  .tools{bottom:auto;top:calc(104px + env(safe-area-inset-top,0px));left:var(--gx);right:var(--gxr);flex-direction:row;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px}
+  .hint{display:none}
+  .app[data-view="map"] .tools{top:auto;bottom:calc(42% + 10px)}
+  .scroll{display:block;position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;z-index:10;pointer-events:none;overscroll-behavior:contain}
+  .scroll>*{pointer-events:auto}
+  .spacer{display:block;height:58%;pointer-events:none}
+  .app:not([data-view="map"]) .scroll{display:none}
+  .ledger{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;margin:0;padding:18px var(--gxr) calc(40px + env(safe-area-inset-bottom,0px)) var(--gx);background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none;display:block;border-top:1px solid var(--rule2)}
+  .areas{overflow:visible;mask-image:none;-webkit-mask-image:none}
+  .big{font-size:84px}
+  .view{right:var(--gxr);top:calc(112px + env(safe-area-inset-top,0px));padding-right:0}
+  .blk{grid-template-columns:1fr;gap:6px}
+  .blk .when{padding-top:0}
+  .drawer{top:auto;height:94%;width:100%;border-left:0;border-top:1px solid var(--rule2);border-radius:20px 20px 0 0;transform:translateY(102%)}
+  .dr-head{padding:22px 20px 0}
+  .dr-head .close{top:18px;right:16px}
+  .dr-tabs{padding:0 20px}
+  .dr-body{padding:20px 20px 40px}
+  .field{font-size:17px}
+  .app.open .ledger{transform:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
+</style>
+
+<div class="app" id="app" data-view="map">
+  <svg class="map" id="map" role="group" aria-label="Map of finance subjects. Drag to pan, scroll or pinch to zoom.">
+    <g id="world"><g id="spokes"></g><g id="edges"></g><g id="hub"></g><g id="clusters"></g><g id="nodes"></g></g>
+  </svg>
+  <div class="vignette"></div>
+
+  <header class="top">
+    <div class="brand"><b>Finance Atlas</b><span>NOV 2026 → OCT 2027</span></div>
+    <div class="modes" id="modes" role="group" aria-label="View">
+      <span class="ink" id="modeInk"></span>
+      <button data-v="map" aria-pressed="true">Map</button>
+      <button data-v="path" aria-pressed="false">Path</button>
+      <button data-v="projects" aria-pressed="false">Projects</button>
+    </div>
+    <div class="tright">
+      <span class="sync" id="sync" data-s="local"><i></i><span id="syncT">On this device</span></span>
+      <button class="ibtn" id="themeBtn" aria-label="Switch light or dark">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="tools">
+    <div class="zoom">
+      <button id="zin" aria-label="Zoom in">+</button>
+      <button id="zout" aria-label="Zoom out">−</button>
+      <button id="zfit" aria-label="Fit map to screen">Fit</button>
+    </div>
+    <div class="legend" id="legend">
+      <span class="eyebrow">Show</span>
+      <button class="fbtn" data-f="0" aria-pressed="true">All</button>
+      <button class="fbtn" data-f="1" aria-pressed="false" title="Master first">L1 Master first</button>
+      <button class="fbtn" data-f="2" aria-pressed="false" title="Stronger candidate">L2 Stronger</button>
+      <button class="fbtn" data-f="3" aria-pressed="false" title="Specialize after">L3 Specialize</button>
+    </div>
+    <div class="hint">Drag to pan · scroll or pinch to zoom · open any subject</div>
+  </div>
+
+  <div class="scroll">
+    <div class="spacer"></div>
+    <aside class="ledger" id="ledger" aria-label="Index and progress">
+      <div class="eyebrow">Overall mastery</div>
+      <div class="big"><span id="pct">0</span><sup>%</sup></div>
+      <div class="sb" id="sb"></div>
+      <div class="subl" id="subl"></div>
+      <div class="next" id="next"></div>
+      <div class="eyebrow idx">Index</div>
+      <ul class="areas" id="areas"></ul>
+      <div class="led-foot">
+        <button class="btn ghost" id="copyBtn">Copy syllabus</button>
+        <button class="btn danger" id="resetBtn">Reset</button>
+      </div>
+    </aside>
+  </div>
+
+  <section class="view" id="view" hidden></section>
+
+  <aside class="drawer" id="drawer" aria-label="Subject detail" aria-hidden="true">
+    <div class="dr-head">
+      <button class="close" id="closeBtn" aria-label="Close"><svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+      <div class="eyebrow" id="drEye"></div>
+      <h1 id="drName"></h1>
+      <p class="note" id="drNote"></p>
+      <div class="dr-stats" id="drStats"></div>
+      <div class="dr-bar"><i id="drBar"></i></div>
+    </div>
+    <div class="dr-tabs" role="tablist" id="drTabs">
+      <button role="tab" data-t="study" aria-selected="true">Study</button>
+      <button role="tab" data-t="build" aria-selected="false">Build</button>
+      <button role="tab" data-t="master" aria-selected="false">Mastery</button>
+    </div>
+    <div class="dr-body" id="drBody"></div>
+  </aside>
+
+  <div class="veil" id="veil" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var NS="http://www.w3.org/2000/svg";
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+
+/* ---------- content ---------- */
+function N(id,n,name,short,lvl,wk,why,groups,deliver,req){return {id:id,n:n,name:name,short:short,lvl:lvl,wk:wk,why:why,groups:groups,deliver:deliver,req:req||[]}}
+var NODES=[
+N("01","01","Accounting foundations","Accounting",1,2,
+ "The language everything else is written in. Every later subject assumes you can go from a transaction to a ledger entry without stopping to think.",
+ [["Finance concepts",["Accounting equation: assets = liabilities + equity","Debits, credits and double-entry bookkeeping","Journal entries and the general ledger","Trial balance and adjusting entries","Accrual accounting versus cash accounting","Revenue, expenses, assets, liabilities and equity"]],
+  ["Excel skills",["Interface, workbooks, sheets, rows, columns and cell references","Number formats","SUM, AVERAGE, MIN, MAX"]]],
+ "A workbook that takes 30 raw transactions to journal, ledger and trial balance, with a check cell that must equal zero.",[]),
+N("02","02","Financial statements","Statements",1,2,
+ "The three statements are one system seen from three sides. If you can make them balance from transactions, you understand how a company works.",
+ [["Finance concepts",["Income statement and profit measures","Balance sheet and shareholders' equity","Cash flow statement: operating, investing and financing","Retained earnings and dividends","How the three statements connect","Preparing statements from transactions"]],
+  ["Excel skills",["Relative versus absolute references","IF, SUMIF, SUMIFS, COUNTIF","Basic tables"]]],
+ "Income statement, balance sheet and cash flow built from the same transaction list, with a balance check on the sheet.",["01"]),
+N("03","03","Accounting adjustments and IFRS","IFRS",1,4,
+ "Where real accounting lives. Most audit and credit questions are about judgement in these areas, so this is the subject to practise hardest.",
+ [["Finance concepts",["Accruals, prepayments and depreciation","Inventory valuation and cost of goods sold","Accounts receivable, bad debts and expected credit losses","Accounts payable and provisions","Property, plant and equipment and impairment","Leases, deferred taxes, foreign currency and consolidation basics","IFRS fundamentals and financial statement disclosures"]],
+  ["Excel skills",["IFERROR and XLOOKUP","Dates and text functions","Data validation and conditional formatting"]]],
+ "Depreciation and expected-credit-loss schedules for a small company, with the adjusting entries flowing into the statements.",["02"]),
+N("04","04","Financial statement analysis","Analysis",1,3,
+ "Turning statements into a story: what changed, why, and whether it is sustainable. This is the base for credit, audit analytics and valuation.",
+ [["Finance concepts",["Horizontal and vertical analysis","Profitability, liquidity and leverage ratios","Efficiency and working-capital ratios","Operating cash flow and free cash flow","Earnings quality and financial red flags","Comparing performance across years and peers"]],
+  ["Excel skills",["Percentage changes and ratio formulas","PivotTables and charts","A basic financial dashboard"]]],
+ "Project 1: three-year analysis of a Moroccan listed company with a one-page summary of what changed and why.",["03"]),
+N("19","19","Management accounting and budgeting","Budgeting",2,3,
+ "A strong candidate can explain why a company missed its budget and what management should do next. This is the gap most syllabi leave out.",
+ [["Finance concepts",["Cost behaviour: fixed, variable and mixed","Cost allocation and overheads","Profitability by product or business unit","Budget building: operating, cash and capital budgets","Rolling forecasts and forecast updates","Variance analysis: price, volume, mix and efficiency","Reporting variances and recommending corrective actions"]],
+  ["Excel skills",["Budget versus actual layout with variance columns","Scenario switch with CHOOSE or data validation","Variance waterfall chart"]]],
+ "Project 4: monthly budget, actuals, variance commentary and a re-forecast for the remaining months.",["04"]),
+N("20","20","Treasury and cash management","Treasury",2,2,
+ "Cash decides whether a business survives. Treasury questions come up in corporate finance, banking and audit alike.",
+ [["Finance concepts",["13-week cash flow forecast","Bank reconciliations","Working-capital cycle and cash conversion","Financing needs: overdraft, term loan, factoring","Liquidity ratios and covenant headroom","FX and interest-rate exposure basics"]],
+  ["Excel skills",["Rolling weekly forecast with SUMIFS","Reconciliation with XLOOKUP and exception flags"]]],
+ "A 13-week cash forecast that flags the first week liquidity falls below a chosen minimum.",["04"]),
+N("21","21","Sector and business analysis","Sector",2,2,
+ "Numbers only make sense inside a business. Credit and equity views both start with how the company earns money and what threatens it.",
+ [["Finance concepts",["Business model: how the company makes money","Competitive position and Porter's five forces","Industry cycle and demand drivers","Peer benchmarking on margins and growth","Macro sensitivities: rates, FX and commodities","Linking business risk to financial risk"]],
+  ["Excel skills",["Peer comparison table with normalised ratios","Charts for margin and growth gaps"]]],
+ "A two-page note on one Moroccan sector that ends with a clear view on credit or equity risk.",["04"]),
+N("06","06","Corporate finance","Corp. finance",1,4,
+ "How firms decide what to invest in and how to pay for it. NPV, IRR and WACC are asked in almost every finance interview.",
+ [["Finance concepts",["Time value of money","Capital budgeting: NPV and IRR","Cost of capital, CAPM and WACC","Capital structure and financing decisions","Working capital and cash management","Break-even analysis, operating and financial leverage"]],
+  ["Excel skills",["PV, FV, NPV, IRR, PMT","Sensitivity tables and Goal Seek"]]],
+ "A capital budgeting file with NPV, IRR, payback and WACC, plus sensitivity to discount rate and sales.",["04"]),
+N("10","10","Valuation and financial modelling","Valuation",2,6,
+ "The heaviest and most visible skill. A clean model with defended assumptions is the best single proof of ability you can show.",
+ [["Finance concepts",["Forecasting revenue, costs and working capital","Building an integrated three-statement model","Free cash flow to the firm and to equity","Discounted cash flow valuation","Enterprise value versus equity value","Comparable-company valuation multiples","Sensitivity analysis and model quality checks"]],
+  ["Excel skills",["Three-statement model with debt schedule","Forecasting, DCF, sensitivity and scenario analysis","Model standards: inputs, calculations, outputs, error checks"]]],
+ "Projects 5 and 6: an integrated three-statement model and DCF of one listed company, with comps, sensitivities and a two-page write-up.",["04","06"]),
+N("16","16","M&A and LBO","M&A · LBO",3,2,
+ "Learn the basics for interviews in advisory, private equity and corporate finance. You do not need mastery for audit or retail credit roles.",
+ [["Finance concepts",["Acquisition accounting: goodwill and purchase price allocation","Consolidation with non-controlling interests","Accretion and dilution analysis, synergies","Precedent transactions and the football field chart","LBO mechanics: sources and uses, debt paydown, exit","Returns analysis: IRR and MOIC"]],
+  ["Excel skills",["Simple merger model","Simple LBO model with XIRR","Circular references and iterative calculation"]]],
+ "A simple LBO on the Project 5 company: sources and uses, five-year debt paydown, exit returns.",["10"]),
+N("05","05","Economics and markets","Economics",2,3,
+ "The backdrop to every credit and valuation decision. Interviewers ask what is happening in the markets; this is how you answer.",
+ [["Finance concepts",["Supply, demand, elasticity and market structures","GDP, inflation, unemployment and economic growth","Monetary policy, fiscal policy and interest rates","Exchange rates and balance of payments","Stocks, bonds, yields and credit spreads","Diversification, risk and return"]],
+  ["Excel skills",["Charts and scenario tables","Percentage changes","Date and time-value calculations"]]],
+ "A monthly macro tracker (policy rate, inflation, MAD against EUR and USD, MASI) with one sentence of interpretation each week.",[]),
+N("13","13","Fixed income and bond mathematics","Fixed income",3,2,
+ "Common in markets, banking and insurance interviews, and the foundation for understanding interest-rate risk.",
+ [["Finance concepts",["Bond pricing and the price-yield relationship","Yield to maturity, current yield and spot rates","Duration (Macaulay and modified) and convexity","Yield curve, term structure and interest-rate risk","Credit ratings, spreads and default risk","Moroccan Treasury bonds and how auctions work"]],
+  ["Excel skills",["PRICE, YIELD, DURATION, MDURATION, RATE","Yield curve charts and data tables"]]],
+ "A bond valuation workbook: price, YTM, duration and the price change for a one-point rate move.",["05","06"]),
+N("14","14","Derivatives and hedging","Derivatives",3,2,
+ "Learn the concepts and payoffs. Deep pricing maths is only needed for markets and quantitative risk roles.",
+ [["Finance concepts",["Forwards and futures: pricing and cost of carry","Options: payoffs, moneyness and put-call parity","Binomial option pricing model","Black-Scholes: inputs and intuition","The Greeks: delta, gamma, vega, theta","Swaps and hedging currency or interest-rate exposure"]],
+  ["Excel skills",["Payoff diagrams","Binomial tree","NORM.S.DIST and scenario tables"]]],
+ "Payoff diagrams for four option strategies and a one-step binomial pricing sheet.",["13"]),
+N("15","15","Statistics and portfolio theory","Statistics",3,3,
+ "The maths behind risk and return. It underpins CAPM, beta, VaR and any quantitative or risk role.",
+ [["Finance concepts",["Descriptive statistics and probability distributions","Covariance, correlation and the maths of diversification","Regression and estimating beta","Portfolio variance, efficient frontier and Sharpe ratio","Value at Risk (VaR) basics","Hypothesis testing and confidence intervals"]],
+  ["Excel skills",["STDEV.S, CORREL, SLOPE, LINEST","Data Analysis ToolPak","Simple Monte Carlo with RAND"]]],
+ "Estimate beta for one listed stock against the MASI and build a two-asset efficient frontier.",["05"]),
+N("07","07","Audit and controls","Audit",1,4,
+ "The core of Big Four junior roles: understand risk, test controls, gather evidence and document what you found.",
+ [["Finance concepts",["Audit purpose and professional ethics","Materiality and audit risk","Internal controls and control testing","Audit evidence and sampling","Revenue, inventory, cash and receivables procedures","Fraud risk and documentation"]],
+  ["Excel skills",["Reconciliations and duplicate checks","Filters, conditional formatting and lookup-based testing","Random sampling and exception logging"]]],
+ "Project 2: an audit workbook on a transaction file. Reconcile, find duplicates, select a sample and record exceptions in a testing log.",["03"]),
+N("08","08","Banking and credit analysis","Credit",1,4,
+ "How a bank decides whether to lend. The deliverable is a credit recommendation you can defend in a few paragraphs.",
+ [["Finance concepts",["How banks earn money and manage funding","Bank balance sheets and income statements","Credit assessment and repayment capacity","Debt service coverage and interest coverage","Collateral, covenants and default risk","Credit risk, liquidity risk and capital requirements"]],
+  ["Excel skills",["Loan schedules: PMT, IPMT, PPMT","Interest calculations and amortization tables","Borrower ratio dashboard"]]],
+ "Project 3: a credit memo covering leverage, DSCR, cash flow, risks, mitigants and a clear recommendation.",["04"]),
+N("09","09","Insurance and risk management","Insurance",2,3,
+ "Learn the financial side of insurance: profitability, reserves and solvency. Advanced actuarial maths is a separate specialization.",
+ [["Finance concepts",["Premiums, claims, underwriting and reserves","Insurance profitability and combined ratio","Reinsurance and solvency concepts","Insurance investments and asset-liability management","Market, credit, operational and liquidity risk","Basic actuarial concepts and insurance reporting","Claims development and reserve analysis in practice"]],
+  ["Excel skills",["Claims analysis and loss ratios","Trend charts and scenario analysis"]]],
+ "A loss-ratio and combined-ratio comparison of two insurers over three years, with a claims trend chart.",["04"]),
+N("17","17","Banking and insurance standards","Standards",2,3,
+ "The regulatory vocabulary of both industries. You need to recognise the terms and the ideas, not recite the full texts.",
+ [["Finance concepts",["Basel III: CET1, Tier 1, leverage ratio, LCR and NSFR","IFRS 9: staging and expected credit loss","IFRS 17: insurance contract measurement basics","Solvency capital concepts for insurers","Anti-money laundering and KYC fundamentals","Stress testing and risk reporting"]],
+  ["Excel skills",["ECL calculation by stage","Capital ratio computation","Stress scenario tables"]]],
+ "An expected-credit-loss calculation for a small loan book by stage, with a stressed scenario.",["08","09"]),
+N("11","11","Moroccan financial environment","Morocco",1,4,
+ "What makes you a local candidate. Know the institutions, read real annual reports, and understand how local rules differ from the textbooks.",
+ [["Finance concepts",["Bank Al-Maghrib and monetary policy","AMMC and the Casablanca Stock Exchange","Moroccan banking and insurance sectors","Moroccan accounting and tax fundamentals","CGNC versus IFRS differences","Financial regulation, compliance and confidentiality","Reading annual reports of Moroccan listed companies"]],
+  ["Excel skills",["Financial reporting templates","Analysis of real company disclosures"]]],
+ "A one-page summary of a Moroccan listed company's annual report: business, key figures, risks and outlook.",["03"]),
+N("12","12","Professional and interview preparation","Interviews",1,4,
+ "Start in month two and run it all year. Knowledge only counts once you can explain it clearly under pressure, in English and French.",
+ [["Finance concepts",["Technical accounting and financial analysis questions","Audit and credit case studies","Behavioural interview preparation","Business writing and financial presentations","Explaining assumptions and recommendations","CV, applications and internship strategy"]],
+  ["Excel skills",["Timed Excel tests","Financial case studies","PowerPoint charts and concise reporting"]]],
+ "Three timed mock interviews, one finished case presentation and a CV reviewed by someone who works in the field.",[]),
+N("xl","XL","Excel","Excel",1,8,
+ "The working tool of every finance role. Practise it next to each subject, then finish with speed drills and modelling standards.",
+ [["Foundations",["Cells, ranges and references: relative, absolute, mixed","Number, date and accounting formats","SUM, AVERAGE, MIN, MAX, COUNT"]],
+  ["Logic and lookup",["IF, IFS, AND, OR, IFERROR","SUMIFS, COUNTIFS, AVERAGEIFS","XLOOKUP and INDEX/MATCH","SUMPRODUCT"]],
+  ["Data handling",["Excel Tables and structured references","PivotTables and slicers","Sort, filter and remove duplicates","Data validation and conditional formatting","Power Query: import, clean, append and merge"]],
+  ["Finance functions",["PV, FV, NPV, XNPV, IRR, XIRR","PMT, IPMT, PPMT and loan schedules","EOMONTH, EDATE, YEARFRAC"]],
+  ["Modelling standards",["Inputs, calculations and outputs kept apart","Colour code: blue inputs, black formulas","Balance and error checks","Scenarios with CHOOSE, data tables and Goal Seek","Solver basics"]],
+  ["Speed and delivery",["Keyboard-only navigation and shortcuts","Dynamic arrays: FILTER, SORT, UNIQUE, LET","Charts that explain: waterfall and combo","Timed exercises under 30 minutes"]]],
+ "Rebuild the Project 5 model to the modelling standards, then run it against a timed test.",[]),
+N("sql","SQL","SQL","SQL",2,4,
+ "Finance teams and auditors increasingly pull their own data. A few weeks of SQL lets you query a ledger instead of waiting for an export.",
+ [["Query basics",["SELECT, WHERE, ORDER BY, LIMIT","COUNT, SUM, AVG with GROUP BY and HAVING","CASE WHEN and COALESCE for cleaning"]],
+  ["Joins",["INNER and LEFT joins","Reconcile two tables such as ledger against bank","Find duplicates and orphan records"]],
+  ["Analytical SQL",["CTEs and subqueries","Window functions: ROW_NUMBER, RANK, LAG, running totals","Dates: monthly buckets, year on year, ageing buckets"]],
+  ["Data model",["Primary and foreign keys","Normalisation and star schema basics","Indexes and performance (concepts)"]]],
+ "Ten finance queries on a sample ledger: receivables ageing, top ten customers, month-on-month revenue, duplicate invoices and three-way match exceptions.",["xl"]),
+N("bi","BI","Power BI","Power BI",2,4,
+ "Turns your Excel analysis into something a manager can explore. A dashboard on a company you modelled makes a strong portfolio piece.",
+ [["Get and shape data",["Connect to Excel, CSV and SQL sources","Power Query steps: types, split, unpivot, merge","Parameters and refresh basics"]],
+  ["Model",["Star schema: fact and dimension tables","Relationships, cardinality and filter direction","A proper date table"]],
+  ["DAX",["Measures versus calculated columns","SUM, AVERAGE, DIVIDE, CALCULATE","Filter context: ALL, ALLEXCEPT, VALUES","Time intelligence: TOTALYTD, SAMEPERIODLASTYEAR, DATESINPERIOD","Variance and percentage variance measures"]],
+  ["Report design",["KPI cards, trends, waterfall and variance visuals","Slicers, drill-through and tooltips","One-page executive layout with accessible colours"]],
+  ["Share",["Publish and refresh (concepts)","Row-level security (concepts)"]]],
+ "A budget-versus-actual dashboard: monthly P&L, variance waterfall, drill-through to account level and a paragraph of commentary.",["xl","sql"]),
+N("py","PY","Python","Python",3,6,
+ "Optional for most junior roles, a real advantage in analytics, risk and FP&A. Start only when the core subjects are on track.",
+ [["Basics",["Variables, lists, dictionaries, loops, functions","Reading and writing CSV and Excel files","Jupyter notebooks and virtual environments"]],
+  ["pandas",["DataFrames: select, filter, groupby, merge, pivot_table","Cleaning: missing values, types, duplicates","Time series: resample, rolling windows, pct_change"]],
+  ["Finance maths",["Returns, volatility, correlation and beta","NPV, IRR and loan schedules in code","Monte Carlo simulation of a forecast","Portfolio variance and efficient frontier (basic)"]],
+  ["Output",["Charts with matplotlib","Automate an Excel report with openpyxl","Repeatable script with parameters"]]],
+ "A script that reads a monthly trial balance, computes ratios and writes a formatted Excel pack, plus a Monte Carlo run on one DCF input.",["xl","sql"])
+];
+var BY={}; NODES.forEach(function(n){BY[n.id]=n});
+
+var AREAS=[
+ {id:"found",name:"Foundations",c:"--c1",ids:["01","02","03","04"]},
+ {id:"plan",name:"Planning and cash",c:"--c2",ids:["19","20","21"]},
+ {id:"corp",name:"Corporate finance",c:"--c3",ids:["06","10","16"]},
+ {id:"mkts",name:"Markets and quant",c:"--c4",ids:["05","13","14","15"]},
+ {id:"risk",name:"Assurance and risk",c:"--c5",ids:["07","08","09","17"]},
+ {id:"moro",name:"Morocco and career",c:"--c6",ids:["11","12"]},
+ {id:"tool",name:"Toolkit",c:"--c7",ids:["xl","sql","bi","py"]}
+];
+var LV={1:"Master first",2:"Stronger candidate",3:"Specialize after"};
+
+var PATH=[
+ {when:"Nov – Dec",t:"Foundations",mods:["01","02","03","xl"],out:"A workbook that builds all three statements from raw transactions, with a balance check. Start your CV and LinkedIn this month."},
+ {when:"Jan – Feb",t:"Analysis, planning and first data skills",mods:["04","19","05","sql"],out:"Project 1 ratio dashboard on two Moroccan listed companies, and Project 4 budget and forecast. Choose your specialization and certification by the end of January, and start applying for internships."},
+ {when:"Mar – Apr",t:"Finance core and the Moroccan setting",mods:["06","20","21","11"],out:"Capital budgeting file with sensitivities, a one-page Moroccan annual report summary and a short sector note."},
+ {when:"May – Jul",t:"Modelling and valuation",mods:["10","bi"],out:"Projects 5 and 6: integrated three-statement model and DCF for one company, then a Power BI dashboard on the same company. Give this block the most time."},
+ {when:"Aug – Sep",t:"Specialization and breadth",mods:["07","08","09","17","13","14","15","16","py"],out:"Go deep on your chosen path (audit workbook, credit memo or insurance claims analysis) and learn only the basics of the others. Python is optional."},
+ {when:"Oct",t:"Interview sprint",mods:["12"],out:"Final portfolio, polished CV, at least three mock interviews and timed Excel tests."}
+];
+var TRACKS=[
+ ["Applications and profile","From January, apply as openings appear instead of waiting to feel ready, and check deadlines early. Contact two people a month for a short conversation about their path."],
+ ["Market watch, 1 hour a week","Follow Bank Al-Maghrib decisions, MASI moves, major deals and results of listed companies. Keep one line a week on what happened and why it mattered."],
+ ["Excel drills, twice a week","Timed exercises on the functions from each subject. From month six, one timed financial case a month."],
+ ["Languages","Read and summarise one finance article a week in English and one in French. Practise explaining a concept out loud in both."],
+ ["One certification","Pick one that fits your path (CFA Level 1, ACCA papers or a financial modelling certificate) by January, and check current dates and requirements on the official site."],
+ ["Review rhythm","Weekly: 5 to 10 practice problems plus 20 minutes on the previous subject. Monthly: a one-page summary and a mock question set. Quarterly: update your portfolio and CV."]
+];
+var ROUTINE=[
+ [30,"Finance concepts","Learn one concept, write a short explanation and practise recalling it in English and French."],
+ [35,"Excel practice","Reproduce the concept in a workbook without copying a finished solution."],
+ [15,"Exercises and revision","Solve one problem from memory and revisit an earlier concept."],
+ [10,"Career preparation","Practise one interview question, or explain one conclusion as if reporting to a manager."]
+];
+var PROJECTS=[
+ {id:"p1",core:1,t:"Financial statement analysis",mods:["04","11","xl"],steps:["Take three years of a Moroccan listed company's published statements","Build the statements side by side and compute growth, margin, liquidity and leverage ratios","Chart the main changes and write one page on what changed and why"],proves:"You can read a set of accounts and explain performance."},
+ {id:"p2",core:1,t:"Audit workbook",mods:["07","03","xl"],steps:["Reconcile two sets of records and list the differences","Flag duplicate transactions and unusual amounts","Select a sample, test it and record exceptions in a testing log"],proves:"You can test transactions and document findings the way an audit file expects."},
+ {id:"p3",core:1,t:"Credit analysis memo",mods:["08","04","21"],steps:["Analyse financial position, leverage, cash flow and repayment capacity","Calculate DSCR and interest cover, and stress the main assumption","Write a short recommendation with risks, mitigants and conditions"],proves:"You can justify a lending decision clearly."},
+ {id:"p4",core:1,t:"Budget and forecast",mods:["19","xl"],steps:["Build a monthly budget with clear assumptions","Compare actuals with budget and calculate variances","Explain each material variance and re-forecast the remaining months"],proves:"You can explain why results differ from plan and what to do next."},
+ {id:"p5",core:1,t:"Three-statement model",mods:["10","02","xl"],steps:["Forecast revenue, costs and working capital","Link income statement, balance sheet and cash flow with a debt schedule","Add balance checks and scenario switches"],proves:"You can build a structured, auditable model."},
+ {id:"p6",core:1,t:"DCF valuation",mods:["10","06"],steps:["Forecast free cash flow from the Project 5 model","Calculate WACC and terminal value","Bridge enterprise value to equity value and add sensitivity tables"],proves:"You can value a company and defend the assumptions."},
+ {id:"p7",core:0,t:"Power BI budget dashboard",mods:["bi","19"],steps:["Load the Project 4 data and build a star schema with a date table","Write measures for actual, budget and variance","Design a one-page view with drill-through and commentary"],proves:"You can turn analysis into something a manager can explore."},
+ {id:"p8",core:0,t:"SQL ledger reconciliation",mods:["sql","07"],steps:["Load a sample ledger and bank file into a database","Match them with joins and list unmatched items","Produce an ageing report and a duplicate-invoice check"],proves:"You can query data directly instead of relying on exports."},
+ {id:"p9",core:0,t:"Python reporting script",mods:["py","15"],steps:["Read a monthly trial balance and compute ratios","Write the results to a formatted Excel pack","Run a Monte Carlo on one DCF input and chart the range"],proves:"You can automate repeatable reporting."},
+ {id:"p10",core:0,t:"Insurance claims analysis",mods:["09","17"],steps:["Take three years of two insurers' results","Compare loss, expense and combined ratios","Comment on reserves, investment income and solvency"],proves:"You understand how insurers make and lose money."},
+ {id:"p11",core:0,t:"Bond valuation workbook",mods:["13","05"],steps:["Price a bond from its cash flows","Calculate yield to maturity, duration and convexity","Show the price change for a one-point move in rates"],proves:"You can handle interest-rate risk numerically."}
+];
+var ORDER=[]; PATH.forEach(function(b){b.mods.forEach(function(m){ORDER.push(m)})});
+
+/* ---------- layout ---------- */
+var R=470, RC=104;
+AREAS.forEach(function(a,i){
+  var ang=(-90+i*360/AREAS.length)*Math.PI/180;
+  a.cx=Math.cos(ang)*R; a.cy=Math.sin(ang)*R; a.i=i;
+  var n=a.ids.length;
+  a.ids.forEach(function(id,j){
+    var nd=BY[id]; nd.area=a;
+    if(n===2){nd.x=a.cx+(j?1:-1)*92; nd.y=a.cy}
+    else{var t=-Math.PI/2+j*2*Math.PI/n; nd.x=a.cx+Math.cos(t)*RC; nd.y=a.cy+Math.sin(t)*RC}
+  });
+});
+
+/* ---------- state ---------- */
+var LS="finance-atlas-v1", S={c:{},n:{},t:0};
+try{var raw=localStorage.getItem(LS); if(raw){var p=JSON.parse(raw); if(p&&p.c){S=p}}}catch(e){}
+function ck(id,g,i){return id+":"+g+":"+i}
+function total(nd){var t=0; nd.groups.forEach(function(g){t+=g[1].length}); return t}
+function done(nd){var d=0; nd.groups.forEach(function(g,gi){g[1].forEach(function(_,ii){if(S.c[ck(nd.id,gi,ii)])d++})}); return d}
+function pct(nd){return Math.round(done(nd)/total(nd)*100)}
+function masteryN(nd){var d=0; for(var i=0;i<4;i++){if(S.c[nd.id+":m"+i])d++} return d}
+function areaStats(a){var d=0,t=0; a.ids.forEach(function(id){d+=done(BY[id]);t+=total(BY[id])}); return {d:d,t:t,p:t?Math.round(d/t*100):0}}
+function allStats(){var d=0,t=0,m=0,w=0; NODES.forEach(function(n){d+=done(n);t+=total(n); if(masteryN(n)===4)m++; w+=n.wk}); return {d:d,t:t,m:m,w:w,p:t?Math.round(d/t*100):0}}
+
+/* ---------- persistence ---------- */
+var dbDoc=null, saving=false, dirty=false, saveT=0;
+function setSync(s){var el=$("#sync"); el.dataset.s=s; $("#syncT").textContent=s==="synced"?"Saved to account":s==="saving"?"Saving":"On this device"}
+function persist(){
+  S.t=Date.now();
+  try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}
+  if(!dbDoc){setSync("local");return}
+  setSync("saving"); dirty=true; clearTimeout(saveT); saveT=setTimeout(flush,700);
+}
+function flush(){
+  if(saving||!dbDoc||!dirty)return;
+  saving=true; dirty=false;
+  dbDoc.set({state:S}).then(function(){saving=false; if(dirty){flush()}else{setSync("synced")}}).catch(function(){saving=false; setSync("local")});
+}
+function initDb(){
+  try{
+    var cl=window.claude; if(!cl||!cl.use)return;
+    Promise.all([cl.use("db"),cl.use("user")]).then(function(r){
+      var db=r[0],user=r[1]; if(!db||!user)return null;
+      return user.id().then(function(id){
+        if(!id)return null;
+        dbDoc=db.doc("data/users/"+id+"/state");
+        return dbDoc.get().then(function(snap){
+          if(snap.exists){
+            var rem=snap.data()&&snap.data().state;
+            if(rem&&rem.c&&(rem.t||0)>(S.t||0)){S=rem; try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){} renderAll(); if(openId)renderDrawer()}
+            else if(S.t){dirty=true;flush();return}
+          }else if(S.t){dirty=true;flush();return}
+          setSync("synced");
+        });
+      });
+    }).catch(function(){setSync("local")});
+  }catch(e){}
+}
+
+/* ---------- svg helpers ---------- */
+function el(tag,attrs,parent){var e=document.createElementNS(NS,tag); for(var k in attrs){e.setAttribute(k,attrs[k])} if(parent)parent.appendChild(e); return e}
+var svg=$("#map"), world=$("#world");
+var edgeEls=[], nodeEls={}, clusterEls={};
+
+function buildMap(){
+  var gS=$("#spokes"), gE=$("#edges"), gH=$("#hub"), gC=$("#clusters"), gN=$("#nodes");
+  el("circle",{class:"hub-ring",r:62},gH); el("circle",{class:"hub-ring",r:78,"stroke-dasharray":"2 6"},gH);
+  var h1=el("text",{class:"hub-t1",y:2},gH); h1.textContent="Finance";
+  var h2=el("text",{class:"hub-t2",y:24},gH); h2.textContent="candidate";
+  AREAS.forEach(function(a){
+    el("line",{class:"spoke",x1:0,y1:0,x2:a.cx,y2:a.cy},gS);
+    var g=el("g",{style:"--dc:var("+a.c+")"},gC);
+    var yy=a.ids.length===2?a.cy+112:a.cy-8;
+    var t1=el("text",{class:"cl-name",x:a.cx,y:yy},g); t1.textContent=a.name;
+    var t2=el("text",{class:"cl-pct",x:a.cx,y:yy+(a.ids.length===2?30:34)},g);
+    clusterEls[a.id]=t2;
+  });
+  NODES.forEach(function(nd){
+    nd.req.forEach(function(rid){
+      var r=BY[rid]; var mx=(r.x+nd.x)/2, my=(r.y+nd.y)/2;
+      var dx=nd.x-r.x, dy=nd.y-r.y, len=Math.hypot(dx,dy)||1;
+      var off=len*0.12, cx=mx-dy/len*off, cy=my+dx/len*off;
+      var p=el("path",{class:"edge",d:"M"+r.x+" "+r.y+" Q"+cx+" "+cy+" "+nd.x+" "+nd.y},gE);
+      edgeEls.push({e:p,a:rid,b:nd.id});
+    });
+  });
+  NODES.forEach(function(nd,i){
+    var g=el("g",{class:"node","data-id":nd.id,"data-l":nd.lvl,tabindex:0,role:"button","aria-label":nd.name+", level "+nd.lvl,transform:"translate("+nd.x+","+nd.y+")",style:"--dc:var("+nd.area.c+")"},gN);
+    var inn=el("g",{class:"in",style:"animation-delay:"+(i*45+150)+"ms"},g);
+    el("circle",{class:"halo",r:46},inn);
+    el("circle",{class:"base",r:32},inn);
+    var ring=el("circle",{class:"ring",r:32,transform:"rotate(-90)","stroke-dasharray":"0 201"},inn);
+    var nn=el("text",{class:"nn",y:5},inn); nn.textContent=nd.n;
+    var nl=el("text",{class:"nl",y:62},inn); nl.textContent=nd.short;
+    var nm=el("text",{class:"nm",y:80},inn);
+    nodeEls[nd.id]={g:g,ring:ring,nm:nm};
+    g.addEventListener("click",function(){if(!moved)openNode(nd.id)});
+    g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();openNode(nd.id)}});
+    g.addEventListener("pointerenter",function(){edgeEls.forEach(function(x){x.e.classList.toggle("hi",x.a===nd.id||x.b===nd.id)})});
+    g.addEventListener("pointerleave",function(){edgeEls.forEach(function(x){x.e.classList.remove("hi")})});
+  });
+}
+function updateMap(){
+  NODES.forEach(function(nd){
+    var o=nodeEls[nd.id], p=pct(nd), c=2*Math.PI*32;
+    o.ring.setAttribute("stroke-dasharray",(c*p/100).toFixed(1)+" "+c.toFixed(1));
+    o.nm.textContent="L"+nd.lvl+" · "+nd.wk+" wk · "+p+"%";
+    o.g.classList.toggle("mastered",masteryN(nd)===4);
+  });
+  AREAS.forEach(function(a){clusterEls[a.id].textContent=areaStats(a).p+"%"});
+}
+
+/* ---------- pan and zoom ---------- */
+var vw={x:0,y:0,k:1}, moved=false, ptrs={}, startPt=null, startVw=null, pinchD=0;
+function apply(){world.setAttribute("transform","translate("+vw.x+","+vw.y+") scale("+vw.k+")")}
+function fit(){
+  var r=svg.getBoundingClientRect(), desk=window.innerWidth>860;
+  var rw=desk?(window.innerWidth>1100?372:332):0;
+  var availW=r.width-rw, topPad=desk?60:96, availH=r.height-topPad-(desk?10:50);
+  var k=Math.min(availW/1340,availH/1340); if(!desk)k=Math.max(k,.36);
+  vw.k=Math.max(.3,k); vw.x=availW/2; vw.y=topPad+availH/2; apply();
+}
+function zoomAt(cx,cy,f){
+  var r=svg.getBoundingClientRect(), px=cx-r.left, py=cy-r.top;
+  var k2=Math.min(2.8,Math.max(.28,vw.k*f)), s=k2/vw.k;
+  vw.x=px-(px-vw.x)*s; vw.y=py-(py-vw.y)*s; vw.k=k2; apply();
+}
+function pcount(){return Object.keys(ptrs).length}
+function pdist(){var a=Object.keys(ptrs).map(function(k){return ptrs[k]}); return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)}
+function pmid(){var a=Object.keys(ptrs).map(function(k){return ptrs[k]}); return {x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}}
+svg.addEventListener("pointerdown",function(e){
+  ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
+  if(pcount()===1){startPt={x:e.clientX,y:e.clientY}; startVw={x:vw.x,y:vw.y}; moved=false}
+  else if(pcount()===2){pinchD=pdist(); moved=true}
+});
+svg.addEventListener("pointermove",function(e){
+  if(!ptrs[e.pointerId])return;
+  ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
+  if(pcount()===2){var d=pdist(), m=pmid(); if(pinchD>0)zoomAt(m.x,m.y,d/pinchD); pinchD=d; return}
+  if(pcount()===1&&startPt){
+    var dx=e.clientX-startPt.x, dy=e.clientY-startPt.y;
+    if(moved||Math.hypot(dx,dy)>5){
+      if(!moved){moved=true; try{svg.setPointerCapture(e.pointerId)}catch(_){}}
+      vw.x=startVw.x+dx; vw.y=startVw.y+dy; apply();
+    }
+  }
+});
+function endPtr(e){
+  delete ptrs[e.pointerId];
+  var left=Object.keys(ptrs);
+  if(left.length===1){var q=ptrs[left[0]]; startPt={x:q.x,y:q.y}; startVw={x:vw.x,y:vw.y}}
+  if(left.length===0){startPt=null; setTimeout(function(){moved=false},0)}
+}
+window.addEventListener("pointerup",endPtr); window.addEventListener("pointercancel",endPtr);
+svg.addEventListener("wheel",function(e){e.preventDefault(); zoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*(e.ctrlKey?.01:.0016)))},{passive:false});
+$("#zin").addEventListener("click",function(){var r=svg.getBoundingClientRect(); zoomAt(r.left+r.width/2,r.top+r.height/2,1.25)});
+$("#zout").addEventListener("click",function(){var r=svg.getBoundingClientRect(); zoomAt(r.left+r.width/2,r.top+r.height/2,.8)});
+$("#zfit").addEventListener("click",fit);
+$("#legend").addEventListener("click",function(e){
+  var b=e.target.closest(".fbtn"); if(!b)return;
+  svg.dataset.f=b.dataset.f==="0"?"":b.dataset.f;
+  [].forEach.call($("#legend").querySelectorAll(".fbtn"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});
+});
+
+/* ---------- ledger ---------- */
+function chip(id){
+  var nd=BY[id], p=pct(nd);
+  return '<button class="rit" data-open="'+id+'" style="--dc:var('+nd.area.c+');--p:'+p+'%" aria-pressed="'+(p===100?"true":"false")+'"><i></i>'+esc((/^\d+$/.test(nd.n)?nd.n+" ":"")+nd.short)+'</button>';
+}
+function nextUp(){
+  for(var i=0;i<ORDER.length;i++){var nd=BY[ORDER[i]]; if(pct(nd)<100)return nd}
+  return null;
+}
+function renderLedger(){
+  var st=allStats();
+  $("#pct").textContent=st.p;
+  $("#sb").innerHTML=AREAS.map(function(a){var s=areaStats(a); return '<i style="--t:'+s.t+';--dc:var('+a.c+')"><b style="--w:'+s.p+'%"></b></i>'}).join("");
+  $("#subl").innerHTML=st.d+" of "+st.t+" topics ticked<br>"+st.m+" of "+NODES.length+" subjects mastered<br>Every subject in full is about "+st.w+" weeks at ten hours a week. The Path view fits a year by choosing one specialization.";
+  var nx=nextUp();
+  $("#next").innerHTML=nx?'<span>Next up</span><button data-open="'+nx.id+'">'+esc(nx.name)+'</button>':'<span>Everything is ticked. Keep practising under time pressure.</span>';
+  $("#areas").innerHTML=AREAS.map(function(a,i){
+    var s=areaStats(a);
+    return '<li style="--i:'+i+';--dc:var('+a.c+')"><div class="a-row"><span class="ix">'+String(i+1).padStart(2,"0")+'</span><span class="nm">'+esc(a.name)+'</span><span class="pc">'+s.p+'</span></div><div class="a-prog"><i style="--w:'+s.p+'%"></i></div><div class="rits">'+a.ids.map(chip).join("")+'</div></li>';
+  }).join("");
+}
+
+/* ---------- drawer ---------- */
+var openId=null, tab="study";
+function openNode(id){
+  openId=id; tab="study"; renderDrawer();
+  $("#app").classList.add("open"); $("#drawer").setAttribute("aria-hidden","false");
+  [].forEach.call(document.querySelectorAll(".node"),function(n){n.classList.toggle("sel",n.dataset.id===id)});
+  setTimeout(function(){$("#closeBtn").focus({preventScroll:true})},60);
+}
+function closeDrawer(){
+  var id=openId; openId=null;
+  $("#app").classList.remove("open"); $("#drawer").setAttribute("aria-hidden","true");
+  [].forEach.call(document.querySelectorAll(".node"),function(n){n.classList.remove("sel")});
+  if(id&&nodeEls[id]&&$("#app").dataset.view==="map"){try{nodeEls[id].g.focus({preventScroll:true})}catch(e){}}
+  else if($("#app").dataset.view!=="map"){var top=$("#view").scrollTop; renderView(); $("#view").scrollTop=top}
+}
+function usedBy(id){return PROJECTS.filter(function(p){return p.mods.indexOf(id)>-1})}
+function renderDrawer(){
+  var nd=BY[openId]; if(!nd)return;
+  var dr=$("#drawer"); dr.style.setProperty("--dc","var("+nd.area.c+")");
+  $("#drEye").textContent=nd.area.name+" · Level "+nd.lvl+" · "+LV[nd.lvl];
+  var words=nd.name.split(" "); var last=words.pop();
+  $("#drName").innerHTML=esc(words.join(" "))+(words.length?" ":"")+"<em>"+esc(last)+"</em>";
+  $("#drNote").textContent=nd.why;
+  refreshStats();
+  [].forEach.call($("#drTabs").querySelectorAll("button"),function(b){b.setAttribute("aria-selected",b.dataset.t===tab?"true":"false")});
+  renderBody();
+}
+function refreshStats(){
+  var nd=BY[openId]; if(!nd)return;
+  var d=done(nd),t=total(nd);
+  $("#drStats").innerHTML='<div><b>'+d+'<small style="font-size:16px;color:var(--mute)">/'+t+'</small></b><span>Topics</span></div><div><b>'+nd.wk+'</b><span>Weeks</span></div><div><b>L'+nd.lvl+'</b><span>Level</span></div><div><b>'+masteryN(nd)+'<small style="font-size:16px;color:var(--mute)">/4</small></b><span>Mastery</span></div>';
+  $("#drBar").style.setProperty("--w",pct(nd)+"%");
+}
+function renderBody(){
+  var nd=BY[openId], body=$("#drBody"), h="";
+  if(tab==="study"){
+    h=nd.groups.map(function(g,gi){
+      return '<section class="grp" style="--i:'+gi+'"><div class="grp-h"><h3>'+esc(g[0])+'</h3><button class="lnk" data-markg="'+gi+'">Mark all</button></div><ul class="ck">'+g[1].map(function(t,ii){
+        var k=ck(nd.id,gi,ii);
+        return '<li><label class="ci"><input type="checkbox" class="check" data-k="'+k+'"'+(S.c[k]?" checked":"")+'><span>'+esc(t)+'</span></label></li>';
+      }).join("")+'</ul></section>';
+    }).join("");
+  }else if(tab==="build"){
+    var ups=usedBy(nd.id);
+    h='<section class="grp"><div class="eyebrow">What to build</div><p class="deliver">'+esc(nd.deliver)+'</p>'+
+      '<ul class="ck"><li><label class="ci"><input type="checkbox" class="check" data-k="'+nd.id+':d"'+(S.c[nd.id+":d"]?" checked":"")+'><span>Deliverable finished and saved where I can show it</span></label></li></ul></section>'+
+      (nd.req.length?'<section class="grp" style="--i:1"><div class="grp-h"><h3>Learn first</h3></div><div class="chips">'+nd.req.map(chip).join("")+'</div></section>':'')+
+      (ups.length?'<section class="grp" style="--i:2"><div class="grp-h"><h3>Used in projects</h3></div><p class="prose">'+ups.map(function(p){return esc(p.t)}).join(" · ")+'. Find them under Projects.</p></section>':'')+
+      '<section class="grp" style="--i:3"><div class="grp-h"><h3>Your notes</h3></div><textarea class="field" id="note" placeholder="Weak spots, formulas to remember, questions to ask a mentor">'+esc(S.n[nd.id]||"")+'</textarea></section>';
+  }else{
+    var tests=["I can explain it simply in two minutes, in English and in French","I can solve a typical exam or interview problem on it in about ten minutes","I can build the related Excel model from a blank sheet","I can say what changes in the result if a key assumption changes"];
+    h='<section class="grp"><div class="eyebrow">The standard</div><p class="prose">Tick a box only when it is true without looking at your notes. When all four are ticked, this subject shows as mastered on the map.</p><ul class="ck">'+tests.map(function(t,i){
+      var k=nd.id+":m"+i; return '<li><label class="ci"><input type="checkbox" class="check" data-k="'+k+'"'+(S.c[k]?" checked":"")+'><span>'+esc(t)+'</span></label></li>';
+    }).join("")+'</ul></section>';
+  }
+  body.innerHTML=h; body.scrollTop=0;
+}
+$("#drTabs").addEventListener("click",function(e){var b=e.target.closest("button"); if(!b)return; tab=b.dataset.t; [].forEach.call($("#drTabs").querySelectorAll("button"),function(x){x.setAttribute("aria-selected",x===b?"true":"false")}); renderBody()});
+$("#drBody").addEventListener("change",function(e){
+  var c=e.target.closest(".check"); if(!c)return;
+  if(c.checked)S.c[c.dataset.k]=1; else delete S.c[c.dataset.k];
+  persist(); refreshStats(); updateAll(true);
+});
+$("#drBody").addEventListener("click",function(e){
+  var m=e.target.closest("[data-markg]");
+  if(m){
+    var nd=BY[openId], gi=+m.dataset.markg, g=nd.groups[gi], all=true;
+    g[1].forEach(function(_,ii){if(!S.c[ck(nd.id,gi,ii)])all=false});
+    g[1].forEach(function(_,ii){var k=ck(nd.id,gi,ii); if(all)delete S.c[k]; else S.c[k]=1});
+    persist(); renderBody(); refreshStats(); updateAll(true); return;
+  }
+  var o=e.target.closest("[data-open]"); if(o){openNode(o.dataset.open)}
+});
+var noteT=0;
+$("#drBody").addEventListener("input",function(e){
+  if(e.target.id!=="note")return;
+  S.n[openId]=e.target.value; clearTimeout(noteT); noteT=setTimeout(persist,500);
+});
+$("#closeBtn").addEventListener("click",closeDrawer);
+
+/* ---------- views ---------- */
+function renderPath(){
+  var h='<div class="eyebrow">Nov 2026 – Oct 2027 · about 10 hours a week</div><h2>Six blocks over twelve months.</h2><p class="prose">Study in this order. Each block ends with something you can show. Taking every subject in full would need more than a year, so pick one of audit, credit or insurance for the deep dive in August and September, and treat Level 3 subjects as basics.</p>';
+  h+=PATH.map(function(b,i){
+    var tot=0,dn=0; b.mods.forEach(function(m){tot+=total(BY[m]);dn+=done(BY[m])});
+    return '<div class="blk" style="--i:'+i+'"><div class="when">'+esc(b.when)+'<br><span style="color:var(--faint)">'+(tot?Math.round(dn/tot*100):0)+'% ticked</span></div><div><h3>'+esc(b.t)+'</h3><div class="chips">'+b.mods.map(chip).join("")+'</div><p class="out">'+esc(b.out)+'</p></div></div>';
+  }).join("");
+  h+='<h3 class="sec-h">Running all year</h3><div class="grid2">'+TRACKS.map(function(t){return '<div class="trk"><h4>'+esc(t[0])+'</h4><p>'+esc(t[1])+'</p></div>'}).join("")+'</div>';
+  h+='<h3 class="sec-h">A 90-minute day</h3>'+ROUTINE.map(function(r){return '<div class="rt"><b>'+r[0]+'<small>min</small></b><div><h4>'+esc(r[1])+'</h4><p>'+esc(r[2])+'</p></div></div>'}).join("");
+  h+='<p class="prose" style="margin-top:18px">Apply for internships while you study. Hiring also depends on your grades, experience and the specific role, and some Moroccan banking roles ask for a Bac+5, so read each vacancy carefully.</p>';
+  return h;
+}
+function renderProjects(){
+  var core=PROJECTS.filter(function(p){return p.core}), nDone=PROJECTS.filter(function(p){return S.c["p:"+p.id]}).length;
+  var h='<div class="eyebrow">Portfolio · '+nDone+' of '+PROJECTS.length+' built</div><h2>Proof beats a list of topics.</h2><p class="prose">The first six are the core set recruiters can open and test. Use real Moroccan company disclosures where they are enough, and label every assumption where data is missing.</p>';
+  h+=PROJECTS.map(function(p,i){
+    var on=!!S.c["p:"+p.id];
+    return '<div class="proj'+(on?" done":"")+'" style="--i:'+i+';--dc:var(--acc)"><input type="checkbox" class="check" data-pk="'+p.id+'"'+(on?" checked":"")+' aria-label="Mark '+esc(p.t)+' built"><div><div><span class="tag">'+(p.core?"Core · P"+(i+1):"Extra · P"+(i+1))+'</span></div><h3>'+esc(p.t)+'</h3><div class="chips">'+p.mods.map(chip).join("")+'</div><ol>'+p.steps.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ol><p class="prv">'+esc(p.proves)+'</p></div></div>';
+  }).join("");
+  return h;
+}
+function renderView(){
+  var v=$("#app").dataset.view, host=$("#view");
+  if(v==="map"){host.hidden=true;return}
+  host.hidden=false; host.innerHTML=v==="path"?renderPath():renderProjects();
+}
+$("#view").addEventListener("click",function(e){var o=e.target.closest("[data-open]"); if(o)openNode(o.dataset.open)});
+$("#view").addEventListener("change",function(e){
+  var c=e.target.closest("[data-pk]"); if(!c)return;
+  var k="p:"+c.dataset.pk; if(c.checked)S.c[k]=1; else delete S.c[k];
+  persist(); var top=$("#view").scrollTop; renderView(); $("#view").scrollTop=top;
+});
+$("#ledger").addEventListener("click",function(e){var o=e.target.closest("[data-open]"); if(o)openNode(o.dataset.open)});
+
+var VIEWS=["map","path","projects"];
+function placeInk(){
+  var b=$("#modes").querySelector('[aria-pressed="true"]'), ink=$("#modeInk"); if(!b)return;
+  ink.style.left=b.offsetLeft+"px"; ink.style.width=b.offsetWidth+"px";
+}
+function setView(v,noHash){
+  if(VIEWS.indexOf(v)<0)v="map";
+  $("#app").dataset.view=v;
+  [].forEach.call($("#modes").querySelectorAll("button"),function(b){b.setAttribute("aria-pressed",b.dataset.v===v?"true":"false")});
+  placeInk(); closeDrawer(); renderView();
+  if(v==="map")setTimeout(function(){if(!vw.set){fit();vw.set=1}},0);
+  if(!noHash){try{history.replaceState(null,"","#"+v)}catch(e){try{location.hash=v}catch(_){}}}
+}
+$("#modes").addEventListener("click",function(e){var b=e.target.closest("button[data-v]"); if(b)setView(b.dataset.v)});
+window.addEventListener("hashchange",function(){var v=location.hash.slice(1); if(VIEWS.indexOf(v)>-1&&v!==$("#app").dataset.view)setView(v,true)});
+
+/* ---------- footer actions, theme, toast ---------- */
+var toastT=0;
+function toast(m){var t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(toastT); toastT=setTimeout(function(){t.classList.remove("on")},2600)}
+$("#copyBtn").addEventListener("click",function(){
+  var out="Finance Atlas syllabus\n";
+  NODES.forEach(function(nd){
+    out+="\n"+nd.n+". "+nd.name+" (level "+nd.lvl+", about "+nd.wk+" weeks)\n";
+    nd.groups.forEach(function(g,gi){out+=g[0]+":\n"; g[1].forEach(function(t,ii){out+=(S.c[ck(nd.id,gi,ii)]?"[x] ":"[ ] ")+t+"\n"})});
+  });
+  try{navigator.clipboard.writeText(out).then(function(){toast("Syllabus copied")},function(){toast("Copying is blocked in this view")})}catch(e){toast("Copying is blocked in this view")}
+});
+function veil(html,after){
+  var v=$("#veil"); v.innerHTML=html; v.hidden=false;
+  v.onclick=function(e){if(e.target===v||e.target.closest("[data-x]")){v.hidden=true}};
+  if(after)after(v);
+}
+$("#resetBtn").addEventListener("click",function(){
+  veil('<div class="modal" role="dialog" aria-modal="true" aria-labelledby="rt"><h3 id="rt">Reset all progress?</h3><p>Every ticked topic, mastery check, finished project and note will be cleared. This cannot be undone.</p><div class="acts"><button class="btn ghost" data-x="1">Keep it</button><button class="btn danger" id="doReset">Reset everything</button></div></div>',function(v){
+    v.querySelector("#doReset").addEventListener("click",function(){S={c:{},n:{},t:0}; persist(); v.hidden=true; renderAll(); if(openId)renderDrawer(); renderView(); toast("Progress cleared")});
+  });
+});
+$("#themeBtn").addEventListener("click",function(){
+  var root=document.documentElement;
+  var cur=root.dataset.theme||(window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");
+  var nx=cur==="dark"?"light":"dark"; root.dataset.theme=nx;
+  try{localStorage.setItem(LS+"-theme",nx)}catch(e){}
+});
+try{var th=localStorage.getItem(LS+"-theme"); if(th)document.documentElement.dataset.theme=th}catch(e){}
+document.addEventListener("keydown",function(e){
+  if(e.key!=="Escape")return;
+  if(!$("#veil").hidden){$("#veil").hidden=true;return}
+  if(openId)closeDrawer();
+});
+
+/* ---------- boot ---------- */
+function updateAll(soft){updateMap(); renderLedger(); var v=$("#app").dataset.view; if(v!=="map"&&soft!==true)renderView()}
+function renderAll(){updateMap(); renderLedger()}
+buildMap(); renderAll();
+var startV=(location.hash||"").slice(1); setView(VIEWS.indexOf(startV)>-1?startV:"map",true);
+fit(); vw.set=1;
+window.addEventListener("resize",function(){placeInk(); fit()});
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(placeInk)}
+setSync("local"); initDb();
+})();
+</script>
+
+</body></html>
