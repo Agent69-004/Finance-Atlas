@@ -1,4 +1,4 @@
-<title>Finance 69</title>
+<title>Finance Atlas</title>
 <meta name="claude:viewport-fit-sides" content="cover" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1916,6 +1916,638 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* ===================== v3: currents, palette, atelier, ripples ===================== */
+  @keyframes clipUp {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(55%);
+    }
+    to {
+      clip-path: inset(-12% 0 -30% 0);
+      transform: none;
+    }
+  }
+  @keyframes rp {
+    to {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+  @keyframes cellIn {
+    from {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+  }
+  @keyframes palIn {
+    from {
+      opacity: 0;
+      transform: translateY(-14px) scale(0.97);
+    }
+  }
+  @keyframes dashRun {
+    to {
+      stroke-dashoffset: -12;
+    }
+  }
+  .view h2,
+  .app.open .dr-head h1 {
+    animation: clipUp 1.15s var(--ease) 0.12s backwards;
+  }
+  .btn,
+  .ibtn,
+  .rit,
+  .fbtn,
+  .zoom button,
+  .modes button,
+  .seg button,
+  .cbtn,
+  .pal-i,
+  .sw button,
+  .step button {
+    position: relative;
+    overflow: hidden;
+  }
+  .rp {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: currentColor;
+    transform: scale(0);
+    opacity: 0.26;
+    animation: rp 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+    z-index: 0;
+  }
+  html[data-motion="calm"] .node .fl {
+    animation-duration: calc(var(--bd, 7s) * 2.4);
+  }
+  html[data-motion="calm"] .edge,
+  html[data-motion="calm"] .orbit {
+    animation-duration: 6s;
+  }
+  html[data-motion="off"] *,
+  html[data-motion="off"] *::before,
+  html[data-motion="off"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* segmented control + chart buttons */
+  .seg {
+    display: inline-flex;
+    padding: 3px;
+    gap: 2px;
+    border: 1px solid var(--rule2);
+    border-radius: 99px;
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .seg button {
+    height: 28px;
+    padding: 0 13px;
+    border-radius: 99px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--mute);
+    transition:
+      background 0.4s var(--ease),
+      color 0.3s,
+      transform 0.3s var(--spring);
+  }
+  .seg button:hover {
+    color: var(--ink);
+  }
+  .seg button:active {
+    transform: scale(0.92);
+  }
+  .seg button[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .cbtn {
+    height: 34px;
+    padding: 0 15px 0 12px;
+    border-radius: 99px;
+    border: 1px solid var(--rule2);
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    isolation: isolate;
+    transition:
+      border-color 0.3s,
+      color 0.3s,
+      transform 0.35s var(--spring),
+      box-shadow 0.4s;
+  }
+  .cbtn:hover {
+    border-color: var(--ink);
+  }
+  .cbtn:active {
+    transform: scale(0.94);
+  }
+  .cbtn svg {
+    width: 13px;
+    height: 13px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .cbtn .prog {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--acc);
+    transform-origin: left;
+    transform: scaleX(var(--p, 0));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cbtn.on {
+    color: #fff;
+    border-color: var(--acc);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--acc) 22%, transparent);
+    background: color-mix(in srgb, var(--acc) 55%, var(--bg));
+  }
+  .cbtn.on .prog {
+    opacity: 1;
+  }
+  .cbtn .dotf {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.35;
+    transition:
+      opacity 0.3s,
+      transform 0.4s var(--spring),
+      box-shadow 0.3s;
+  }
+  .cbtn.fc.on {
+    background: var(--glass);
+    color: var(--acc);
+    border-color: var(--acc);
+    box-shadow: none;
+  }
+  .cbtn.fc.on .dotf {
+    opacity: 1;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px var(--acc);
+  }
+
+  /* currents view */
+  .cur-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 22px 0 0;
+    border-top: 1px solid var(--rule2);
+    border-bottom: 1px solid var(--rule);
+  }
+  .cur-stats > div {
+    padding: 14px 0 14px 16px;
+    border-right: 1px solid var(--rule);
+    min-width: 0;
+    animation: rise 0.9s var(--ease) backwards;
+  }
+  .cur-stats > div:first-child {
+    padding-left: 0;
+  }
+  .cur-stats > div:last-child {
+    border-right: 0;
+  }
+  .cur-stats > div:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+  .cur-stats > div:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+  .cur-stats > div:nth-child(4) {
+    animation-delay: 0.24s;
+  }
+  .cur-stats b {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(26px, 3.2vw, 40px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .cur-stats b small {
+    font-size: 0.45em;
+    color: var(--mute);
+    font-style: italic;
+    margin-left: 4px;
+    letter-spacing: 0;
+  }
+  .cur-stats span {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  .cur-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .cur-bar .sp {
+    flex: 1;
+  }
+  .cur-wrap {
+    position: relative;
+    height: clamp(300px, 46vh, 470px);
+    margin-top: 12px;
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--card) 55%, transparent);
+    overflow: hidden;
+  }
+  .cur-wrap canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: pan-y;
+    cursor: crosshair;
+  }
+  .cur-badge {
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    padding: 5px 11px;
+    border-radius: 99px;
+    border: 1px dashed var(--acc);
+    color: var(--acc);
+    background: var(--glass);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: rise 0.8s var(--ease) both;
+    pointer-events: none;
+  }
+  .cur-tip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    width: 218px;
+    padding: 11px 13px 10px;
+    border-radius: 14px;
+    border: 1px solid var(--rule2);
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 20px 44px -20px var(--shadow);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    will-change: transform;
+  }
+  .cur-tip.on {
+    opacity: 1;
+  }
+  .cur-tip .d {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.05;
+  }
+  .cur-tip .d small {
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--acc);
+    margin-left: 6px;
+  }
+  .cur-tip .r {
+    display: grid;
+    grid-template-columns: 8px minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+    font-size: 12px;
+    color: var(--mute);
+    padding: 2px 0;
+  }
+  .cur-tip .r i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--dc);
+  }
+  .cur-tip .r span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cur-tip .r b {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .cur-tip .rows {
+    margin-top: 7px;
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+  .heat-wrap {
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+  }
+  .heat-m {
+    display: grid;
+    grid-template-columns: repeat(26, 15px);
+    gap: 4px;
+    margin-bottom: 6px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .heat {
+    display: grid;
+    grid-template-rows: repeat(7, 15px);
+    grid-auto-flow: column;
+    grid-auto-columns: 15px;
+    gap: 4px;
+  }
+  .heat i {
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--acc) calc(var(--a) * 100%), var(--rule));
+    transition:
+      transform 0.3s var(--spring),
+      outline-color 0.3s;
+    outline: 2px solid transparent;
+  }
+  .heat.in i {
+    animation: cellIn 0.7s var(--spring) backwards;
+    animation-delay: var(--d);
+  }
+  .heat i:hover {
+    transform: scale(1.35);
+    outline-color: var(--ink);
+    z-index: 1;
+    position: relative;
+  }
+  .heat i.fut {
+    background: transparent;
+    outline: 1px dashed var(--rule);
+  }
+  .heat-leg {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--mute);
+    letter-spacing: 0.06em;
+  }
+  .heat-leg i {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--acc) calc(var(--a) * 100%), var(--rule));
+  }
+
+  /* command palette */
+  .pal {
+    position: absolute;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12vh var(--gxr) 20px var(--gx);
+    background: color-mix(in srgb, var(--bg) 52%, transparent);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    animation: fade 0.3s both;
+  }
+  .pal[hidden] {
+    display: none;
+  }
+  .pal-box {
+    width: min(560px, 100%);
+    border: 1px solid var(--rule2);
+    border-radius: 20px;
+    background: var(--card);
+    box-shadow: 0 50px 90px -34px var(--shadow);
+    overflow: hidden;
+    animation: palIn 0.55s var(--spring) both;
+  }
+  .pal-box input {
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    padding: 20px 22px 16px;
+    font-family: var(--serif);
+    font-size: 26px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pal-box input::placeholder {
+    color: var(--faint);
+    font-style: italic;
+  }
+  .pal-box ul {
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    max-height: min(52vh, 420px);
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+  .pal-i {
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    animation: rise 0.45s var(--ease) backwards;
+    animation-delay: calc(var(--j) * 22ms);
+    transition:
+      background 0.25s,
+      transform 0.3s var(--ease);
+  }
+  .pal-i i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--dc, var(--faint));
+  }
+  .pal-i b {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .pal-i span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--mute);
+    white-space: nowrap;
+  }
+  .pal-i.sel {
+    background: color-mix(in srgb, var(--ink) 7%, transparent);
+    transform: translateX(4px);
+  }
+  .pal-foot {
+    display: flex;
+    gap: 14px;
+    padding: 10px 22px 14px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--mute);
+  }
+  .pal-empty {
+    padding: 22px 14px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--mute);
+  }
+
+  /* atelier */
+  .atl {
+    width: min(480px, 100%);
+    max-height: 100%;
+    overflow: auto;
+  }
+  .atl-r {
+    margin-top: 20px;
+    display: grid;
+    gap: 9px;
+  }
+  .sw {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .sw button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--c);
+    border: 2px solid var(--card);
+    outline: 1.5px solid var(--rule2);
+    transition:
+      transform 0.4s var(--spring),
+      outline-color 0.3s;
+  }
+  .sw button.auto {
+    background: conic-gradient(#ff6b2c, #2d7ff9, #7b61ff, #12b5a6, #ff5c77, #ff6b2c);
+  }
+  .sw button:hover {
+    transform: scale(1.14);
+  }
+  .sw button[aria-pressed="true"] {
+    outline: 2px solid var(--ink);
+    transform: scale(1.12);
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .step button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--rule2);
+    font-size: 18px;
+    line-height: 1;
+    transition:
+      transform 0.3s var(--spring),
+      border-color 0.3s;
+  }
+  .step button:hover {
+    border-color: var(--ink);
+  }
+  .step b {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1;
+    min-width: 2ch;
+    text-align: center;
+  }
+  .step span {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--mute);
+  }
+  .dt {
+    border: 0;
+    border-bottom: 1.5px solid var(--rule2);
+    background: transparent;
+    font-family: var(--serif);
+    font-size: 22px;
+    padding: 6px 2px;
+    width: 100%;
+    color-scheme: inherit;
+  }
+  .dt:focus {
+    outline: none;
+    border-color: var(--acc);
+  }
+  .atl textarea {
+    min-height: 110px;
+    font-size: 13px;
+    font-family: var(--mono);
+  }
+  @media (max-width: 860px) {
+    .cur-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cur-stats > div:nth-child(2) {
+      border-right: 0;
+    }
+    .cur-stats > div:nth-child(3) {
+      padding-left: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .cur-stats > div:nth-child(4) {
+      border-top: 1px solid var(--rule);
+    }
+    .cur-wrap {
+      height: 320px;
+    }
+    .pal {
+      padding-top: 8vh;
+    }
+  }
 </style>
 
 <div class="app" id="app" data-view="map">
@@ -1965,6 +2597,7 @@
       <span class="ink" id="modeInk"></span>
       <button data-v="map" aria-pressed="true">Map</button>
       <button data-v="path" aria-pressed="false">Path</button>
+      <button data-v="currents" aria-pressed="false">Currents</button>
       <button data-v="projects" aria-pressed="false">Projects</button>
     </div>
     <div class="tright">
@@ -1972,6 +2605,12 @@
         <i></i>
         <span id="syncT">On this device</span>
       </span>
+      <button class="ibtn" id="searchBtn" aria-label="Search subjects and actions (Ctrl K)" title="Search · Ctrl K or /">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
+      </button>
+      <button class="ibtn" id="atelierBtn" aria-label="Open the Atelier" title="Atelier · accent, motion, goals">
+        <svg viewBox="0 0 24 24"><path d="M4 8h10M18 8h2M4 16h2M10 16h10" /><circle cx="16" cy="8" r="2" /><circle cx="8" cy="16" r="2" /></svg>
+      </button>
       <button class="ibtn" id="themeBtn" aria-label="Switch between light and dark">
         <svg viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="4" />
@@ -2057,6 +2696,13 @@
 
   <canvas id="fx" aria-hidden="true"></canvas>
   <div class="veil" id="veil" hidden></div>
+  <div class="pal" id="pal" hidden>
+    <div class="pal-box" role="dialog" aria-modal="true" aria-label="Search">
+      <input id="palIn" type="text" placeholder="Jump to a subject, view or action…" autocomplete="off" spellcheck="false" aria-label="Search" />
+      <ul id="palList"></ul>
+      <div class="pal-foot"><span>↑ ↓ move</span><span>↵ open</span><span>esc close</span><span>1–4 switch view</span></div>
+    </div>
+  </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </div>
 
@@ -2078,6 +2724,7 @@
       window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
     var root = document.documentElement;
+    var reducedMQ = reduced;
     /* ---------- content ---------- */
     function N(id, n, name, short, lvl, wk, why, groups, deliver, req) {
       return {
@@ -3189,6 +3836,12 @@
       if (!S.c) S.c = {};
       if (!S.n) S.n = {};
       if (!S.s) S.s = {};
+      if (!S.h) S.h = {};
+      if (!S.cfg) S.cfg = {};
+      if (typeof S.cfg.hrs !== "number") S.cfg.hrs = 10;
+      if (!S.cfg.end) S.cfg.end = "2027-10-31";
+      if (!S.cfg.motion) S.cfg.motion = "full";
+      if (typeof S.cfg.acc !== "string") S.cfg.acc = "";
     }
     norm();
     function ck(id, g, i) {
@@ -3366,6 +4019,7 @@
                     var ls = S.s || {};
                     S = rem;
                     norm();
+                    applyCfg();
                     Object.keys(ls).forEach(function (d) {
                       if ((ls[d] || 0) > (S.s[d] || 0)) S.s[d] = ls[d];
                     });
@@ -4134,8 +4788,10 @@
         bp = pct(nd),
         bm = masteryN(nd),
         ba = allStats().p;
+      var d0 = done(nd);
       if (c.checked) S.c[c.dataset.k] = 1;
       else delete S.c[c.dataset.k];
+      logTick(nd, done(nd) - d0);
       persist();
       refreshStats();
       updateAll(true);
@@ -4154,11 +4810,13 @@
         g[1].forEach(function (_, ii) {
           if (!S.c[ck(nd.id, gi, ii)]) all = false;
         });
+        var d0m = done(nd);
         g[1].forEach(function (_, ii) {
           var k = ck(nd.id, gi, ii);
           if (all) delete S.c[k];
           else S.c[k] = 1;
         });
+        logTick(nd, done(nd) - d0m);
         persist();
         renderBody();
         refreshStats();
@@ -4281,9 +4939,15 @@
         host = $("#view");
       if (v === "map") {
         host.hidden = true;
+        CUR.mounted = false;
         return;
       }
       host.hidden = false;
+      if (v === "currents") {
+        renderCurrentsView(host);
+        return;
+      }
+      CUR.mounted = false;
       host.innerHTML = v === "path" ? renderPath() : renderProjects();
     }
     $("#view").addEventListener("click", function (e) {
@@ -4310,7 +4974,7 @@
       if (o) openNode(o.dataset.open);
     });
 
-    var VIEWS = ["map", "path", "projects"],
+    var VIEWS = ["map", "path", "currents", "projects"],
       inkReady = false;
     function placeInk() {
       var b = $("#modes").querySelector('[aria-pressed="true"]'),
@@ -4407,7 +5071,8 @@
         '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="rt"><h3 id="rt">Reset all progress?</h3><p>Every ticked topic, mastery check, finished project, note and study streak will be cleared. This cannot be undone.</p><div class="acts"><button class="btn ghost" data-x="1">Keep it</button><button class="btn danger" id="doReset">Reset everything</button></div></div>',
         function (v) {
           v.querySelector("#doReset").addEventListener("click", function () {
-            S = { c: {}, n: {}, s: {}, t: 0 };
+            S = { c: {}, n: {}, s: {}, h: {}, cfg: S.cfg, t: 0 };
+            norm();
             persist();
             v.hidden = true;
             updateAll();
@@ -4426,14 +5091,6 @@
       try {
         localStorage.setItem(LS + "-theme", nx);
       } catch (e) {}
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key !== "Escape") return;
-      if (!$("#veil").hidden) {
-        $("#veil").hidden = true;
-        return;
-      }
-      if (openId) closeDrawer();
     });
 
     /* ---------- study session timer ---------- */
@@ -4717,10 +5374,11 @@
           "translate3d(" + spotC.x.toFixed(1) + "px," + spotC.y.toFixed(1) + "px,0)";
       stepTweens(t);
       if (!reduced || bgDirty) {
-        drawBg(t / 1000);
+        drawBg((t / 1000) * (calm ? 0.35 : 1));
         bgDirty = false;
       }
       drawFx();
+      drawCurrents(t, dt);
       if (!document.hidden) raf = requestAnimationFrame(frame);
     }
     document.addEventListener("visibilitychange", function () {
@@ -4730,11 +5388,951 @@
       }
     });
 
+    /* =====================================================================
+       v3 additions: settings, history log, Currents view, palette, ripples
+       ===================================================================== */
+
+    /* ---------- settings (accent, motion, weekly goal, target date) ---------- */
+    var ACCS = ["#FF6B2C", "#2D7FF9", "#7B61FF", "#12B5A6", "#FF5C77", "#16A34A"];
+    var calm = false;
+    function applyCfg() {
+      var c = S.cfg;
+      if (c.acc) root.style.setProperty("--acc", c.acc);
+      else root.style.removeProperty("--acc");
+      root.dataset.motion = c.motion || "full";
+      reduced = reducedMQ || c.motion === "off";
+      calm = c.motion === "calm";
+      bgDirty = true;
+    }
+
+    /* ---------- history log: net topics ticked per day per area ---------- */
+    function logTick(nd, delta) {
+      if (!delta) return;
+      var k = dayKey(new Date());
+      var row = S.h[k] || (S.h[k] = [0, 0, 0, 0, 0, 0, 0]);
+      row[nd.area.i] = Math.max(0, (row[nd.area.i] || 0) + delta);
+    }
+
+    /* ---------- date helpers ---------- */
+    var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    function dayAt(off) {
+      var d = new Date();
+      d.setHours(12, 0, 0, 0);
+      d.setDate(d.getDate() + off);
+      return d;
+    }
+    function dfmt(d, withYear) {
+      return d.getDate() + " " + MON[d.getMonth()] + (withYear ? " " + d.getFullYear() : "");
+    }
+    function parseDate(s) {
+      var p = String(s || "2027-10-31").split("-");
+      return new Date(+p[0] || 2027, (+p[1] || 10) - 1, +p[2] || 31, 12);
+    }
+    function weekSeconds() {
+      var dow = (new Date().getDay() + 6) % 7,
+        t = 0;
+      for (var k = 0; k <= dow; k++) t += S.s[dayKey(dayAt(-k))] || 0;
+      return t;
+    }
+    function longestStreak() {
+      var best = 0,
+        run = 0;
+      for (var off = -400; off <= 0; off++) {
+        if ((S.s[dayKey(dayAt(off))] || 0) >= 1200) {
+          run++;
+          if (run > best) best = run;
+        } else run = 0;
+      }
+      return best;
+    }
+
+    /* ---------- Currents: a streamgraph of how fast you really move ---------- */
+    var CUR = {
+      mounted: false,
+      range: 90,
+      fc: true,
+      sample: false,
+      n: 90,
+      order: [0, 1, 2, 3, 4, 5, 6],
+      tg: null,
+      raw: null,
+      disp: null,
+      sc: 0,
+      revealT: 0,
+      revealStart: 0,
+      replay: null,
+      hover: -1,
+      W: 0,
+      H: 0,
+      dpr: 1,
+      cv: null,
+      ctx: null,
+      host: null,
+    };
+    var FUT = 28,
+      RANGES = [
+        [30, "30d"],
+        [90, "90d"],
+        [180, "6m"],
+      ];
+    function hsh(n) {
+      n = Math.imul(n ^ (n >>> 15), 0x2c1b3c6d);
+      n = Math.imul(n ^ (n >>> 12), 0x297a2d39);
+      return ((n ^ (n >>> 15)) >>> 0) / 4294967296;
+    }
+    function rawTicks(i, off, sample) {
+      if (!sample) {
+        var r = S.h[dayKey(dayAt(off))];
+        return r ? r[i] || 0 : 0;
+      }
+      var dow = dayAt(off).getDay(),
+        wk = dow === 0 || dow === 6 ? 0.45 : 1,
+        base = [0.5, 0.32, 0.4, 0.3, 0.24, 0.18, 0.36][i] * (0.7 + 0.3 * Math.sin(off * 0.06 + i * 1.7)),
+        lull = off < -34 && off > -52 ? 0.25 : 1,
+        rise = 0.55 + 0.45 * Math.min(1, (off + 180) / 180);
+      return Math.max(0, base * wk * lull * rise * (0.5 + hsh(i * 7919 + off * 104729 + 13)));
+    }
+    function curTarget() {
+      var n = CUR.range,
+        sum = 0,
+        i,
+        j;
+      for (i = 0; i < 7; i++) for (j = 0; j < n; j++) sum += rawTicks(i, -(n - 1 - j), false);
+      CUR.sample = sum < 3;
+      var raw = [],
+        full = [],
+        rem = [];
+      AREAS.forEach(function (a, ai) {
+        var st = areaStats(a);
+        rem[ai] = CUR.sample ? st.t * 0.7 : st.t - st.d;
+      });
+      for (i = 0; i < 7; i++) {
+        var a = [];
+        for (j = 0; j < n; j++) a.push(rawTicks(i, -(n - 1 - j), CUR.sample));
+        raw.push(a);
+        var sm = a.map(function (_, jj) {
+          var t = 0,
+            w = 0;
+          for (var q = -5; q <= 5; q++) {
+            var k = jj + q;
+            if (k < 0 || k >= n) continue;
+            var ww = Math.exp((-q * q) / 6);
+            t += a[k] * ww;
+            w += ww;
+          }
+          return t / w;
+        });
+        var last = a.slice(-14),
+          pace =
+            last.reduce(function (x, y) {
+              return x + y;
+            }, 0) / Math.max(1, last.length),
+          fut = Math.min(pace, rem[i] / FUT),
+          start = sm[n - 1],
+          f = sm.slice();
+        for (var k2 = 0; k2 < FUT; k2++) f.push(start + (fut - start) * Math.min(1, (k2 + 1) / 7));
+        full.push(f);
+      }
+      CUR.n = n;
+      CUR.tg = full;
+      CUR.raw = raw;
+      var tot = full
+        .map(function (a, ii) {
+          return {
+            i: ii,
+            s: a.reduce(function (x, y) {
+              return x + y;
+            }, 0),
+          };
+        })
+        .sort(function (a, b) {
+          return b.s - a.s;
+        });
+      var top = [],
+        bot = [];
+      tot.forEach(function (o, k) {
+        (k % 2 ? bot : top).push(o.i);
+      });
+      CUR.order = top.reverse().concat(bot);
+      if (!CUR.disp || CUR.disp[0].length !== full[0].length) {
+        CUR.disp = full.map(function (a) {
+          return a.map(function () {
+            return 0;
+          });
+        });
+      }
+    }
+    function curSummary() {
+      var st = allStats(),
+        sm = CUR.sample,
+        rem = sm ? Math.round(st.t * 0.7) : st.t - st.d,
+        sum = 0,
+        i,
+        j;
+      for (i = 0; i < 7; i++) for (j = 0; j < 28; j++) sum += rawTicks(i, -j, sm);
+      var perDay = sum / 28,
+        end = parseDate(S.cfg.end),
+        toEnd = Math.max(1, Math.round((end - dayAt(0)) / 864e5)),
+        days = perDay > 0.001 ? Math.ceil(rem / perDay) : null;
+      return {
+        perWeek: perDay * 7,
+        need: (rem / toEnd) * 7,
+        rem: rem,
+        finish: days == null ? null : dayAt(days),
+        delta: days == null ? null : Math.round((dayAt(days) - end) / 864e5),
+        end: end,
+        hours: weekSeconds() / 3600,
+        streak: streak(),
+        best: longestStreak(),
+      };
+    }
+    function renderCurStats(animate) {
+      var s = curSummary(),
+        c = S.cfg;
+      var verdict =
+        s.delta == null
+          ? ["—", "no pace yet"]
+          : s.delta <= 0
+            ? [Math.max(1, Math.round(-s.delta / 7)) + "<small>wk ahead</small>", "on pace"]
+            : [Math.max(1, Math.round(s.delta / 7)) + "<small>wk late</small>", "behind target"];
+      var h =
+        "<div><b>" +
+        s.perWeek.toFixed(1) +
+        "<small>topics / wk</small></b><span>Pace · last 4 weeks</span></div>" +
+        "<div><b>" +
+        (s.finish ? dfmt(s.finish, true) : "—") +
+        '</b><span>Projected finish · target ' +
+        dfmt(s.end, true) +
+        "</span></div>" +
+        "<div><b>" +
+        s.streak +
+        "<small>days · best " +
+        s.best +
+        "</small></b><span>Streak · 20 min counts</span></div>" +
+        "<div><b>" +
+        s.hours.toFixed(1) +
+        "<small>of " +
+        c.hrs +
+        " h</small></b><span>This week</span></div>";
+      $("#curStats").innerHTML = h;
+      var note;
+      if (CUR.sample) {
+        note =
+          "This is a sample of what your currents will look like. Tick topics in any subject, or run the study timer, and your own history replaces it.";
+      } else if (s.delta == null) {
+        note = "No topics ticked in the last four weeks, so there is nothing to project yet.";
+      } else {
+        note =
+          "At " +
+          s.perWeek.toFixed(1) +
+          " topics a week you tick the last topic around " +
+          dfmt(s.finish, true) +
+          ", " +
+          (s.delta <= 0
+            ? Math.abs(Math.round(s.delta / 7)) + " weeks before"
+            : Math.round(s.delta / 7) + " weeks after") +
+          " your " +
+          dfmt(s.end, true) +
+          " target. To land on it you need " +
+          s.need.toFixed(1) +
+          " a week.";
+      }
+      $("#curNote").textContent = note;
+      $("#curBadge").hidden = !CUR.sample;
+      void animate;
+      void verdict;
+    }
+    function buildHeat(animate) {
+      var host = $("#heat"),
+        mh = $("#heatM");
+      if (!host) return;
+      var WEEKS = 26,
+        dowM = (new Date().getDay() + 6) % 7,
+        h = "",
+        months = [],
+        lastM = -1;
+      for (var w = 0; w < WEEKS; w++) {
+        var firstOff = -((WEEKS - 1 - w) * 7 + dowM);
+        var fm = dayAt(firstOff).getMonth();
+        months.push(fm !== lastM ? MON[fm] : "");
+        lastM = fm;
+        for (var r = 0; r < 7; r++) {
+          var off = -((WEEKS - 1 - w) * 7 + (dowM - r));
+          if (off > 0) {
+            h += '<i class="fut"></i>';
+            continue;
+          }
+          var key = dayKey(dayAt(off)),
+            sec = S.s[key] || 0,
+            tk = 0,
+            row = S.h[key];
+          if (CUR.sample) {
+            for (var q = 0; q < 7; q++) tk += rawTicks(q, off, true);
+            sec = tk * 380;
+          } else if (row) tk = row.reduce(function (x, y) { return x + y; }, 0);
+          var a = Math.min(1, (sec / 5400) * 0.7 + (tk / 12) * 0.5),
+            lab = dfmt(dayAt(off)) + " · " + Math.round(sec / 60) + " min · " + Math.round(tk) + " topics";
+          h +=
+            '<i style="--a:' +
+            (a < 0.04 ? 0 : 0.18 + a * 0.82).toFixed(2) +
+            ";--d:" +
+            (w * 22 + r * 9) +
+            'ms" title="' +
+            lab +
+            '"></i>';
+        }
+      }
+      host.innerHTML = h;
+      host.classList.toggle("in", !!animate);
+      mh.innerHTML = months
+        .map(function (m) {
+          return "<span>" + m + "</span>";
+        })
+        .join("");
+    }
+    function mountCurrents(host) {
+      CUR.mounted = true;
+      CUR.host = host;
+      CUR.hover = -1;
+      CUR.replay = null;
+      host.innerHTML =
+        '<div class="eyebrow">Study history · how fast you actually move</div><h2>Currents.</h2>' +
+        '<p class="prose" id="curNote" style="margin-top:14px"></p>' +
+        '<div class="cur-stats" id="curStats"></div>' +
+        '<div class="cur-bar"><div class="seg" id="curRange" role="group" aria-label="Range">' +
+        RANGES.map(function (r) {
+          return (
+            '<button data-r="' +
+            r[0] +
+            '" aria-pressed="' +
+            (r[0] === CUR.range) +
+            '">' +
+            r[1] +
+            "</button>"
+          );
+        }).join("") +
+        '</div><span class="sp"></span>' +
+        '<button class="cbtn fc' +
+        (CUR.fc ? " on" : "") +
+        '" id="curFc" aria-pressed="' +
+        CUR.fc +
+        '"><span class="dotf"></span>Forecast</button>' +
+        '<button class="cbtn" id="curReplay"><span class="prog"></span><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z"/></svg><span id="curRL">Replay</span></button></div>' +
+        '<div class="cur-wrap" id="curWrap"><canvas id="cvs" aria-label="Streamgraph of topics ticked per day for each of the seven areas"></canvas><span class="cur-badge" id="curBadge" hidden>Sample data</span><div class="cur-tip" id="curTip"></div></div>' +
+        '<h3 class="sec-h">Study rhythm</h3><p class="prose">Every square is a day. Brighter means more minutes on the timer and more topics ticked.</p>' +
+        '<div class="heat-wrap"><div class="heat-m" id="heatM"></div><div class="heat" id="heat"></div></div>' +
+        '<div class="heat-leg"><span>Less</span><i style="--a:0"></i><i style="--a:.3"></i><i style="--a:.55"></i><i style="--a:.8"></i><i style="--a:1"></i><span>More</span></div>';
+      CUR.cv = $("#cvs");
+      CUR.ctx = CUR.cv.getContext && CUR.cv.getContext("2d");
+      CUR.disp = null;
+      curTarget();
+      sizeCur();
+      CUR.revealT = reduced ? 1 : 0;
+      CUR.revealStart = performance.now();
+      renderCurStats(true);
+      buildHeat(true);
+      var cv = CUR.cv;
+      cv.addEventListener("pointermove", function (e) {
+        var b = cv.getBoundingClientRect(),
+          m = CUR.n + (CUR.fc ? FUT : 0),
+          x = e.clientX - b.left,
+          pl = 10,
+          pw = CUR.W - 20;
+        CUR.hover = Math.max(0, Math.min(m - 1, Math.round(((x - pl) / pw) * (m - 1))));
+        CUR.mx = x;
+        CUR.my = e.clientY - b.top;
+        curTip();
+      });
+      cv.addEventListener("pointerleave", function () {
+        CUR.hover = -1;
+        $("#curTip").classList.remove("on");
+      });
+    }
+    function sizeCur() {
+      var c = CUR;
+      if (!c.mounted || !c.cv) return;
+      var w = c.cv.clientWidth,
+        h = c.cv.clientHeight;
+      if (!w || !h) return;
+      c.dpr = Math.min(2, window.devicePixelRatio || 1);
+      c.cv.width = Math.round(w * c.dpr);
+      c.cv.height = Math.round(h * c.dpr);
+      c.W = w;
+      c.H = h;
+    }
+    function refreshCur() {
+      if (!CUR.mounted) return;
+      curTarget();
+      renderCurStats();
+      buildHeat(false);
+    }
+    function curTip() {
+      var c = CUR,
+        tip = $("#curTip");
+      if (!tip || c.hover < 0 || !c.tg) return;
+      var j = c.hover,
+        n = c.n,
+        fut = j >= n,
+        off = j - (n - 1),
+        d = dayAt(off),
+        rows = "",
+        sum = 0;
+      c.order
+        .slice()
+        .reverse()
+        .forEach(function (i) {
+          var v = fut ? c.tg[i][j] : c.raw[i][j];
+          sum += v;
+          rows +=
+            '<div class="r" style="--dc:var(' +
+            AREAS[i].c +
+            ')"><i></i><span>' +
+            esc(AREAS[i].name) +
+            "</span><b>" +
+            (fut ? v.toFixed(1) : Math.round(v)) +
+            "</b></div>";
+        });
+      tip.innerHTML =
+        '<div class="d">' +
+        dfmt(d) +
+        (fut ? "<small>forecast</small>" : off === 0 ? "<small>today</small>" : "") +
+        '</div><div class="rows">' +
+        rows +
+        "</div>";
+      var tw = 218,
+        x = c.mx + 18 + tw > c.W ? c.mx - tw - 18 : c.mx + 18,
+        y = Math.max(8, Math.min(c.H - tip.offsetHeight - 8, c.my - 30));
+      tip.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
+      tip.classList.add("on");
+    }
+    function setReplayUI(on) {
+      var b = $("#curReplay");
+      if (!b) return;
+      b.classList.toggle("on", on);
+      $("#curRL").textContent = on ? "Stop" : "Replay";
+      if (!on) b.style.setProperty("--p", 0);
+    }
+    function curReplay() {
+      if (CUR.replay) {
+        CUR.replay = null;
+        CUR.revealT = 1;
+        setReplayUI(false);
+        return;
+      }
+      CUR.replay = { t0: performance.now(), dur: reduced ? 500 : 5600 };
+      CUR.revealT = 0;
+      setReplayUI(true);
+    }
+    function curPath(ctx, xs, ys, move) {
+      var n = xs.length;
+      if (!n) return;
+      if (move) ctx.moveTo(xs[0], ys[0]);
+      else ctx.lineTo(xs[0], ys[0]);
+      for (var j = 0; j < n - 1; j++)
+        ctx.quadraticCurveTo(xs[j], ys[j], (xs[j] + xs[j + 1]) / 2, (ys[j] + ys[j + 1]) / 2);
+      ctx.lineTo(xs[n - 1], ys[n - 1]);
+    }
+    var curFonts = null;
+    function drawCurrents(now, dt) {
+      var c = CUR;
+      if (!c.mounted || !c.ctx || !c.tg || !c.W || !c.disp) return;
+      var ctx = c.ctx,
+        W = c.W,
+        H = c.H,
+        n = c.n,
+        F = c.fc ? FUT : 0,
+        m = n + F,
+        i,
+        j,
+        kk = reduced ? 1 : Math.min(1, dt / 240);
+      if (!curFonts) {
+        var cs = getComputedStyle(root);
+        curFonts = { serif: cs.getPropertyValue("--serif"), mono: cs.getPropertyValue("--mono") };
+      }
+      /* reveal animation: first load and replay */
+      if (c.replay) {
+        var p = Math.min(1, (now - c.replay.t0) / c.replay.dur);
+        c.revealT = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+        $("#curReplay").style.setProperty("--p", p.toFixed(3));
+        if (p >= 1) {
+          c.replay = null;
+          c.revealT = 1;
+          setReplayUI(false);
+        }
+      } else if (c.revealT < 1) {
+        var q = Math.min(1, (now - c.revealStart) / 1600);
+        c.revealT = 1 - Math.pow(1 - q, 3);
+      }
+      for (i = 0; i < 7; i++) for (j = 0; j < c.tg[i].length; j++) c.disp[i][j] += (c.tg[i][j] - c.disp[i][j]) * kk;
+      var l = 10,
+        r = 10,
+        t = 26,
+        b = 34,
+        pw = W - l - r,
+        ph = H - t - b,
+        cy = t + ph / 2,
+        tot = [],
+        maxT = 0;
+      for (j = 0; j < m; j++) {
+        var s = 0;
+        for (i = 0; i < 7; i++) s += c.disp[i][j];
+        tot.push(s);
+        if (s > maxT) maxT = s;
+      }
+      var scT = (ph * 0.86) / Math.max(maxT, 1.1);
+      c.sc += (scT - (c.sc || scT)) * kk || 0;
+      if (!c.sc) c.sc = scT;
+      var sc = c.sc,
+        xs = [],
+        ink = DARK ? "236,238,248" : "18,19,26",
+        halo = DARK ? "11,12,18" : "245,246,251";
+      for (j = 0; j < m; j++) xs.push(l + (j / (m - 1)) * pw);
+      var xNow = xs[n - 1],
+        revX = l + c.revealT * (W - l);
+      ctx.setTransform(c.dpr, 0, 0, c.dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      /* grid */
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(" + ink + ",.07)";
+      for (j = 0; j <= 4; j++) {
+        var gx = l + (j / 4) * pw;
+        ctx.beginPath();
+        ctx.moveTo(gx, t - 8);
+        ctx.lineTo(gx, H - b + 6);
+        ctx.stroke();
+      }
+      /* bands */
+      var cum = tot.map(function (v) {
+          return cy - (v * sc) / 2;
+        }),
+        bands = [];
+      c.order.forEach(function (ai) {
+        var top = cum.slice(),
+          bot = [];
+        for (var jj = 0; jj < m; jj++) {
+          bot.push(top[jj] + c.disp[ai][jj] * sc);
+          cum[jj] = bot[jj];
+        }
+        bands.push({ i: ai, top: top, bot: bot });
+      });
+      function paint(alpha, dashed) {
+        bands.forEach(function (bd) {
+          var col = PAL[bd.i];
+          ctx.beginPath();
+          curPath(ctx, xs, bd.top, true);
+          curPath(ctx, xs.slice().reverse(), bd.bot.slice().reverse(), false);
+          ctx.closePath();
+          var g = ctx.createLinearGradient(0, t, 0, H - b);
+          g.addColorStop(0, "rgba(" + col[0] + "," + col[1] + "," + col[2] + "," + alpha + ")");
+          g.addColorStop(1, "rgba(" + col[0] + "," + col[1] + "," + col[2] + "," + alpha * 0.72 + ")");
+          ctx.fillStyle = g;
+          ctx.fill();
+          ctx.lineWidth = dashed ? 1.2 : 1;
+          ctx.strokeStyle = dashed ? "rgba(" + col[0] + "," + col[1] + "," + col[2] + ",.85)" : DARK ? "rgba(255,255,255,.16)" : "rgba(255,255,255,.7)";
+          if (dashed) ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          curPath(ctx, xs, bd.top, true);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        });
+      }
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, Math.min(revX, F ? xNow + 0.5 : W), H);
+      ctx.clip();
+      paint(DARK ? 0.78 : 0.88, false);
+      ctx.restore();
+      if (F) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(xNow, 0, Math.max(0, revX - xNow), H);
+        ctx.clip();
+        paint(0.3, true);
+        ctx.restore();
+        ctx.save();
+        ctx.setLineDash([3, 5]);
+        ctx.strokeStyle = "rgba(" + ink + ",.35)";
+        ctx.beginPath();
+        ctx.moveTo(xNow, t - 10);
+        ctx.lineTo(xNow, H - b + 6);
+        ctx.stroke();
+        ctx.restore();
+      }
+      /* labels on the thickest part of each band */
+      ctx.textAlign = "center";
+      bands.forEach(function (bd) {
+        var bj = -1,
+          bv = 0,
+          lo = Math.round(n * 0.12),
+          hi = Math.round(n * 0.9);
+        for (var jj = lo; jj < hi; jj++) {
+          var th = bd.bot[jj] - bd.top[jj];
+          if (th > bv) {
+            bv = th;
+            bj = jj;
+          }
+        }
+        if (bj < 0 || bv < 17 || xs[bj] > revX - 30) return;
+        var fade = Math.min(1, (revX - xs[bj] - 30) / 120),
+          name = AREAS[bd.i].name,
+          y = (bd.top[bj] + bd.bot[bj]) / 2;
+        ctx.font = "italic " + (bv > 30 ? 21 : 16) + "px " + curFonts.serif;
+        ctx.textBaseline = "middle";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "rgba(" + halo + "," + 0.55 * fade + ")";
+        ctx.strokeText(name, xs[bj], y);
+        ctx.fillStyle = "rgba(" + ink + "," + 0.92 * fade + ")";
+        ctx.fillText(name, xs[bj], y);
+      });
+      /* axis */
+      ctx.font = "10px " + curFonts.mono;
+      ctx.textBaseline = "alphabetic";
+      ctx.fillStyle = "rgba(" + ink + ",.5)";
+      for (j = 0; j < 5; j++) {
+        var jj2 = Math.round((j * (n - 1)) / 4),
+          lab = j === 4 ? "today" : dfmt(dayAt(jj2 - (n - 1)));
+        ctx.textAlign = j === 0 ? "left" : "center";
+        ctx.fillText(lab.toUpperCase(), xs[jj2], H - 12);
+      }
+      if (F) {
+        ctx.textAlign = "right";
+        ctx.fillStyle = "rgba(" + ink + ",.5)";
+        ctx.fillText(("forecast · " + dfmt(dayAt(FUT))).toUpperCase(), W - r, H - 12);
+      }
+      /* replay head */
+      if (c.replay || c.revealT < 0.999) {
+        var hg = ctx.createLinearGradient(revX - 36, 0, revX, 0);
+        hg.addColorStop(0, "rgba(255,255,255,0)");
+        hg.addColorStop(1, "rgba(" + PAL[0][0] + "," + PAL[0][1] + "," + PAL[0][2] + ",.3)");
+        ctx.fillStyle = hg;
+        ctx.fillRect(revX - 36, t - 10, 36, ph + 20);
+        ctx.strokeStyle = "rgba(" + ink + ",.75)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(revX, t - 12);
+        ctx.lineTo(revX, H - b + 8);
+        ctx.stroke();
+        var hj = Math.max(0, Math.min(m - 1, Math.round(((revX - l) / pw) * (m - 1))));
+        ctx.font = "italic 17px " + curFonts.serif;
+        ctx.textAlign = revX > W - 90 ? "right" : "left";
+        ctx.fillStyle = "rgba(" + ink + ",.9)";
+        ctx.fillText(dfmt(dayAt(hj - (n - 1))), revX + (revX > W - 90 ? -8 : 8), t - 6);
+      }
+      /* hover scrubber */
+      if (c.hover >= 0 && c.hover < m) {
+        var hx = xs[c.hover];
+        ctx.strokeStyle = "rgba(" + ink + ",.55)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(hx, t - 10);
+        ctx.lineTo(hx, H - b + 6);
+        ctx.stroke();
+        bands.forEach(function (bd) {
+          var col = PAL[bd.i];
+          ctx.beginPath();
+          ctx.arc(hx, (bd.top[c.hover] + bd.bot[c.hover]) / 2, 3.6, 0, 6.283);
+          ctx.fillStyle = "rgb(" + col[0] + "," + col[1] + "," + col[2] + ")";
+          ctx.fill();
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = "rgba(" + halo + ",1)";
+          ctx.stroke();
+        });
+      }
+    }
+    function renderCurrentsView(host) {
+      if (CUR.mounted && CUR.host === host && host.querySelector("#cvs")) {
+        refreshCur();
+        return;
+      }
+      mountCurrents(host);
+    }
+
+    /* ---------- command palette ---------- */
+    var palSel = 0,
+      palItems = [];
+    function palCommands() {
+      var cmds = [
+        { t: "Map", s: "View · 1", k: "view map", run: function () { setView("map"); } },
+        { t: "Path", s: "View · 2", k: "view path plan year", run: function () { setView("path"); } },
+        { t: "Currents", s: "View · 3", k: "view currents history chart pace forecast", run: function () { setView("currents"); } },
+        { t: "Projects", s: "View · 4", k: "view projects portfolio", run: function () { setView("projects"); } },
+        { t: "Start or pause the study timer", s: "Action", k: "timer session study pomodoro", run: function () { $("#sBtn").click(); } },
+        { t: "Switch light and dark", s: "Action", k: "theme dark light mode", run: function () { $("#themeBtn").click(); } },
+        { t: "Open the Atelier", s: "Action · settings", k: "settings accent motion goal target atelier backup", run: function () { openAtelier(); } },
+        { t: "Fit the map to the screen", s: "Action", k: "zoom fit map", run: function () { setView("map"); fit(false); } },
+        { t: "Copy the syllabus", s: "Action", k: "copy syllabus export", run: function () { $("#copyBtn").click(); } },
+      ];
+      NODES.forEach(function (nd) {
+        cmds.push({
+          t: (/^\d+$/.test(nd.n) ? nd.n + " · " : "") + nd.name,
+          s: nd.area.name + " · L" + nd.lvl + " · " + pct(nd) + "%",
+          c: nd.area.c,
+          k: nd.name + " " + nd.short + " " + nd.area.name,
+          topics: nd.groups.map(function (g) { return g[0] + " · " + g[1].join(" · "); }).join(" · "),
+          items: nd.groups.reduce(function (a, g) { return a.concat(g[1]); }, []),
+          run: function () { openNode(nd.id); },
+        });
+      });
+      return cmds;
+    }
+    function palSub(it, q) {
+      if (!it.items || !q.length) return it.s;
+      if ((it.t + " " + (it.k || "")).toLowerCase().indexOf(q[0]) > -1) return it.s;
+      for (var i = 0; i < it.items.length; i++) {
+        var x = it.items[i].toLowerCase();
+        if (q.every(function (w) { return x.indexOf(w) > -1; })) return "Topic · " + it.items[i].slice(0, 46);
+      }
+      return it.s;
+    }
+    function palRender() {
+      var q = $("#palIn").value.toLowerCase().trim().split(/\s+/).filter(Boolean),
+        all = palCommands();
+      palItems = all
+        .filter(function (it) {
+          var hay = (it.t + " " + it.s + " " + (it.k || "") + " " + (it.topics || "")).toLowerCase();
+          return q.every(function (w) { return hay.indexOf(w) > -1; });
+        })
+        .sort(function (a, b) {
+          var as = q.length && a.t.toLowerCase().indexOf(q[0]) < 3 ? 0 : 1,
+            bs = q.length && b.t.toLowerCase().indexOf(q[0]) < 3 ? 0 : 1;
+          return as - bs;
+        })
+        .slice(0, 9);
+      palSel = Math.min(palSel, Math.max(0, palItems.length - 1));
+      $("#palList").innerHTML = palItems.length
+        ? palItems
+            .map(function (it, i) {
+              return (
+                '<li class="pal-i' + (i === palSel ? " sel" : "") + '" data-i="' + i + '" style="--j:' + i +
+                (it.c ? ";--dc:var(" + it.c + ")" : "") + '"><i></i><b>' + esc(it.t) + "</b><span>" + esc(palSub(it, q)) + "</span></li>"
+              );
+            })
+            .join("")
+        : '<li class="pal-empty">Nothing matches that. Try a subject like “DCF” or “audit”.</li>';
+    }
+    function palOpen() {
+      var p = $("#pal");
+      if (!p.hidden) return;
+      p.hidden = false;
+      $("#palIn").value = "";
+      palSel = 0;
+      palRender();
+      setTimeout(function () { $("#palIn").focus(); }, 30);
+    }
+    function palClose() {
+      $("#pal").hidden = true;
+    }
+    function palRun(i) {
+      var it = palItems[i];
+      if (!it) return;
+      palClose();
+      it.run();
+    }
+    $("#palIn").addEventListener("input", function () {
+      palSel = 0;
+      palRender();
+    });
+    $("#palIn").addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        var n = palItems.length || 1;
+        palSel = (palSel + (e.key === "ArrowDown" ? 1 : -1) + n) % n;
+        [].forEach.call($("#palList").querySelectorAll(".pal-i"), function (li, i) {
+          li.classList.toggle("sel", i === palSel);
+          if (i === palSel) li.scrollIntoView({ block: "nearest" });
+        });
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        palRun(palSel);
+      }
+    });
+    $("#palList").addEventListener("click", function (e) {
+      var li = e.target.closest(".pal-i");
+      if (li) palRun(+li.dataset.i);
+    });
+    $("#palList").addEventListener("mousemove", function (e) {
+      var li = e.target.closest(".pal-i");
+      if (!li || +li.dataset.i === palSel) return;
+      palSel = +li.dataset.i;
+      [].forEach.call($("#palList").querySelectorAll(".pal-i"), function (x, i) { x.classList.toggle("sel", i === palSel); });
+    });
+    $("#pal").addEventListener("mousedown", function (e) {
+      if (e.target === $("#pal")) palClose();
+    });
+    $("#searchBtn").addEventListener("click", palOpen);
+
+    /* ---------- atelier: accent, motion, weekly goal, target date, backup ---------- */
+    function openAtelier() {
+      var c = S.cfg;
+      veil(
+        '<div class="modal atl" role="dialog" aria-modal="true" aria-labelledby="atT"><h3 id="atT">Atelier</h3><p>Make the atlas yours. These choices save with your progress.</p>' +
+          '<div class="atl-r"><span class="eyebrow">Accent</span><div class="sw" id="atSw"><button class="auto" data-a="" aria-label="Automatic" aria-pressed="' + !c.acc + '"></button>' +
+          ACCS.map(function (a) {
+            return '<button style="--c:' + a + '" data-a="' + a + '" aria-label="' + a + '" aria-pressed="' + (c.acc === a) + '"></button>';
+          }).join("") +
+          "</div></div>" +
+          '<div class="atl-r"><span class="eyebrow">Motion</span><div class="seg" id="atMo">' +
+          [["full", "Full"], ["calm", "Calm"], ["off", "Off"]]
+            .map(function (m) {
+              return '<button data-m="' + m[0] + '" aria-pressed="' + ((c.motion || "full") === m[0]) + '">' + m[1] + "</button>";
+            })
+            .join("") +
+          "</div></div>" +
+          '<div class="atl-r"><span class="eyebrow">Weekly study goal</span><div class="step"><button data-st="-1" aria-label="Fewer hours">−</button><b id="atH">' + c.hrs + '</b><span>hours a week</span><button data-st="1" aria-label="More hours">+</button></div></div>' +
+          '<div class="atl-r"><span class="eyebrow">Target finish date</span><input type="date" class="dt" id="atD" value="' + esc(c.end) + '"></div>' +
+          '<div class="atl-r" id="atImp" hidden><span class="eyebrow">Paste a backup</span><textarea class="field" id="atTx" placeholder="Paste the text you copied from Copy backup"></textarea></div>' +
+          '<div class="acts"><button class="btn ghost" id="atBk">Copy backup</button><button class="btn ghost" id="atIm">Import</button><button class="btn" data-x="1">Done</button></div></div>',
+        function (v) {
+          v.querySelector("#atSw").addEventListener("click", function (e) {
+            var b = e.target.closest("button");
+            if (!b) return;
+            S.cfg.acc = b.dataset.a;
+            [].forEach.call(this.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+            applyCfg();
+            persist();
+          });
+          v.querySelector("#atMo").addEventListener("click", function (e) {
+            var b = e.target.closest("button");
+            if (!b) return;
+            S.cfg.motion = b.dataset.m;
+            [].forEach.call(this.querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+            applyCfg();
+            persist();
+          });
+          v.addEventListener("click", function (e) {
+            var s = e.target.closest("[data-st]");
+            if (!s) return;
+            S.cfg.hrs = Math.max(2, Math.min(40, S.cfg.hrs + +s.dataset.st));
+            v.querySelector("#atH").textContent = S.cfg.hrs;
+            persist();
+            refreshCur();
+          });
+          v.querySelector("#atD").addEventListener("change", function () {
+            if (this.value) {
+              S.cfg.end = this.value;
+              persist();
+              refreshCur();
+            }
+          });
+          v.querySelector("#atBk").addEventListener("click", function () {
+            try {
+              navigator.clipboard.writeText(JSON.stringify(S)).then(
+                function () { toast("Backup copied. Paste it into Import on any device."); },
+                function () { toast("Copying is blocked in this view"); }
+              );
+            } catch (e) {
+              toast("Copying is blocked in this view");
+            }
+          });
+          v.querySelector("#atIm").addEventListener("click", function () {
+            var box = v.querySelector("#atImp");
+            if (box.hidden) {
+              box.hidden = false;
+              this.textContent = "Load backup";
+              return;
+            }
+            try {
+              var o = JSON.parse(v.querySelector("#atTx").value);
+              if (!o || !o.c) throw 0;
+              S = o;
+              norm();
+              persist();
+              applyCfg();
+              v.hidden = true;
+              updateAll();
+              renderSess();
+              if (openId) renderDrawer();
+              renderView();
+              toast("Backup loaded");
+            } catch (e) {
+              toast("That does not look like a backup");
+            }
+          });
+        }
+      );
+    }
+    $("#atelierBtn").addEventListener("click", openAtelier);
+
+    /* ---------- ripples on buttons ---------- */
+    document.addEventListener(
+      "pointerdown",
+      function (e) {
+        if (reduced || !e.target.closest) return;
+        var b = e.target.closest(".btn,.ibtn,.rit,.fbtn,.zoom button,.modes button,.seg button,.cbtn,.pal-i,.sw button,.step button");
+        if (!b) return;
+        var r = b.getBoundingClientRect(),
+          d = Math.max(r.width, r.height) * 2.2,
+          s = document.createElement("span");
+        s.className = "rp";
+        s.style.cssText =
+          "width:" + d + "px;height:" + d + "px;left:" + (e.clientX - r.left - d / 2) + "px;top:" + (e.clientY - r.top - d / 2) + "px";
+        b.appendChild(s);
+        s.addEventListener("animationend", function () { s.remove(); });
+      },
+      true
+    );
+
+    /* ---------- currents controls ---------- */
+    $("#view").addEventListener("click", function (e) {
+      var rb = e.target.closest("#curRange button");
+      if (rb) {
+        CUR.range = +rb.dataset.r;
+        [].forEach.call($("#curRange").querySelectorAll("button"), function (x) { x.setAttribute("aria-pressed", x === rb ? "true" : "false"); });
+        CUR.disp = null;
+        curTarget();
+        CUR.revealT = reduced ? 1 : 0;
+        CUR.revealStart = performance.now();
+        CUR.replay = null;
+        setReplayUI(false);
+        buildHeat(false);
+        return;
+      }
+      if (e.target.closest("#curFc")) {
+        CUR.fc = !CUR.fc;
+        var f = $("#curFc");
+        f.classList.toggle("on", CUR.fc);
+        f.setAttribute("aria-pressed", CUR.fc);
+        return;
+      }
+      if (e.target.closest("#curReplay")) curReplay();
+    });
+
+    /* ---------- keyboard: palette, view switching, escape ---------- */
+    document.addEventListener("keydown", function (e) {
+      var tg = e.target,
+        typing = tg && (tg.tagName === "INPUT" || tg.tagName === "TEXTAREA" || tg.isContentEditable);
+      if ((e.metaKey || e.ctrlKey) && e.key && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        if ($("#pal").hidden) palOpen();
+        else palClose();
+        return;
+      }
+      if (e.key === "Escape") {
+        if (!$("#pal").hidden) return palClose();
+        if (!$("#veil").hidden) {
+          $("#veil").hidden = true;
+          return;
+        }
+        if (openId) closeDrawer();
+        return;
+      }
+      if (typing || e.metaKey || e.ctrlKey || e.altKey || !$("#pal").hidden) return;
+      if (e.key === "/") {
+        e.preventDefault();
+        palOpen();
+        return;
+      }
+      var vi = "1234".indexOf(e.key);
+      if (e.key.length === 1 && vi > -1) setView(VIEWS[vi]);
+    });
+
     /* ---------- boot ---------- */
     function updateAll(soft) {
       bgDirty = true;
       updateMap();
       updateLedger();
+      if (CUR.mounted) refreshCur();
       if ($("#app").dataset.view !== "map" && soft !== true) renderView();
     }
     $("#brandB").innerHTML = "Finance Atlas"
@@ -4765,6 +6363,7 @@
     window.addEventListener("resize", function () {
       placeInk();
       sizeCanvases();
+      sizeCur();
       clearTimeout(rzT);
       rzT = setTimeout(function () {
         if (!openId) fit(false);
@@ -4773,6 +6372,7 @@
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(placeInk);
     }
+    applyCfg();
     setSync("local");
     initDb();
     raf = requestAnimationFrame(frame);
