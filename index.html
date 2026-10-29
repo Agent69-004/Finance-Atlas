@@ -3779,6 +3779,13 @@
     .ledger .areas{overflow:visible;flex:none;min-height:auto;max-height:none}
     .ledger .led-foot{position:sticky;bottom:0;margin-top:auto;background:linear-gradient(to top,var(--card) 70%,transparent);z-index:2}
   }
+
+  /* lite mode: switched on automatically when frames run slow */
+  html.lite *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  html.lite .node .fl,html.lite .edge:not(.hi),html.lite .orbit,html.lite .ring,html.lite .spoke,html.lite .node *::before,html.lite .node *::after{animation:none!important}
+  html.lite .lvl::after,html.lite .tile::before,html.lite .fring::before,html.lite .fring::after{animation:none!important}
+  html.lite .node{filter:none!important}
+  body:has(.app.open) #bg,body:has(.app:not([data-view="map"])) #bg{visibility:hidden}
 </style>
 <!--FA-WRAP-B--></head>
 <body><!--/FA-WRAP-B-->
@@ -6799,7 +6806,7 @@
       DPR = Math.min(2, window.devicePixelRatio || 1);
       CW = window.innerWidth;
       CH = window.innerHeight;
-      var bd = IS_M.matches ? 1 : DPR;
+      var bd = 1;
       [fxc, fx2c].forEach(function (c) {
         c.width = Math.round(CW * DPR);
         c.height = Math.round(CH * DPR);
@@ -6945,6 +6952,28 @@
     /* ---------- frame loop ---------- */
     var raf = 0,
       lastT = 0;
+    var lite = false, pwN = 0, pwT = 0, pwBad = 0;
+    function setLite(on) {
+      lite = on;
+      document.documentElement.classList.toggle("lite", on);
+      bgDirty = true;
+    }
+    try {
+      if (localStorage.getItem("fa-lite") === "1" || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || (navigator.deviceMemory && navigator.deviceMemory <= 4)) setLite(true);
+    } catch (e) {}
+    function perfWatch(t) {
+      /* measure real frame time; two slow seconds in a row switch to lite mode for good */
+      if (lite) return;
+      if (!pwT) { pwT = t; return; }
+      pwN++;
+      if (t - pwT >= 1000) {
+        var avg = (t - pwT) / pwN;
+        pwBad = avg > 26 ? pwBad + 1 : 0;
+        pwN = 0; pwT = t;
+        if (pwBad >= 2) { setLite(true); try { localStorage.setItem("fa-lite", "1"); } catch (e) {} }
+      }
+    }
+    document.addEventListener("visibilitychange", function () { pwT = 0; pwN = 0; });
     function frame(t) {
       raf = 0;
       var dt = Math.min(60, t - (lastT || t - 16));
@@ -6978,8 +7007,11 @@
           "translate3d(" + spotC.x.toFixed(1) + "px," + spotC.y.toFixed(1) + "px,0)";
       stepTweens(t);
       FN++;
+      perfWatch(t);
       var camMoving = dragging || Math.abs(tg.x - cam.x) > 0.5 || Math.abs(tg.y - cam.y) > 0.5 || Math.abs(tg.k - cam.k) > 0.002;
-      if ((!reduced || bgDirty) && (!IS_M.matches || (FN & (camMoving ? 7 : 3)) === 0 || bgDirty)) {
+      var appEl = document.querySelector(".app"), bgHidden = !!appEl && (appEl.classList.contains("open") || (appEl.dataset.view && appEl.dataset.view !== "map"));
+      var bgMask = lite ? 63 : camMoving ? 7 : IS_M.matches ? 3 : 1;
+      if ((!reduced || bgDirty) && (bgDirty || (!bgHidden && (FN & bgMask) === 0))) {
         drawBg((t / 1000) * (calm ? 0.35 : 1));
         bgDirty = false;
       }
