@@ -4082,8 +4082,6 @@
   @keyframes eqRise{from{opacity:0;transform:translateY(16px) scale(.985)}}
   @media (prefers-reduced-motion: reduce){.eqv .rise,.eq-glow::before,.eq-lab i{animation:none}}
   @media (max-width:860px){
-    :root{--peek:0px}
-    .scroll{display:none!important}
     .app[data-view="home"] #view,.app[data-view="subjects"] #view{left:0!important;right:0!important;top:calc(env(safe-area-inset-top,0px) + 64px)!important;padding:6px var(--gxr) calc(var(--tabb) + 40px) var(--gx)!important}
     #searchBtn{display:grid!important}
     .undobar:not([hidden]){left:var(--gx)!important;right:var(--gxr)!important;width:auto!important;max-width:none!important;transform:none!important;border-radius:20px!important;display:flex!important;align-items:center;gap:10px;padding:8px 8px 8px 16px!important;background:var(--ink)!important;color:var(--bg)!important}
@@ -4091,7 +4089,7 @@
     #undoBtn{flex:none;height:38px;padding:0 16px;border-radius:99px;background:var(--acc)!important;color:var(--acc-ink)!important;font:650 13.5px var(--sans)}
     .toast{bottom:calc(var(--tabb) + 78px)!important}
     #themeBtn{display:none!important}
-    .zoom{bottom:calc(var(--tabb) + 14px)!important}
+    .zoom{bottom:calc(var(--peek) + var(--tabb) + 12px)!important}
     #intro{top:auto!important;bottom:calc(var(--tabb) + 14px)!important;right:calc(var(--gxr) + 56px)!important}
   }
 
@@ -4281,21 +4279,17 @@
   <canvas id="fx2" aria-hidden="true"></canvas>
   <nav class="tabbar" id="tabbar" aria-label="Views">
     <span class="tabink" id="tabInk"></span>
-    <button data-v="home" aria-pressed="false">
-      <svg viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z" /></svg>
-      <span>Home</span>
-    </button>
-    <button data-v="subjects" aria-pressed="false">
-      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2" /><rect x="13" y="4" width="7" height="7" rx="2" /><rect x="4" y="13" width="7" height="7" rx="2" /><rect x="13" y="13" width="7" height="7" rx="2" /></svg>
-      <span>Subjects</span>
-    </button>
-    <button data-v="map" aria-pressed="false">
+    <button data-v="map" aria-pressed="true">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="m15.5 8.5-2 5-5 2 2-5z" /></svg>
       <span>Map</span>
     </button>
     <button data-v="path" aria-pressed="false">
       <svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2" /><circle cx="18" cy="6" r="2.2" /><path d="M8 17.5c5 0 3-5 6-6.5s3-3 2-3.4" /></svg>
       <span>Path</span>
+    </button>
+    <button data-v="currents" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><path d="M3 9c3-4 5 4 9 0s6 3 9-1" /><path d="M3 14c3-4 5 4 9 0s6 3 9-1" /><path d="M3 19c3-4 5 4 9 0s6 3 9-1" /></svg>
+      <span>Currents</span>
     </button>
     <button data-v="projects" aria-pressed="false">
       <svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z" /><path d="m3 13 9 5 9-5" /></svg>
@@ -12294,7 +12288,6 @@ var AIX = {"mods":[["Foundations: what AI is and is not","Know the vocabulary an
     /* =====================================================================
        Equity-style Home and Subjects screens (phone first)
        ===================================================================== */
-    VIEWS.push("home", "subjects");
     var EQ = { range: 90, lvl: 0, busy: false, t: 0 };
     var ICO_CHK = '<svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
     function eqActive() { var v = $("#app").dataset.view; return v === "home" || v === "subjects"; }
@@ -12640,7 +12633,7 @@ var AIX = {"mods":[["Foundations: what AI is and is not","Know the vocabulary an
     updateAll();
     renderSess();
     var startV = (location.hash || "").slice(1);
-    setView(VIEWS.indexOf(startV) > -1 ? startV : (window.innerWidth <= 860 ? "home" : "map"), true);
+    setView(VIEWS.indexOf(startV) > -1 ? startV : "map", true);
     (function intro() {
       var f = fitTarget();
       tg.x = f.x;
@@ -12650,7 +12643,7 @@ var AIX = {"mods":[["Foundations: what AI is and is not","Know the vocabulary an
       cam.y = f.y + 60;
       cam.k = f.k * (reduced ? 1 : 0.55);
       applyCam();
-      setTimeout(mobileFocus, 1250);
+      if (window.innerWidth > 860) setTimeout(mobileFocus, 1250);
     })();
     var rzT = 0;
     window.addEventListener("resize", function () {
