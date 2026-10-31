@@ -3826,6 +3826,31 @@
     input,select,textarea,.field{font-size:16px}
   }
   @media (max-width:860px) and (max-height:700px){#intro p{display:none}}
+
+  /* ===== phone navigation pass (v11): list-first sheet ===== */
+  @media (max-width:860px){
+    :root{--peek:196px}
+    .ledger > *{order:20}
+    .ledger > .eyebrow:not(.idx){order:1}
+    .ledger > .big{order:2;font-size:60px!important;margin-top:2px}
+    .ledger > .sb{order:3;margin:10px 0 8px}
+    .ledger > .next{order:4;margin-top:4px;margin-bottom:6px}
+    .ledger > .idx{order:5;margin-top:10px;position:sticky;top:0;z-index:2;background:var(--bg);padding:10px 0 6px}
+    .ledger > .areas{order:6;padding-bottom:8px}
+    .ledger > .sess{order:7}
+    .ledger > .subl{order:8;margin-top:14px}
+    .ledger > .pulse{order:9}.ledger > .catch{order:10}.ledger > .aibtn{order:11}
+    .ledger > .led-foot{order:12}
+    .a-row .nm{font-size:24px;white-space:normal}
+    .a-row .pc{white-space:nowrap;display:flex;flex-direction:row!important;align-items:baseline;gap:1px;padding:0!important;border:0!important;background:none!important;min-width:0!important;height:auto!important}
+    .a-row .pc b{font-size:15px!important}
+    .rits{margin-left:0!important;gap:8px}
+    .rit{height:42px!important;padding:0 14px 0 11px!important;font-size:14px!important}
+    .rit i{width:14px!important;height:14px!important}
+    .a-prog{margin-left:0!important}
+    .areas li{padding:16px 0!important}
+    .ledger .btn,.ledger .cbtn{min-height:44px}
+  }
 </style>
 <!--FA-WRAP-B--></head>
 <body><!--/FA-WRAP-B-->
